@@ -1,3 +1,4 @@
+import {createSegmentClassifier} from './segments.mjs';
 import { createHash, randomUUID } from 'node:crypto';
 export const GURU = [
   ['bed-sheet-king','2026-03-12'], ['bed-curtain','2026-07-11'],
@@ -27,7 +28,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     'hist:category','hist:tags','hist:repeat'];
   const J=new Map(names.map((n,j)=>[n,j])), D=names.length, zero=()=>new Float64Array(D);
   const hash=catalogueHash(items);
-  const version=`ml-demo-v3:${hash.slice(0,12)}:${seed}:${asOf}`;
+  const version=`ml-demo-v4-segments:${hash.slice(0,12)}:${seed}:${asOf}`;
   function history(orders=[]) {
     const h={c:new Map(),t:new Map(),r:new Map()}; let total=0;
     const add=(m,k,v)=>m.set(k,(m.get(k)||0)+v);
@@ -115,6 +116,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
   }
   const heldout=metrics(globalW,test,train.reduce((s,r)=>s+r.y,0)/train.length);
   const trainMs=performance.now()-started, sessions=new Map();
+  const shopperSegments=createSegmentClassifier(items);
   function ranked(w,h) {
     return items.map(p=>{
       const x=encode(p,h), logit=dot(w,x);
@@ -122,13 +124,6 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
       terms.sort((a,b)=>Math.abs(b.contribution)-Math.abs(a.contribution));
       return {item_id:p.id,p_buy:sig(logit),logit,terms};
     }).sort((a,b)=>b.p_buy-a.p_buy||a.item_id.localeCompare(b.item_id)).map((p,k)=>({...p,rank:k+1}));
-  }
-  function segment(s) {
-    if(s.learned<3) return 'Still learning';
-    const category=cats.slice().sort((a,b)=>s.w[J.get('cat:'+b)]-s.w[J.get('cat:'+a)])[0];
-    const tilt=s.w[J.get('band:low')]-s.w[J.get('band:high')]
-      +s.w[J.get('price:log')]*(Math.log(.3)/2.5-Math.log(3)/2.5);
-    return category==='snacks'?(tilt>.3?'Price-savvy snacker':'Snack explorer'):category+' explorer';
   }
   function summary(s) {
     const refs=(feature,positive)=>s.log.filter(h=>h.learned&&h.deltas.some(d=>d.feature===feature&&(positive?d.delta-(h.regularization?.find(r=>r.feature===feature)?.delta||0)>1e-8:d.delta-(h.regularization?.find(r=>r.feature===feature)?.delta||0)< -1e-8))).map(h=>({event_id:h.event.event_id,seq:h.seq}));
@@ -151,7 +146,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
       return {...p,beforeP:b.p_buy,deltaP:p.p_buy-b.p_buy,beforeRank:b.rank,rankDelta:b.rank-p.rank};});
     return {sid:s.sid,run_id:s.run,seq:s.seq,profile:s.profile,version,target:'buy-intent-proxy',
       weights:names.map((feature,j)=>({feature,before:s.anchor[j],after:s.w[j],delta:s.w[j]-s.anchor[j]})),
-      predictions,top:predictions.slice(0,5),segment:segment(s),learned:s.learned,
+      predictions,top:predictions.slice(0,5),segment:shopperSegments.snapshot(s.segments),learned:s.learned,
       summary:summary(s),catalogueHash:hash,demoOrders:s.profile==='guru'?GURU:[],history:s.log.slice(),priceExpectation:s.expectation,priceError:s.guesses?s.error/s.guesses:null};
   }
   function reset(sid,profile='guru') {
@@ -159,7 +154,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     const orders=(profile==='guru'?GURU:[]).filter(o=>byId.has(o.item_id)), h=history(orders), w=globalW.slice();
     for(const o of orders) step(w,encode(byId.get(o.item_id),h),1,globalW,.20,.025,.35);
     const s={sid,profile,h,w,anchor:w.slice(),run:randomUUID(),seq:0,learned:0,
-      log:[],payloads:new Map(),receipts:new Map(),expectation:0,error:0,guesses:0};
+      log:[],payloads:new Map(),receipts:new Map(),expectation:0,error:0,guesses:0,segments:shopperSegments.begin(orders)};
     sessions.set(sid,s); return snapshot(s);
   }
   function session(sid) {if(!sessions.has(sid))reset(sid); return sessions.get(sid);}
@@ -188,6 +183,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
       step(s.w,encode(byId.get(e.item_id),s.h),e.label,s.anchor); learned=true;
     }
     s.seq++; if(learned)s.learned++;
+    shopperSegments.observe(s.segments,e,s.seq);
     const deltas=names.map((feature,j)=>({feature,delta:s.w[j]-before.weights[j].after}));
     const regularization=before.weights.map((w,j)=>({feature:w.feature,delta:personal(j)?-.25*.025*(w.after-w.before):0}));
     s.log.push({seq:s.seq,receivedAt:Date.now(),event:{...e},learned,deltas,regularization:learned?regularization:[],priceGuess:e.stage==='guess'?{signedLogRatio:clip(Math.log(e.guess/byId.get(e.item_id).price),-1,1),absoluteRelativeError:Math.abs(e.guess-byId.get(e.item_id).price)/byId.get(e.item_id).price}:null});
@@ -202,7 +198,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
   function contextFor(sid,limit=12) {
     const s=snapshot(session(sid)), compact=w=>({feature:w.feature,weight:Number(w.after.toFixed(3))});
     const weights=s.weights.filter(w=>w.feature!=='bias');
-    return {segment:s.segment,summary:s.summary.text,
+    return {segment:{...s.segment.top,confidence:s.segment.confidence,evidence_count:s.segment.evidence_count},summary:s.summary.text,
       positive:weights.filter(w=>w.after>0).sort((a,b)=>b.after-a.after).slice(0,8).map(compact),
       negative:weights.filter(w=>w.after<0).sort((a,b)=>a.after-b.after).slice(0,5).map(compact),
       top:s.predictions.slice(0,Math.max(1,Math.min(12,limit))).map(p=>({id:p.item_id,p:Number(p.p_buy.toFixed(3))})),seq:s.seq,run_id:s.run_id};
@@ -217,7 +213,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     }} finally {sessions.set(sid,original);}
     original.comparison={seq:original.seq,value};return value;
   }
-  return {compare,replay,contextFor,restoreRun:(sid,run)=>{session(sid).run=run;},reset,event,model:sid=>snapshot(session(sid)),global:()=>({
+  return {segments:shopperSegments.population,compare,replay,contextFor,restoreRun:(sid,run)=>{session(sid).run=run;},reset,event,model:sid=>snapshot(session(sid)),global:()=>({
     version,catalogueHash:hash,asOf,seed,synthetic:true,target:'buy-intent-proxy',
     users:2000,trainUsers:1600,testUsers:400,trainRows:train.length,testRows:test.length,
     trainColdRows:train.filter(r=>r.cold).length,testColdRows:test.filter(r=>r.cold).length,

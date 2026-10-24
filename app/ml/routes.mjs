@@ -65,14 +65,15 @@ function validate(e){
 async function body(req){let n=0,chunks=[];for await(const c of req){n+=c.length;if(n>16384)fail(413,'Body too large');chunks.push(c);}try{return JSON.parse(Buffer.concat(chunks));}catch{fail(400,'Invalid JSON');}}
 function json(res,status,value){res.writeHead(status,{'content-type':'application/json','cache-control':'no-store'});res.end(JSON.stringify(value));}
 export default async function(req,res,url){
- if(!['/api/events','/api/model','/api/model/global','/api/model/reset','/api/model/context','/api/events/undo','/api/model/profile'].includes(url.pathname))return false;
+ if(!['/api/segments','/api/events','/api/model','/api/model/global','/api/model/reset','/api/model/context','/api/events/undo','/api/model/profile'].includes(url.pathname))return false;
  try{
   refreshCatalogue();
   const p=url.pathname;
   if(p==='/api/model/context'&&req.method==='GET'){
    const limit=Number(url.searchParams.get('limit')||12);if(!Number.isInteger(limit)||limit<1||limit>12)fail(400,'Limit must be 1..12');
    json(res,200,contextFor(url.searchParams.get('sid')||'demo',limit));
-  }else if(p==='/api/model/global'&&req.method==='GET')json(res,200,state.engine.global());
+  }else if(p==='/api/segments'&&req.method==='GET')json(res,200,state.engine.segments());
+  else if(p==='/api/model/global'&&req.method==='GET')json(res,200,state.engine.global());
   else if(p==='/api/model'&&req.method==='GET'){const sid=id(url.searchParams.get('sid')||'demo','sid');hydrate(sid);json(res,200,snapshot(sid));}
   else if(['/api/model/reset','/api/model/profile'].includes(p)&&req.method==='POST'){
    const e=await body(req);if(!e||typeof e!=='object'||Object.keys(e).some(k=>!['sid','profile'].includes(k)))fail(400,'Invalid reset');

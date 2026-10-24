@@ -8,7 +8,7 @@ export const tools = [
   tool('search_orders', 'Look up past purchases by product words or category. Returns names, IDs, brands, prices, dates and quantities from demo history and this user’s saved orders.', {query:string, category:string}),
   tool('check_bought_before', 'Check whether the user bought a product before, for example bed or baby monitor. Call separately for each product.', {product_query:string}, ['product_query']),
   tool('get_reorder_pattern', 'Read reorder cadence and whether a previously purchased product is due. Use the known usual product ID from context; can run alongside search_orders.', {product_id:string}, ['product_id']),
-  tool('get_preferences', 'Read top learned shopping preferences from the live preference model, optionally for a category.', {category:string})
+  tool('get_preferences', 'Read learned shopping preferences and the top shopper segment with its probability, confidence and evidence count. Optionally filter preferences by category; synthetic population, not real customer validation.', {category:string})
 ];
 async function history(sid, cat) {
   const memoryURL = new URL('./memory.mjs', import.meta.url);
@@ -39,7 +39,8 @@ export async function execute(name, args, {sid, cat = R.catalogue()}) {
   }
   if (name === 'get_preferences') {
     const prefs = await R.preferences(sid);
-    return {source:prefs.source, version:prefs.version, top:args.category ? prefs.top.filter(([k]) => !k.startsWith('cat:') || k === 'cat:'+args.category) : prefs.top};
+    const segment=prefs.raw?.segment;
+    return {source:prefs.source, version:prefs.version, segment:segment?.top ? {...segment.top,confidence:segment.confidence,evidence_count:segment.evidence_count,synthetic:true} : null, top:args.category ? prefs.top.filter(([k]) => !k.startsWith('cat:') || k === 'cat:'+args.category) : prefs.top};
   }
   throw Error('unknown-data-tool');
 }
