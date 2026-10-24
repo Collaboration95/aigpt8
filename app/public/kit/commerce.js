@@ -38,7 +38,7 @@
     function ready(){surface.replaceChildren();status.textContent='';
       const stack=node('div','kc-stack kc-mini');rows.forEach(r=>stack.append(photo(r.p,c)));surface.append(stack);
       const total=sum(rows),ship=button('Ship it · '+c.won(total),place,'kc-primary kc-ship-button');ship.disabled=!rows.length||e.isFrozen();
-      const icon=node('div','kc-hero',v==='truck'?'▰ →':v==='stamp'?'READY TO SHIP':'↗');surface.append(icon,ship,node('p','kc-delivery','Rocket · tomorrow 7am'));
+      if(v==='truck'||v==='stamp')surface.append(node('div','kc-hero',v==='truck'?'▰ →':'READY TO SHIP'));surface.append(ship,node('p','kc-delivery','Rocket · tomorrow 7am'));
       if(window.REWARDS?.shipRow){const rewardRow=window.REWARDS.shipRow(total);if(rewardRow instanceof HTMLElement)surface.append(rewardRow);}
       if(v==='slide'){
         ship.textContent='Ship it · '+c.won(total);const range=node('input','kc-range');range.type='range';range.min=0;range.max=100;range.value=0;range.setAttribute('aria-label','Slide to ship');range.disabled=ship.disabled;

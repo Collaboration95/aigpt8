@@ -59,7 +59,7 @@
     try { node = e.name==='play_game'?el('div','game-host'):KIT.tools().includes(e.name) ? KIT.render(e.name,a,{onAnswer:(v,l)=>answer(e,v,l)}) : el('div','status-card','This option is temporarily unavailable.'); }
     catch { node = el('div','status-card','This option is temporarily unavailable.'); }
     wrapper.append(node);
-    if(e.gameReason&&['show_picks','compare_products','product_spotlight','ship_it'].includes(e.name))wrapper.append(el('small','game-reason',e.gameReason));
+    if(e.gameReason&&['show_picks','compare_products','product_spotlight'].includes(e.name))wrapper.append(el('small','game-reason',e.gameReason));
     if(['note_inference','memory_recap'].includes(e.name))wrapper.addEventListener('click',ev=>{const b=ev.target.closest('button[data-action]');if(!b||!['forget','change'].includes(b.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();answer(e,{action:b.dataset.action,key:b.dataset.key},b.textContent);},true);
     if(e.name==='play_game'&&!KIT.tools().includes('play_game')) {
       const token=a.launchToken||a.launch_token;
@@ -74,7 +74,7 @@
     // before their handlers run; only the server's order event creates a receipt.
     if (e.name === 'ship_it') {
       node.querySelectorAll('*').forEach(n=>{if(n.children.length===0&&n.textContent.trim()==='APPROVED?')n.textContent='READY TO SHIP';});
-      if(window.REWARDS){const total=(a.items||[]).reduce((n,i)=>n+(CATALOG.get(i.product_id)?.price||0)*(i.qty||1),0);const row=REWARDS.shipRow(total,v=>{wrapper.dataset.coins=String(typeof v==='object'?v.coins||0:Number(v)||0);});row.dataset.rewards='true';wrapper.append(row);}
+      if(window.REWARDS){const total=(a.items||[]).reduce((n,i)=>n+(CATALOG.get(i.product_id)?.price||0)*(i.qty||1),0);const ex=wrapper.querySelector('.coin-use');if(ex){ex.querySelector('input')?.addEventListener('change',ev=>{wrapper.dataset.coins=ev.target.checked?((ex.textContent.match(/Use (\d+)/)||[0,0])[1]):'0';});}else{const row=REWARDS.shipRow(total,v=>{wrapper.dataset.coins=String(typeof v==='object'?v.coins||0:Number(v)||0);});row.dataset.rewards='true';wrapper.append(row);}}
       const intercept = ev => {
         if(ev.target.closest('[data-rewards]'))return;const target = ev.target.closest('button,input[type=range]'); if (!target) return;
         ev.stopImmediatePropagation();
