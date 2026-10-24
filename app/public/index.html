@@ -33,7 +33,7 @@ h1{font-size:24px;font-weight:600;line-height:1.25;margin-top:18px;max-width:280
 <script>
 // Route a request to its flow. Each flow page auto-runs ?q= as the first message.
 const ROUTES=[[/tooth|paste|brush/i,'toothpaste'],[/mosquit|bite|bug|net\b|insect/i,'mosquito'],[/camp|tent|hike|trip/i,'camping'],[/surprise|game|play|bored/i,'games']];
-function go(q){q=(q||'').trim();if(!q)return;const r=ROUTES.find(([re])=>re.test(q));location.href=`/${r?r[1]:'games'}.html?q=${encodeURIComponent(q)}`}
+function go(q){q=(q||'').trim();if(!q)return;const params=new URLSearchParams(location.search);if(params.get('mode')!=='scripted'){const next=new URLSearchParams({q});for(const k of ['debug','fresh'])if(params.has(k))next.set(k,params.get(k));location.href='/live.html?'+next;return;}const r=ROUTES.find(([re])=>re.test(q));location.href=`/${r?r[1]:'games'}.html?q=${encodeURIComponent(q)}`}
 f.onsubmit=e=>{e.preventDefault();go(document.getElementById('in').value)};
 surp.onclick=()=>go('Surprise me');
 </script></body></html>
