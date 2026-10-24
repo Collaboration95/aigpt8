@@ -18,7 +18,7 @@
     const tags = p => (p.tags || []).filter(t => !['game','history'].includes(t)).slice(0,3);
     let because = a.because || '';
     if (!because && tool === 'show_usual' && products[0]?.id === ctx.memory?.facts?.toothpasteUsual) because = ctx.memory.explain('toothpasteUsual').because;
-    const title = `<header class="kp-head"><span class="kp-eyebrow">${tool === 'show_usual' ? 'BUY AGAIN' : tool === 'compare_products' ? 'SIDE BY SIDE' : tool === 'show_alternatives' ? 'MORE POSSIBILITIES' : 'YOUR EDIT'}</span><h2>${esc(a.title || defaults[tool])}</h2>${because ? `<p class="kp-because">↳ ${esc(because)}</p>` : ''}</header>`;
+    const title = `<header class="kp-head"><span class="kp-eyebrow">${tool === 'show_usual' ? 'BUY AGAIN' : tool === 'compare_products' ? 'SIDE BY SIDE' : tool === 'show_alternatives' ? 'MORE POSSIBILITIES' : 'PICKED FOR YOU'}</span><h2>${esc(a.title || defaults[tool])}</h2>${because ? `<p class="kp-because">↳ ${esc(because)}</p>` : ''}</header>`;
     const chips = p => `<span class="kp-chips">${tags(p).map(t => `<span>${esc(t.replace(/-/g,' '))}</span>`).join('')}</span>`;
     const info = p => `<span class="kp-info"><span class="kp-brand">${esc(p.brand)}</span><span class="kp-name">${esc(p.name)}</span>${reason(p) ? `<span class="kp-reason">${esc(reason(p))}</span>` : ''}<strong class="kp-price">${esc(ctx.won(p.price))}</strong></span>`;
     const photo = p => `<span class="kp-photo">${ctx.img(ctx.product(p.id))}${badge(p) ? `<span class="kp-badge">${esc(badge(p))}</span>` : ''}</span>`;

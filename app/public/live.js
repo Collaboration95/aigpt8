@@ -48,6 +48,7 @@
   }
   function answer(e, value, label) {
     const c = calls.get(e.toolCallId); if (busy || !c?.committed || c.frozen) return;
+    if(value?.forget)value={action:'forget',key:value.forget};if(value?.change)value={action:'change',key:value.change};
     if (e.name === 'ship_it') value = 'ship';
     return submit({event:{toolCallId:e.toolCallId, value, label:String(label || value).slice(0,200)}});
   }
@@ -55,9 +56,11 @@
     clearThinking(); const a = adapted(e), wrapper = el('div','tool');
     wrapper.dataset.call = e.toolCallId; wrapper.dataset.turn = e.turnId || currentTurn; wrapper.dataset.provisional = 'true'; wrapper.inert = true;
     let node;
-    try { node = KIT.tools().includes(e.name) ? KIT.render(e.name,a,{onAnswer:(v,l)=>answer(e,v,l)}) : el('div','status-card','This option is getting ready.'); }
+    try { node = e.name==='play_game'?el('div','game-host'):KIT.tools().includes(e.name) ? KIT.render(e.name,a,{onAnswer:(v,l)=>answer(e,v,l)}) : el('div','status-card','This option is temporarily unavailable.'); }
     catch { node = el('div','status-card','This option is temporarily unavailable.'); }
     wrapper.append(node);
+    if(e.gameReason&&['show_picks','compare_products','product_spotlight','ship_it'].includes(e.name))wrapper.append(el('small','game-reason',e.gameReason));
+    if(['note_inference','memory_recap'].includes(e.name))wrapper.addEventListener('click',ev=>{const b=ev.target.closest('button[data-action]');if(!b||!['forget','change'].includes(b.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();answer(e,{action:b.dataset.action,key:b.dataset.key},b.textContent);},true);
     if(e.name==='play_game'&&!KIT.tools().includes('play_game')) {
       const token=a.launchToken||a.launch_token;
       const game=['price','rapid','swipe','basket','bracket'].includes(a.game)?a.game:'price';
@@ -70,8 +73,10 @@
     // Older commerce variants commit to localStorage on click. Capture live checkout
     // before their handlers run; only the server's order event creates a receipt.
     if (e.name === 'ship_it') {
+      node.querySelectorAll('*').forEach(n=>{if(n.children.length===0&&n.textContent.trim()==='APPROVED?')n.textContent='READY TO SHIP';});
+      if(window.REWARDS){const total=(a.items||[]).reduce((n,i)=>n+(CATALOG.get(i.product_id)?.price||0)*(i.qty||1),0);const row=REWARDS.shipRow(total,v=>{wrapper.dataset.coins=String(typeof v==='object'?v.coins||0:Number(v)||0);});row.dataset.rewards='true';wrapper.append(row);}
       const intercept = ev => {
-        const target = ev.target.closest('button,input[type=range]'); if (!target) return;
+        if(ev.target.closest('[data-rewards]'))return;const target = ev.target.closest('button,input[type=range]'); if (!target) return;
         ev.stopImmediatePropagation();
         if (ev.type === 'click' && target.tagName === 'BUTTON') { ev.preventDefault(); answer(e,'ship','Ship it'); }
         if (ev.type === 'change' && Number(target.value) >= 95) answer(e,'ship','Ship it');
@@ -102,8 +107,9 @@
     if(type==='tool')renderTool(data);
     if(type==='reset')reset(data.turnId);
     if(type==='commit'){accepted=true;freezePrevious();for(const id of data.toolCallIds || []){const c=calls.get(id);if(c){c.committed=true;c.node.inert=false;c.node.dataset.provisional='false';}}clearThinking();}
-    if(type==='order'){accepted=true;freezePrevious();clearThinking();receipt(data,activeRequest?.event?.toolCallId);}
-    if(type==='fallback')fallback(data);
+    if(type==='order'){accepted=true;freezePrevious();clearThinking();const callId=activeRequest?.event?.toolCallId;if(window.REWARDS){if(data.action==='undo')REWARDS.refund(data.order.id).catch(()=>{});else {const coins=Number(calls.get(callId)?.node.dataset.coins||0);if(coins)REWARDS.spend(data.order.id,coins).catch(()=>{});}}receipt(data,callId);saveView();}
+    if(type==='fallback')updateProof({source:'scripted'});
+    if(type==='notice')messages.append(el('div','notice',data.text));
     if(type==='debug')updateProof(data);
     if(type==='error')throw Error(data.message || 'Could not finish this turn.');
     if(type==='done'){finished=true;clearThinking();}
@@ -116,7 +122,7 @@
   }
   let activeRequest=null;
   async function submit(request) {
-    if(busy)return;busy=true;accepted=false;finished=false;currentTurn=null;activeRequest=request;send.disabled=true;
+    if(busy)return;request._key ||= crypto.randomUUID();if(request.text)originalGoal=request.text;busy=true;accepted=false;finished=false;currentTurn=null;activeRequest=request;send.disabled=true;
     const previous=[...calls.values()].filter(c=>c.committed&&!c.frozen);previous.forEach(c=>c.node.inert=true);
     activeBubble=bubble(request.text || request.event.label);input.value='';input.blur();status(['Connecting…']);
     messages.dataset.busy='true';raw=[];proof={source:mock?'mock':'connecting'};updateProof(); const started=performance.now();
@@ -125,14 +131,14 @@
       if(mock) await replay(request);
       else {
         const query=new URLSearchParams();for(const key of ['fresh','debug'])if(params.get(key)==='1')query.set(key,'1');const url='/api/turn'+(query.size?'?'+query:'');
-        const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':crypto.randomUUID()},body:JSON.stringify({sid,...request,...(params.get('fresh')==='1'?{fresh:true}:{})}),signal:controller.signal});
+        const response=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json','Idempotency-Key':request._key},body:JSON.stringify({sid,text:request.text,event:request.event}),signal:controller.signal});
         if(!response.ok)throw Error(response.status===409?'Another turn is finishing. Try again.':'Shopping is temporarily unavailable.');
         if(!response.headers.get('content-type')?.includes('text/event-stream'))throw Error('Shopping is temporarily unavailable.');
         await readSSE(response.body); if(!finished)throw Error('Connection interrupted. Please try again.');
       }
     } catch(error) {
       clearThinking();reset();const n=el('div','notice',error.name==='AbortError'?'This is taking too long. Try again.':error.message);
-      if(!accepted){activeBubble.remove();previous.forEach(c=>{if(c.node.isConnected){const old=c.node;renderTool(c.event);const restored=calls.get(c.event.toolCallId);restored.committed=true;restored.node.dataset.provisional='false';restored.node.inert=false;old.replaceWith(restored.node);}});const retry=el('button','','Try again');retry.onclick=()=>{n.remove();submit(request);};n.append(el('br'),retry);}
+      if(!accepted)activeBubble.remove();{previous.forEach(c=>{if(c.node.isConnected){const old=c.node;renderTool(c.event);const restored=calls.get(c.event.toolCallId);restored.committed=true;restored.node.dataset.provisional='false';restored.node.inert=false;old.replaceWith(restored.node);}});const retry=el('button','','Try again');retry.onclick=()=>{n.remove();submit(request);};n.append(el('br'),retry);}
       messages.append(n);updateProof({error:'Turn failed'});
     } finally {clearTimeout(timeout);busy=false;send.disabled=false;messages.dataset.busy='false';updateProof({clientTotalMs:Math.round(performance.now()-started)});align();}
   }
@@ -149,7 +155,7 @@
     }
     handle('debug',{model:'recorded fixture',source:'mock',ttftMs:0,totalMs:0,usage:{total_tokens:0},retries:0});handle('done',{turnId});
   }
-  document.querySelector('#composer').onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(text){if(!originalGoal)originalGoal=text;submit({text});}};
+  document.querySelector('#composer').onsubmit=e=>{e.preventDefault();const text=input.value.trim();if(text){originalGoal=text;submit({text});}};
   window.addEventListener('message',e=>{
     if(e.origin!==location.origin||e.data?.type!=='game_complete')return;
     const c=[...calls.values()].find(c=>c.event.name==='play_game'&&c.committed&&!c.frozen&&c.node.querySelector('iframe')?.contentWindow===e.source);
@@ -157,5 +163,10 @@
     if(!c||!token||e.data.token!==token||!Array.isArray(e.data.eventIds)||!e.data.eventIds.every(id=>typeof id==='string'&&id.length<=160))return;
     answer(c.event,{action:'complete',eventIds:e.data.eventIds},'Game complete');
   });
-  if(originalGoal)submit({text:originalGoal});else input.focus();
+  const viewKey='t8-live-view-'+sid;
+  function saveView(){try{sessionStorage.setItem(viewKey,JSON.stringify({goal:originalGoal,html:messages.innerHTML,calls:[...calls].map(([id,c])=>[id,{event:c.event,committed:c.committed,frozen:c.frozen}])}));}catch{}}
+  function restoreView(){try{const view=JSON.parse(sessionStorage.getItem(viewKey));if(!view)return false;originalGoal=view.goal;messages.innerHTML=view.html;for(const [id,c] of view.calls){const old=messages.querySelector('[data-call="'+id+'"]');if(!old)continue;renderTool(c.event);const fresh=calls.get(id);old.replaceWith(fresh.node);fresh.committed=c.committed;fresh.frozen=c.frozen;fresh.node.inert=c.frozen||!c.committed;if(c.frozen)fresh.node.firstElementChild?.freeze?.();}messages.querySelectorAll('.receipt').forEach(n=>n.remove());const orders=Orders.list().filter(o=>o.sid===sid);for(const order of orders.slice(0,1))receipt({order},order.toolCallId);anchor=messages.lastElementChild;align();return true;}catch{return false;}}
+  window.addEventListener('pagehide',saveView);
+  const consumed=new URL(location.href);consumed.searchParams.delete('q');history.replaceState(null,'',consumed);
+  if(originalGoal)submit({text:originalGoal});else if(!restoreView())input.focus();
 })();
