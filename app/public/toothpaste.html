@@ -275,7 +275,7 @@ function brands(){
 }
 function receipt(snap,order){
  const blk=P.Block({layout:'plain',theme:'plain'});let link=null;
- const rc=P.Receipt({items:snap.items,total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onAnswer:(v,l)=>bubble(l,blk),onUndo:f=>{if(link)link.hidden=f;if(window.Orders&&order){if(f&&Orders.cancel)Orders.cancel(order.id);else if(!f&&Orders.restore)Orders.restore(order.id);else {const orders=Orders.list().filter(o=>o.id!==order.id);if(!f)orders.unshift(order);localStorage.setItem('t8-orders',JSON.stringify(orders));dispatchEvent(new Event('t8-orders'))}}setCart(0)}});
+ const rc=P.Receipt({items:snap.items,total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onAnswer:(v,l)=>bubble(l,blk),onUndo:f=>{if(link)link.style.display=f?'none':'';if(window.Orders&&order){if(f&&Orders.cancel)Orders.cancel(order.id);else if(!f&&Orders.restore)Orders.restore(order.id);else {const orders=Orders.list().filter(o=>o.id!==order.id);if(!f)orders.unshift(order);localStorage.setItem('t8-orders',JSON.stringify(orders));dispatchEvent(new Event('t8-orders'))}}setCart(0)}});
  blk.add(rc);if(order){link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+order.id,textContent:'Track order →'});link.classList.add('track');link.dataset.orderLink=order.id;link.addEventListener('click',()=>bubble('Track order',blk));blk.add(link)}setCart(cartN+snap.items.length);live=null;mount(blk);
 }
 
