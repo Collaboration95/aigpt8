@@ -138,8 +138,8 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     for(const positive of [true,false]) {
       const ranked=candidates.filter(w=>positive?w.weight>0:w.weight<0).sort((a,b)=>positive?b.weight-a.weight:a.weight-b.weight);
       // Personal claims require observed supporting gradients; population-only signals are labelled.
-      const supported=ranked.filter(w=>refs(w.feature,positive).length).slice(0,2);
-      for(const w of supported)claims.push({text:(positive?'Leans toward ':'Less inclined toward ')+describe(w),feature:w.feature,weight:w.weight,evidence:refs(w.feature,positive)});
+      const seen=new Set(claims.map(c=>c.key));const supported=ranked.filter(w=>{const k=describe(w).replace(/s$/,'');if(seen.has(k)||!refs(w.feature,positive).length)return false;seen.add(k);return true;}).slice(0,2);
+      for(const w of supported)claims.push({key:describe(w).replace(/s$/,''),text:(positive?'Leans toward ':'Less inclined toward ')+describe(w),feature:w.feature,weight:w.weight,evidence:refs(w.feature,positive)});
     }
     const reactions=s.log.filter(h=>h.learned).length,orders=s.profile==='guru'?GURU.filter(o=>byId.has(o.item_id)):[];
     const text=(claims.length?claims.map(c=>c.text).join('; '):s.profile==='guru'?'History-informed baseline; awaiting game reactions':'Population model only; no personal history')+`. Based on ${reactions} game reactions + ${orders.length} past orders.`;
