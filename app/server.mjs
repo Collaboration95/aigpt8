@@ -28,7 +28,7 @@ try {
 // --- backend modules: each of ml/routes.mjs, llm/routes.mjs exports
 //     default async (req, res, url) => true if it handled the request.
 //     Re-imported when the file changes, so editing a module needs no server restart.
-const MODULES = ['ml/routes.mjs', 'llm/routes.mjs'];
+const MODULES = ['ml/routes.mjs', 'llm/routes.mjs', 'rewards/routes.mjs'];
 const loaded = {};
 async function moduleHandlers() {
   const out = [];
