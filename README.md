@@ -1,6 +1,8 @@
 # Team 8
 
-## 척하면 척 (*cheok-hamyeon cheok*)
+## Click · 척하면 척 (*cheok-hamyeon cheok*)
+
+**Name: Click.** In English, two people "click" when they understand each other instantly, which is the meaning of 척하면 척. It's also what you do in the app: every answer is a tap, never a form.
 
 **Tagline:** 척하면 척, the shop that gets you before you finish.
 

@@ -7,7 +7,7 @@
   const button = (label, fn, cls='') => {const b=node('button','kc-btn '+cls,label); b.type='button';b.onclick=fn;return b;};
   function shell(a, title, variant) {
     const e=node('section','kc-root kc-'+variant);e.setAttribute('aria-label',a.title||title);
-    const eyebrow=node('div','kc-eyebrow','COUPANG · FOR YOU');e.append(eyebrow,node('h3','kc-title',a.title||title));
+    const eyebrow=node('div','kc-eyebrow','CLICK · FOR YOU');e.append(eyebrow,node('h3','kc-title',a.title||title));
     let frozen=false;
     e.freeze=()=>{frozen=true;e.dataset.frozen='true';e.querySelectorAll('button,input,select').forEach(b=>{if(!b.dataset.undo)b.disabled=true;});};
     e.isFrozen=()=>frozen;return e;

@@ -1,6 +1,6 @@
 # Pitch notes: what to say (draft, 25 Oct 2026)
 
-**Tagline (chosen): 척하면 척 (*cheok-hamyeon cheok*), "gets you before you finish".** It's a Korean idiom for someone who understands you from half a word, and that is our context story. The app name is still open. Open with the tagline, then show toothpaste: "Reorder my toothpaste. 척. Done."
+**Tagline (chosen): 척하면 척 (*cheok-hamyeon cheok*), "gets you before you finish".** It's a Korean idiom for someone who understands you from half a word, and that is our context story. **App name: Click.** "We just clicked" means instant understanding, the English twin of 척하면 척, and every answer in the app is a tap. Open with the tagline, then show toothpaste: "Reorder my toothpaste. 척. Done."
 
 ## One-line idea
 Shopping where the AI *is* the interface: every request builds its own screen from your context, and games turn browsing into learning.
