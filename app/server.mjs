@@ -65,7 +65,7 @@ const writePrefs = p => fs.writeFileSync(PREFS, JSON.stringify(p, null, 2));
 const body = req => new Promise(r => { let b = ''; req.on('data', c => b += c); req.on('end', () => { try { r(JSON.parse(b || '{}')); } catch { r({}); } }); });
 const json = (res, code, obj) => { res.writeHead(code, { 'content-type': 'application/json', 'cache-control': 'no-store' }); res.end(JSON.stringify(obj)); };
 
-http.createServer(async (req, res) => {
+async function handle(req, res) {
   const url = new URL(req.url, 'http://x');
   const p = url.pathname;
 
@@ -99,8 +99,10 @@ http.createServer(async (req, res) => {
   if (p === '/api/turn') return json(res, 501, { error: 'llm-not-configured' });
 
   // Static files
-  let f = path.normalize(path.join(PUB, decodeURIComponent(p)));
-  if (!f.startsWith(PUB)) { res.writeHead(403); return res.end(); }
+  let rel; try { rel = decodeURIComponent(p); } catch { res.writeHead(400); return res.end('bad url'); }
+  let f = path.join(PUB, rel);
+  const r = path.relative(PUB, f);
+  if (r.startsWith('..') || path.isAbsolute(r)) { res.writeHead(403); return res.end(); }
   if (fs.existsSync(f) && fs.statSync(f).isDirectory()) f = path.join(f, 'index.html');
   if (!fs.existsSync(f)) { res.writeHead(404); return res.end('not found'); }
   const ext = path.extname(f).toLowerCase();
@@ -110,5 +112,15 @@ http.createServer(async (req, res) => {
     if (!NO_FRAME.test(f)) html = html.replace(/<head[^>]*>/i, m => m + FRAME);
     return res.end(html);
   }
-  fs.createReadStream(f).pipe(res);
+  fs.createReadStream(f).on('error', () => res.destroy()).pipe(res);
+}
+
+// One bad request must never take the demo server down.
+http.createServer((req, res) => {
+  handle(req, res).catch(e => {
+    console.error('request failed:', req.url, e);
+    if (!res.headersSent) { res.writeHead(500, { 'content-type': 'application/json' }); res.end('{"error":"internal"}'); } else res.destroy();
+  });
 }).listen(PORT, HOST, () => console.log(`team8 app: http://${HOST}:${PORT}/`));
+process.on('uncaughtException', e => console.error('uncaught:', e));
+process.on('unhandledRejection', e => console.error('unhandled rejection:', e));
