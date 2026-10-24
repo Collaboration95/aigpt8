@@ -227,6 +227,27 @@ html,body{background:#fff;color:#202332}
 .again{font-size:13px}
 .t8-track,.track-fallback{align-self:center;min-height:44px;display:flex;align-items:center}
 a:focus-visible,button:focus-visible{outline:3px solid #1689ce;outline-offset:2px}
+/* Inline shopping game: bounded by the parent iframe viewport. */
+html.embedded,html.embedded body{height:100%;min-height:0;background:transparent;overflow:hidden}
+.embedded .page{max-width:none;height:100%;padding:0;display:flex;flex-direction:column}
+.embedded .top,.embedded .tabwrap{display:none}
+.embedded #ml-save{flex:none;margin:0;font-size:11px!important;padding:4px!important}
+.embedded .card{flex:1;min-height:0;padding:10px;border-radius:18px;overflow-y:auto;overscroll-behavior:contain}
+.embedded .head{min-height:28px;margin-bottom:6px}
+.embedded .head h2{font-size:20px}
+.embedded .stage{min-height:0}
+.embedded .pgart .art{width:112px!important;height:112px!important}
+.embedded .pg{gap:2px}.embedded .gv{font-size:28px}.embedded .rv{height:36px}
+.embedded .pgn,.embedded .sn{font-size:16px}
+.embedded .cta{min-height:44px;font-size:16px}
+.embedded .rfc{min-height:0;padding:8px;margin:0 0 10px;gap:4px}
+.embedded .rfc .art{width:144px!important;height:144px!important}
+.embedded .rx button{min-height:60px;font-size:26px}
+.embedded .deck{height:270px;margin-bottom:10px}.embedded .sc .art{max-height:175px}
+.embedded .rb{width:54px;height:54px;font-size:24px}
+.embedded .dl{min-height:210px;padding:8px 4px}.embedded .dl .art{max-height:120px}
+.embedded .grid3 .art{max-height:65px}.embedded .grid3{gap:6px}
+.embedded .bridge-result{display:grid;gap:12px;text-align:center;padding:24px 8px}
 </style>
 </head>
 <body>
@@ -245,6 +266,20 @@ a:focus-visible,button:focus-visible{outline:3px solid #1689ce;outline-offset:2p
 <script>
 (()=>{
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const launch=new URLSearchParams(location.search);
+const launchToken=launch.get('launchToken')||launch.get('token')||'';
+const embedded=window.parent!==window;
+document.documentElement.classList.toggle('embedded',embedded);
+const requestedRounds=Number(launch.get('rounds'));
+const roundLimit=Number.isInteger(requestedRounds)&&requestedRounds>0?Math.min(requestedRounds,8):null;
+let approvedIds=[];
+try{const ids=JSON.parse(launch.get('productIds')||'[]');if(Array.isArray(ids))approvedIds=[...new Set(ids.filter(id=>typeof id==='string'&&CATALOG.get(id)))];}catch{}
+function gameDeck(defaults){
+ if(!approvedIds.length)return roundLimit?defaults.slice(0,roundLimit):defaults;
+ const ids=approvedIds.slice(0,roundLimit||approvedIds.length);
+ ids.forEach(id=>{const item=CATALOG.get(id);P[id]={id,item,n:item.name,s:item.name,pr:item.price,cat:item.category,tags:item.tags||[]};});
+ return ids;
+}
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const won=n=>'₩'+Math.round(n).toLocaleString('en-US');
@@ -307,6 +342,7 @@ syncCatalog();
 function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size==='full'?'100%':size+'px'};height:${size==='full'?'auto':size+'px'};${size==='full'?'aspect-ratio:1':''}">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
 if(window.CATALOG&&CATALOG.onMode)CATALOG.onMode(()=>{$$('.product-art').forEach(el=>{const p=P[el.dataset.product];el.innerHTML=CATALOG.imgHTML(p.item,'product-photo')})});
 const sid=new URLSearchParams(location.search).get('sid')||localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
+let savedEventIds=[];
 let modelState=null,prefState={weights:{}},startWeights={},pending=Promise.resolve(),signalError=false,waiting=0;
 const save=document.createElement('div');save.id='ml-save';save.style='font:12px system-ui;padding:8px 4px;color:#586174';$('.card').before(save);
 function status(){save.textContent=signalError?'Learning pending · tap to retry':waiting?`Saving ${waiting} choice${waiting===1?'':'s'}…`:'Guru · demo profile · choices saved';}
@@ -320,7 +356,7 @@ function postEvent(fields){
    if(!modelState)await loadModel();event.run_id??=runAtTap||modelState.run_id;
    const r=await fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(event)});
    if(!r.ok){const d=await r.json();throw Error(d.error||'Save failed');}
-   const receipt=await r.json();modelState=receipt.after;waiting--;signalError=false;status();return;
+   const receipt=await r.json();modelState=receipt.after;savedEventIds.push(receipt.event_id);waiting--;signalError=false;status();return;
   }catch(e){signalError=true;status();save.textContent+=' · '+e.message;save.setAttribute('role','button');save.tabIndex=0;
    await new Promise(resolve=>{save.onclick=resolve;save.onkeydown=e=>{if(e.key==='Enter')resolve()}});save.onclick=null;save.removeAttribute('role');
   }}
@@ -361,7 +397,14 @@ const stage=$('#stage'),card=$('#card'),cntEl=$('#cnt');
 const cnt=t=>{if(cntEl.textContent===t)return;cntEl.textContent=t;cntEl.classList.remove('bump');void cntEl.offsetWidth;cntEl.classList.add('bump')};
 function enter(){stage.classList.remove('enter');void stage.offsetWidth;stage.classList.add('enter')}
 async function result(prof){
-  const token=run;await pending;if(token!==run)return;const rewards=reward();
+  const token=run;await pending;if(token!==run)return;
+  if(embedded){
+    if(inst&&inst.stop)inst.stop();cnt('');
+    stage.innerHTML='<div class="bridge-result"><b>Preferences updated</b><span>Back to shopping</span></div>';
+    if(launchToken)parent.postMessage({type:'game_complete',token:launchToken,game:cur,eventIds:[...savedEventIds]},location.origin);
+    return;
+  }
+  const rewards=reward();
   if(inst&&inst.stop)inst.stop();
   const r=learn(prof.w,prof.ex||[],prof.seen||new Set(),prof.pp);lastRes=r;cnt('');
   stage.innerHTML=`<div class="res"><div class="rewards"><b>+120 coins</b><span>🔥 ${rewards.streak} day streak</span></div><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
@@ -375,7 +418,7 @@ async function result(prof){
 function go(id){
   if(!G[id])id='price';
   if(inst&&inst.stop)inst.stop();
-  run++;cur=id;syncCatalog();startWeights={...prefState.weights};const g=G[id];
+  run++;savedEventIds=[];cur=id;syncCatalog();startWeights={...prefState.weights};const g=G[id];
   $$('.tab').forEach(t=>{const on=t.dataset.g===id;t.setAttribute('aria-selected',on);if(on&&t.scrollIntoView)t.scrollIntoView({inline:'center',block:'nearest',behavior:'auto'})});
   card.style.background=g.bg;$('#ttl').textContent=g.name;$('#ttl').style.color=g.ink;cnt('');
   $('#cf').getContext('2d').clearRect(0,0,9999,9999);
@@ -386,7 +429,7 @@ function go(id){
 /* ================= SWIPE ================= */
 G.swipe={name:'Swipe',ico:'💞',ink:'#d6285f',bg:'linear-gradient(160deg,#ffe0ee,#fff1cc)',
 start(S,fin,cnt){
-  const ids=['matcha','chips','candle','tteok','sun','cold','pet2','tumbler'];
+  const ids=gameDeck(['matcha','chips','candle','tteok','sun','cold','pet2','tumbler']);
   let i=0,busy=false,raf=0,alive=true,px=0,py=0,drag=null,fr,bk;const liked=[],pass=[];
   S.innerHTML='<div class="deck"></div><div class="rbs"><button class="rb no" aria-label="Pass">✕</button><button class="rb yes" aria-label="Love">♥</button></div>';
   const deck=$('.deck',S);cnt('1/'+ids.length);
@@ -395,7 +438,7 @@ start(S,fin,cnt){
   const put=()=>{fr.style.transform=`translate3d(${px}px,${py}px,0) rotate(${px/18}deg)`;
     $('.stamp.l',fr).style.opacity=clamp(px/90,0,1);$('.stamp.n',fr).style.opacity=clamp(-px/90,0,1);
     if(bk){bk.style.transition='none';bk.style.transform=`scale(${.93+.07*clamp(Math.abs(px)/160,0,1)}) translateY(${16-16*clamp(Math.abs(px)/160,0,1)}px)`}};
-  fr=mk(0);bk=mk(1);bk.classList.add('back');deck.append(bk,fr);
+  fr=mk(0);bk=mk(1);if(bk)bk.classList.add('back');deck.append(...[bk,fr].filter(Boolean));
   const advance=()=>{fr.remove();i++;px=py=0;busy=false;
     if(i>=ids.length){fin(summary());return}
     cnt((i+1)+'/'+ids.length);fr=bk;fr.classList.remove('back');fr.style.transition='transform .4s cubic-bezier(.34,1.56,.64,1)';fr.style.transform='none';
@@ -433,7 +476,7 @@ start(S,fin,cnt){
 /* ================= PRICE GUESS ================= */
 G.price={name:'Price guess',ico:'💰',ink:'#0a8a5a',bg:'linear-gradient(160deg,#d9f8e8,#fff4c2)',
 start(S,fin,cnt){
-  const ids=['tumbler','chips','sun','candle','kimchi'];let i=0,alive=true,raf=0;const log=[];
+  const ids=gameDeck(['tumbler','chips','sun','candle','kimchi']);let i=0,alive=true,raf=0;const log=[];
   function round(){const p=P[ids[i]];cnt((i+1)+'/'+ids.length);
     S.innerHTML=`<div class="pg"><div class="pgart">${sv(p,128)}</div><b class="pgn">${p.n}</b><div class="gv" id="gv">${won(10000)}</div><input type="range" id="rg" min="1000" max="30000" step="500" value="10000" aria-label="Price guess"><div class="rl"><span>${won(1000)}</span><span>${won(30000)}</span></div><div class="rv" id="rv"></div><div id="act"><button class="cta" id="lock">Lock in</button></div></div>`;
     enter();const rg=$('#rg'),gv=$('#gv');
@@ -462,7 +505,7 @@ start(S,fin,cnt){
 /* ================= BUDGET ================= */
 G.basket={name:'Budget',ico:'🧺',ink:'#c2410c',bg:'linear-gradient(160deg,#ffe7d6,#ffe0ee)',
 start(S,fin,cnt){
-  const ids=['chips','ramen','seaweed','matcha','hand','sheet','plant','towel','sun','candle','pet1','spark'],BUD=30000;
+  const ids=gameDeck(['chips','ramen','seaweed','matcha','hand','sheet','plant','towel','sun','candle','pet1','spark']),BUD=30000;
   const sel=new Set();let alive=true;const t0=performance.now();
   S.innerHTML=`<div class="mt"><b id="sum">${won(0)}</b><span id="left">${won(BUD)} left</span></div><div class="meter" id="mt"><div class="mf" id="mf"></div></div>
   <div class="grid3">${ids.map(id=>{const p=P[id];return`<button class="bt" aria-pressed="false" data-id="${id}">${sv(p,'full')}<span class="bn">${p.s||p.n}</span><span class="bp">${won(p.pr)}</span><i class="ck">${CHECK}</i></button>`}).join('')}</div>
@@ -484,17 +527,18 @@ start(S,fin,cnt){
 /* ================= BRACKET ================= */
 G.bracket={name:'Bracket',ico:'🏆',ink:'#0a6fb8',bg:'linear-gradient(160deg,#d9f1ff,#e3ffe9)',
 start(S,fin,cnt){
-  const start=['matcha','ramen','candle','sun','pet2','choco','tumbler','plant'],NAMES=['Quarter','Semi','Final'];
+  const available=gameDeck(['matcha','ramen','candle','sun','pet2','choco','tumbler','plant']);
+  const start=available.slice(0,2**Math.floor(Math.log2(available.length))),total=start.length-1,NAMES=start.length===4?['Semi','Final']:start.length===2?['Final']:['Quarter','Semi','Final'];
   let rounds=[start.slice()],r=0,m=0,step=0,alive=true,lock=false;const nxt=[],semis=[],qlose=[];let champ,finalist;
-  function show(){const cr=rounds[r],a=P[cr[m*2]],b=P[cr[m*2+1]];lock=false;cnt((step+1)+'/7');
+  function show(){const cr=rounds[r],a=P[cr[m*2]],b=P[cr[m*2+1]];lock=false;cnt((step+1)+'/'+total);
     const side=p=>`<button class="dl" data-id="${p.id}">${sv(p,'full')}<b class="dn">${p.s||p.n}</b><span class="sp">${won(p.pr)}</span></button>`;
-    S.innerHTML=`<div class="rnd">${NAMES[r]}</div><div class="duel">${side(a)}${side(b)}<i class="vs">VS</i></div><div class="dots">${Array.from({length:7},(_,k)=>`<i class="${k<step?'on':''}"></i>`).join('')}</div>`;
+    S.innerHTML=`<div class="rnd">${NAMES[r]}</div><div class="duel">${side(a)}${side(b)}<i class="vs">VS</i></div><div class="dots">${Array.from({length:total},(_,k)=>`<i class="${k<step?'on':''}"></i>`).join('')}</div>`;
     enter();$$('.dl',S).forEach(bn=>bn.onclick=()=>choose(bn))}
   function choose(bn){if(lock)return;lock=true;const cr=rounds[r],w=bn.dataset.id,l=cr[m*2]===w?cr[m*2+1]:cr[m*2];if(P[w].item&&P[l].item)postEvent({game:'bracket',pair:{winner:P[w].item.id,loser:P[l].item.id}});
     $$('.dl',S).forEach(x=>x.classList.add(x===bn?'win':'lose'));pop(bn,1.1);
-    setTimeout(()=>{if(!alive)return;nxt.push(w);if(r===0)qlose.push(l);if(r===1)semis.push(l);if(r===2){champ=w;finalist=l}
+    setTimeout(()=>{if(!alive)return;nxt.push(w);if(r===0)qlose.push(l);if(r===1)semis.push(l);if(cr.length===2){champ=w;finalist=l}
       m++;step++;if(m*2>=cr.length){r++;rounds[r]=nxt.slice();nxt.length=0;m=0}
-      if(r===3)finish();else show()},RM?0:420)}
+      if(rounds[r].length===1)finish();else show()},RM?0:420)}
   function finish(){const w={},ex=[],add=(id,v)=>P[id].tags.forEach(t=>w[t]=(w[t]||0)+v);
     add(champ,3);add(finalist,1.5);semis.forEach(id=>add(id,.8));qlose.forEach(id=>add(id,-.3));
     if(P[champ].rare||P[champ].tags.includes('trendy'))ex.push('Novelty seeker');
@@ -506,7 +550,8 @@ start(S,fin,cnt){
 /* ================= RAPID FIRE ================= */
 G.rapid={name:'Rapid fire',ico:'⚡',ink:'#b45309',bg:'linear-gradient(160deg,#fff1b8,#ffe0cc)',
 start(S,fin,cnt){
-  const ids=['snack-2','beauty-1','snack-7','home-4','drink-7','kitchen-8','snack-3','beauty-6','drink-6','home-2'];
+  const ids=gameDeck(['snack-2','beauty-1','snack-7','home-4','drink-7','kitchen-8','snack-3','beauty-6','drink-6','home-2'].filter(id=>CATALOG.get(id)));
+  if(!ids.length)ids.push(...Object.keys(P).slice(0,10));
   ids.forEach(id=>{const item=CATALOG.get(id);if(item)P[id]={id,item,n:item.name,s:item.name,pr:item.price,cat:item.category,tags:item.tags};});
   let i=0,t0=0,tm=0,alive=true,busy=false;const log=[];
   function show(){const p=P[ids[i]];cnt((i+1)+'/'+ids.length);busy=false;
