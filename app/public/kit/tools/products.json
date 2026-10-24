@@ -365,7 +365,7 @@
             "King size",
             "King deluxe"
           ],
-          "because": "King size · from your Mar bed order",
+          "because": "King size · from your bed sheet cover order (12 Mar)",
           "highlight_id": "net-king",
           "variant": "columns"
         }
@@ -460,7 +460,7 @@
           "reasons": [
             "King size for your bed"
           ],
-          "because": "From your Mar bed purchase",
+          "because": "From your bed sheet cover order (12 Mar)",
           "badges": [
             "King size"
           ],
@@ -586,7 +586,7 @@
             "Current king canopy",
             "Deluxe king canopy"
           ],
-          "because": "From your Mar bed purchase",
+          "because": "From your bed sheet cover order (12 Mar)",
           "variant": "toggle"
         }
       ]

@@ -8916,5 +8916,52 @@
     "feature_version": "features-v1",
     "price_band": "mid",
     "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 220\" role=\"img\" aria-label=\"Kovea Folding Back Support Chair\"><defs><linearGradient id=\"bg\" x2=\"1\" y2=\"1\"><stop stop-color=\"#fafbfc\"/><stop offset=\"1\" stop-color=\"#ffb8cd\" stop-opacity=\".15\"/></linearGradient></defs><rect width=\"200\" height=\"220\" fill=\"url(#bg)\"/><ellipse cx=\"100\" cy=\"181\" rx=\"65\" ry=\"9\" fill=\"#243342\" opacity=\".08\"/><path d=\"M47 45h106l-9 70H56zM52 119h96v17H52z\" fill=\"#ffb8cd\" stroke=\"#35404b\" stroke-width=\"2\" stroke-linejoin=\"round\"/><path d=\"M54 78l94 101m0-101L54 179M50 109h102\" stroke=\"#56636d\" stroke-width=\"6\" fill=\"none\"/><circle cx=\"88\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><circle cx=\"111\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><path d=\"M92 116q8 8 16 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\"/></svg>"
+  },
+  {
+    "id": "bed-sheet-king",
+    "name": "King-size fitted bed sheet cover",
+    "brand": "Everyday",
+    "price": 39900,
+    "category": "bedding",
+    "tags": [
+      "king",
+      "bed-size",
+      "history"
+    ],
+    "img": "/img/products/bed-sheet-king.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Fitted_sheet.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"King-size fitted bed sheet cover\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>",
+    "currency": "KRW",
+    "traits": [
+      "king",
+      "bed-size"
+    ],
+    "use_case": [
+      "sleep"
+    ],
+    "problem_keywords": [
+      "sleep",
+      "bedroom",
+      "bed sheet",
+      "침대",
+      "침구",
+      "시트"
+    ],
+    "rating": 4.7,
+    "reviews": 1284,
+    "rocket": true,
+    "data_origin": "demo-fixture",
+    "price_source": "fixed-demo",
+    "rating_source": "synthetic-demo",
+    "reviews_source": "synthetic-demo",
+    "delivery_source": "synthetic-demo",
+    "image_kind": "representative",
+    "license": "CC BY 2.0",
+    "feature_version": "features-v1",
+    "price_band": "mid",
+    "image_source": "https://commons.wikimedia.org/wiki/File:Fitted_sheet.jpg",
+    "image_artist": "The Sleep Judge",
+    "image_license_url": "https://creativecommons.org/licenses/by/2.0/",
+    "image_note": "Representative product-type photograph (cropped); brand, size and price are demo fixtures."
   }
 ]

@@ -10,14 +10,56 @@
     const el = E('section','kq-root');
     el.append(E('div','kq-eyebrow',hint), E('h2','kq-title',a.question));
     const body = E('div','kq-body'); el.append(body);
-    const note = E('p','kq-because');
     const has = a.preselect !== undefined && a.preselect !== null;
-    if (has && a.because) { note.textContent = '✦ because ' + a.because; el.append(note); }
     const status = E('div','kq-status'); status.setAttribute('aria-live','polite'); el.append(status);
     let locked = false, sent = false;
     const freeze = () => { locked = true; el.classList.add('kit-frozen','kq-frozen'); el.querySelectorAll('button,input,select').forEach(n=>n.disabled=true); el.querySelectorAll('[draggable]').forEach(n=>n.draggable=false); };
     el.freeze = freeze;
-    return {el,body,status,ctx,a,has, get locked(){return locked;}, changed(v){if(!same(v,a.preselect)) note.remove();}, finish(v,label){if(locked || sent)return; sent=true; status.textContent=label; freeze(); ctx.answer(v,label);}};
+    const s = {el,body,status,ctx,a,has, get locked(){return locked;}, changed(v){if(!same(v,a.preselect)) s.inferred?.clear();}, finish(v,label){if(locked || sent)return; sent=true; status.textContent=label; freeze(); ctx.answer(v,label);}};
+    if (has && a.because) { s.inferred = inference(s); el.insertBefore(s.inferred.line, status); }
+    return s;
+  }
+  /* "✦ inferred" default: line + per-option badge both open a small "Why X?" sheet (Change / Don't use this). */
+  const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const normBecause = t => String(t || '').replace(/ · demo order$/i,'').trim().toLowerCase();
+  function inference(s) {
+    const {a,ctx} = s, mem = ctx.memory, opt = (a.options||[]).find(o => same(val(o),a.preselect));
+    const label = opt?.label ?? [a.preselect].flat().join(', ');
+    const key = Object.keys(mem?.facts || {}).find(k => normBecause(mem.explain?.(k)?.because) === normBecause(a.because)) || 'preselect';
+    const pid = mem?.explain?.(key)?.source_product_id, product = pid && ctx.product(pid);
+    const order = pid && mem?.pastOrders?.find(o => o.items?.some(i => i.id === pid));
+    const when = order ? (d => `${d.getUTCDate()} ${MON[d.getUTCMonth()]}`)(new Date(order.date)) : '';
+    const why = normBecause(a.because).replace(/^from /,''), from = 'from ' + a.because.replace(/ · demo order$/i,'').replace(/^from /i,'').replace(/^./,c=>c.toLowerCase());
+    const line = button('', () => open(), 'kq-inferred-line'); line.type = 'button';
+    line.innerHTML = '<span>✦ <strong></strong> · <span class="kq-from"></span></span><span aria-hidden="true">›</span>';
+    line.querySelector('strong').textContent = label; line.querySelector('.kq-from').textContent = from;
+    line.setAttribute('aria-haspopup','dialog'); line.setAttribute('aria-label',`Why ${label}? ${from}`);
+    const dialog = E('dialog','kx-source-sheet kit kq-inferred-sheet'); dialog.setAttribute('aria-label',`Why ${label}?`);
+    dialog.innerHTML = '<div class="kx-sheet-grip"></div><div class="kx-sheet-head"><h3></h3><button type="button" class="kx-close" aria-label="Close">×</button></div><p class="kx-sheet-fact"></p><div class="kx-sheet-source"><span class="kq-sheet-photo"></span><div><strong></strong><small></small><small class="kq-sheet-order"></small></div></div><div class="kx-sheet-actions"><button type="button" data-ctx="change">Change</button><button type="button" data-ctx="forget">Don\u2019t use this</button></div>';
+    dialog.querySelector('h3').textContent = `Why ${label}?`;
+    dialog.querySelector('.kx-sheet-fact').textContent = product ? `You ordered “${product.name}”${when ? ' on ' + when : ''}.` : a.because.replace(/ · demo order$/i,'') + '.';
+    if (product) dialog.querySelector('.kq-sheet-photo').innerHTML = ctx.img(product); else dialog.querySelector('.kq-sheet-photo').remove();
+    dialog.querySelector('strong').textContent = product?.name || 'This conversation';
+    dialog.querySelectorAll('small')[0].textContent = a.because.replace(/ · demo order$/i,'');
+    dialog.querySelector('.kq-sheet-order').textContent = order ? order.source : 'Demo order history';
+    const open = () => { if (!s.locked) dialog.showModal(); };
+    dialog.querySelector('.kx-close').onclick = () => dialog.close();
+    dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
+    dialog.querySelectorAll('[data-ctx]').forEach(b => b.onclick = () => { dialog.close(); s.finish({action:b.dataset.ctx,key},`${b.dataset.ctx === 'forget' ? "Don't use" : 'Change'} ${label}`); });
+    s.el.append(dialog);
+    const badges = [];
+    return {line, open, label, key,
+      badge(node) {
+        const b = E('span','kq-inferred-badge','✦ inferred'); b.setAttribute('role','button'); b.tabIndex = 0; b.setAttribute('aria-label',`Why ${label}? ${from}`);
+        const go = e => { e.stopPropagation(); e.preventDefault(); open(); };
+        b.addEventListener('click',go); b.addEventListener('keydown',e => { if (e.key === 'Enter' || e.key === ' ') go(e); });
+        let t, long = false; node.addEventListener('pointerdown',() => { long = false; clearTimeout(t); t = setTimeout(() => { long = true; open(); }, 550); });
+        ['pointerup','pointerleave','pointercancel'].forEach(n => node.addEventListener(n,() => clearTimeout(t)));
+        node.addEventListener('click',e => { if (long) { e.stopImmediatePropagation(); e.preventDefault(); long = false; } }, true);
+        node.addEventListener('contextmenu',e => e.preventDefault());
+        node.append(b); badges.push(b);
+      },
+      clear() { line.remove(); badges.forEach(b => b.remove()); }};
   }
   function button(text, fn, cls='') {const b=E('button','kq-button '+cls,text); b.type='button'; b.onclick=fn; return b;}
   function confirm(s, fn, label='Done') {const b=button(label,fn,'kq-confirm'); s.el.insertBefore(b,s.status); return b;}
@@ -40,6 +82,7 @@
       if(style==='ruler') b.prepend(E('span','kq-tick',String(i+1).padStart(2,'0')));
       box.append(b); nodes.push(b);
     }); draw();
+    if(s.inferred){const k=os.findIndex(o=>same(val(o),a.preselect));if(k>=0)s.inferred.badge(nodes[k]);if(style!=='coin'&&style!=='tug'&&k>=0)confirm(s,()=>pick(k),'Continue · '+os[k].label);}
     if(style==='versus')box.append(E('span','kq-vs','VS'));
     if(style==='split')nodes.forEach((b,i)=>b.prepend(E('span','kq-letter',i?'B':'A')));
     if(style==='stack')nodes.forEach((b,i)=>b.prepend(E('span','kq-letter',i?'02':'01')));
@@ -138,6 +181,10 @@
   .kq-option{display:flex;align-items:center;gap:12px;text-align:left;min-width:0}.kq-label{font-size:15px;font-weight:650;line-height:1.25;overflow-wrap:anywhere}.kq-description{font-size:12px;color:var(--sub);font-weight:400;line-height:1.4}.kq-option .kq-description{grid-column:1/-1}
   .kq-emoji{font-size:30px;line-height:1.2;flex-shrink:0}.kq-photo{display:block;width:58px;flex-shrink:0}.kq-photo .pimg{width:100%;border-radius:12px}.kq-root [data-picked]{outline:2px solid var(--acc);outline-offset:1px;background:color-mix(in srgb,var(--acc) 9%,var(--card))}
   .kq-root .kq-confirm{width:100%;margin-top:20px;background:var(--ink);color:var(--card);font-weight:700;min-height:52px;border-radius:16px}.kq-confirm:disabled{opacity:.4}.kq-because{font-size:12px;line-height:1.5;color:var(--sub);margin:18px 2px 0;padding-top:12px;border-top:1px solid var(--soft)}.kq-status{font-size:12px;font-weight:650;color:var(--sub);margin-top:12px}.kq-status:empty{display:none}.kq-hint{font-size:11px;color:var(--sub);text-align:center;margin:14px 0 4px;line-height:1.5}
+  .kq-inferred-line{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;margin-top:16px;padding:8px 12px;border-radius:12px;background:var(--soft);font-size:12px;line-height:1.4;color:var(--sub);text-align:left}.kq-inferred-line>span:first-child{min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.kq-inferred-line strong{color:var(--ink);font-weight:650}
+  .kq-inferred-badge{position:absolute;top:6px;right:6px;z-index:2;padding:2px 7px;border-radius:20px;background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc);font-size:9px;font-weight:750;line-height:1.5;white-space:nowrap;cursor:help}.kq-inferred-badge:before{content:'';position:absolute;inset:-14px -8px}.kq-inferred-badge:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  .kq-sheet-photo{flex:none;width:76px}.kq-sheet-photo .pimg{width:76px;height:76px}.kq-inferred-sheet .kx-sheet-source{align-items:center}
+  .kq-frozen .kq-inferred-badge{pointer-events:none}
   .kq-root.kq-frozen{opacity:1;filter:none}.kq-frozen .kq-button{cursor:default}.kq-frozen [aria-pressed=false]{opacity:.48}
   .kq-chips{display:flex;flex-wrap:wrap;gap:10px}.kq-chips .kq-option{border-radius:50px;padding:12px 18px}.kq-chips .kq-emoji{font-size:21px}.kq-chips .kq-photo{width:32px}.kq-cards,.kq-emoji,.kq-polaroid{grid-template-columns:repeat(2,minmax(0,1fr))}.kq-cards .kq-option,.kq-emoji .kq-option,.kq-polaroid .kq-option{flex-direction:column;justify-content:center;text-align:center;min-height:145px;padding:18px 12px}.kq-cards .kq-emoji,.kq-emoji .kq-emoji{font-size:44px}.kq-cards .kq-photo,.kq-emoji .kq-photo{width:80px}
   .kq-carousel,.kq-ruler{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 4px 14px;gap:14px}.kq-carousel .kq-option{flex:0 0 77%;min-height:220px;flex-direction:column;justify-content:center;text-align:center;scroll-snap-align:center}.kq-carousel .kq-photo{width:140px}.kq-carousel .kq-emoji{font-size:70px}.kq-carousel .kq-label{font-size:21px}.kq-radio .kq-option{display:grid;grid-template-columns:20px 44px 1fr;padding:16px}.kq-radio .kq-photo{width:44px}.kq-radio-dot{width:19px;height:19px;border:1px solid var(--sub);border-radius:50%}.kq-radio [data-picked] .kq-radio-dot{border:5px solid var(--acc)}.kq-polaroid{gap:18px;padding:12px 8px}.kq-polaroid .kq-option{transform:rotate(var(--tilt));background:var(--card);box-shadow:0 5px 15px #0002;border:1px solid var(--soft);border-radius:3px}.kq-polaroid .kq-photo{width:100%}.kq-polaroid .kq-emoji{background:var(--soft);width:100%;padding:20px}

@@ -490,7 +490,7 @@ function qStyle(){
 const ppl=n=>{const xs={1:[50],2:[34,66],4:[16,39,62,85]}[n],sc=n===4?.9:1.05;return `<svg viewBox="0 0 100 58" aria-hidden="true">${xs.map((x,i)=>`<g transform="translate(${x} 54) scale(${sc})"><rect x="-8" y="-24" width="16" height="22" rx="7" fill="${PCOL[i]}" stroke="#111" stroke-width="2.5"/><circle cy="-33" r="10" fill="#ffd9b0" stroke="#111" stroke-width="2.5"/><circle cx="-3.5" cy="-34" r="1.7" fill="#111"/><circle cx="3.5" cy="-34" r="1.7" fill="#111"/><path d="M-3-29Q0-26 3-29" stroke="#111" stroke-width="1.6" fill="none"/></g>`).join('')}</svg>`};
 const PCOL=['#ff6b6b','#5cc8ff','#ffd23f','#7cf29a'];
 function qCrew(){
- return mkQ(1,`<div class="pre">✦ Duo preselected · from your King bed order (Mar)</div><div class="cw">${[['solo',1],['duo',2],['squad',4]].map(([k,n])=>`<button class="opt cr${k==='duo'?' rec':''}" data-a="crew" data-v="${k}" aria-pressed="false">${ppl(n)}<b>${LAB[k]}${k==='duo'?' ✦':''}</b></button>`).join('')}</div>`);
+ return mkQ(1,`<div class="pre">✦ Duo preselected · from your King bed sheet cover order (12 Mar)</div><div class="cw">${[['solo',1],['duo',2],['squad',4]].map(([k,n])=>`<button class="opt cr${k==='duo'?' rec':''}" data-a="crew" data-v="${k}" aria-pressed="false">${ppl(n)}<b>${LAB[k]}${k==='duo'?' ✦':''}</b></button>`).join('')}</div>`);
 }
 const PAL={minimal:['#c9b48a','#8a9a6b','#b86b4b','#4a4a4a','#a7a08f'],retro:['#ff5d9e','#ff9f1c','#2ec4b6','#8e5bd9','#7bd62f']};
 const PRE={minimal:['Sand','Olive','Clay','Stone','Oat'],retro:['Pop','Mango','Teal','Berry','Lime']};
@@ -549,7 +549,7 @@ function makeKit(m,prev,label,v){
 const qtyTxt=it=>it.qty>1?` <small>×${it.qty}</small>`:'';
 function srcLine(){
  const el=document.createElement('div');el.className='srcl';
- const crewTxt=ans.crew==='duo'||!ans.crew?'Duo · from your King bed order (Mar)':LAB[ans.crew]+' · your pick';
+ const crewTxt=ans.crew==='duo'||!ans.crew?'Duo · from your King bed sheet cover order (12 Mar)':LAB[ans.crew]+' · your pick';
  el.innerHTML=`<button class="srcb" type="button" aria-expanded="false">✦ ${SEAS[ans.si].n} · ${LAB[ans.crew||'duo']} · from your past order <span>▾</span></button><div class="srcs" hidden><p>${SEAS[ans.si].n}: from today's date.<br>${crewTxt}. Demo history, not a real account.</p><div class="srcc">${['solo','duo','squad'].map(c=>`<button class="qc${c===(ans.crew||'duo')?' sel':''}" type="button" data-crew="${c}">${LAB[c]}</button>`).join('')}</div></div>`;
  const b=el.querySelector('.srcb'),sh=el.querySelector('.srcs');b.onclick=()=>{sh.hidden=!sh.hidden;b.setAttribute('aria-expanded',String(!sh.hidden))};
  return el;

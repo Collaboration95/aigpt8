@@ -160,7 +160,7 @@
             }
           ],
           "preselect": "king",
-          "because": "your March bed order was King"
+          "because": "From your bed sheet cover order (12 Mar) · demo order"
         },
         {
           "question": "Camping weather?",
@@ -863,7 +863,7 @@
             }
           ],
           "preselect": "king",
-          "because": "your March bed purchase was King"
+          "because": "From your bed sheet cover order (12 Mar) · demo order"
         },
         {
           "question": "Which toothpaste flavour?",

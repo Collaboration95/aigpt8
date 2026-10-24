@@ -29,7 +29,8 @@
               "orbit",
               "ring",
               "scanner",
-              "toasts"
+              "toasts",
+              "trace"
             ],
             "description": "Optional visual style; omit to let the frontend choose."
           },
@@ -55,7 +56,7 @@
         {
           "steps": [
             "Checking past orders",
-            "King bed · Mar demo order",
+            "King · bed sheet cover (12 Mar)",
             "Baby monitor · Aug demo order"
           ],
           "duration": 1100
@@ -145,9 +146,9 @@
           "facts": [
             {
               "key": "bed",
-              "label": "King bed",
-              "because": "From your Mar bed purchase · demo order",
-              "source_product_id": "bed-king"
+              "label": "King",
+              "because": "From your bed sheet cover order (12 Mar) · demo order",
+              "source_product_id": "bed-sheet-king"
             }
           ]
         },
@@ -259,9 +260,9 @@
           "facts": [
             {
               "key": "bed",
-              "label": "King bed",
-              "because": "From your Mar bed purchase · demo order",
-              "source_product_id": "bed-king"
+              "label": "King",
+              "because": "From your bed sheet cover order (12 Mar) · demo order",
+              "source_product_id": "bed-sheet-king"
             },
             {
               "key": "baby",
@@ -304,8 +305,8 @@
             {
               "key": "bed",
               "label": "King",
-              "because": "From your Mar bed purchase · demo order",
-              "source_product_id": "bed-king"
+              "because": "From your bed sheet cover order (12 Mar) · demo order",
+              "source_product_id": "bed-sheet-king"
             }
           ]
         }
@@ -507,7 +508,7 @@
         {
           "title": "Why a King-size net?",
           "points": [
-            "King bed · Mar demo order",
+            "King · bed sheet cover (12 Mar)",
             "Bedroom · curtain demo order",
             "Baby at home · inferred from monitor order"
           ]
