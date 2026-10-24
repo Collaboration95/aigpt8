@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UI kit · Coupang</title>
+<link rel="icon" href="data:,">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#fafafa;color:#19191e;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,select{font:inherit}button,select{min-height:44px;border:1px solid #dfdfe5;border-radius:12px;background:white;color:#222;padding:9px 12px}button{cursor:pointer}button:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #e52528;outline-offset:3px}header{background:white;border-bottom:1px solid #e8e8ed;padding:28px 28px 22px}.heading{display:flex;align-items:center;gap:12px}.mark{background:#e52528;color:white;border-radius:12px;width:40px;height:40px;display:grid;place-items:center;font-size:25px;font-weight:800;flex-shrink:0}.eyebrow{font-size:10px;font-weight:750;letter-spacing:1.6px;color:#8b8b96;text-transform:uppercase;margin-bottom:5px}h1{font-size:clamp(19px,2vw,28px);letter-spacing:-.8px;margin:0;line-height:1.25}.intro{color:#6e6e7a;font-size:14px;line-height:1.6;max-width:600px;margin:16px 0 20px}.controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}.control{display:flex;flex-direction:column;gap:6px;min-width:0}.control span{font-size:11px;font-weight:650;color:#777783}.controls select{width:145px;max-width:100%}#shuffle{background:#e52528;color:white;border-color:#e52528;font-weight:650}.status{font-size:11px;line-height:1.6;color:#8b8b96;margin:14px 0 0;overflow-wrap:anywhere}main{padding:0 28px 30px;max-width:1800px;margin:auto}.tool-section{padding:30px 0;border-bottom:1px solid #e5e5ea;min-width:0}.tool-head{display:flex;gap:14px;align-items:start;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}.tool-copy{min-width:0;flex:1 1 250px}.tool-name{font:650 18px ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere;margin:8px 0}.badge{font-size:10px;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:#a6383b;background:#fff0f0;padding:5px 8px;border-radius:6px;display:inline-block}.tool-description{font-size:13px;color:#73737e;line-height:1.6;margin:0;max-width:650px}.example-select{width:190px}.variants{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,392px),1fr));align-items:start;gap:18px;min-width:0}.variant-card{border:1px solid #e4e4eb;border-radius:16px;background:white;overflow:hidden;min-width:0;max-width:416px}.variant-label{padding:12px 14px;border-bottom:1px solid #efeff3;display:flex;justify-content:space-between;gap:8px;color:#666674;font:11px ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}.variant-label span:last-child{font:10px -apple-system,sans-serif;color:#aaa}.preview{width:100%;overflow:hidden;background:white}.stage{width:390px;min-height:100px;display:flow-root}.answer{border-top:1px solid #efeff3;min-height:38px;padding:10px 13px;color:#90909b;font:10px/1.6 ui-monospace,SFMono-Regular,monospace;overflow-wrap:anywhere}.answer.answered{color:#187854;background:#f1fbf6}.render-error{padding:24px;color:#a5393d;font:12px/1.6 ui-monospace,monospace}.empty{padding:40px 0;color:#777;font-size:14px;line-height:1.6}.stats{margin-top:30px;border:1px solid #e4e4eb;background:white;border-radius:16px;padding:20px;min-width:0}.stats h2{font-size:16px;margin:0 0 8px}.stats p{font-size:12px;line-height:1.6;color:#787883;margin:0 0 14px}pre{margin:0;font:11px/1.7 ui-monospace,SFMono-Regular,monospace;white-space:pre-wrap;overflow-wrap:anywhere;color:#555560;max-height:320px;overflow:auto}footer{font-size:11px;color:#999;padding:22px 0}.tool-section[hidden]{display:none}
+@media(max-width:700px){header{padding:23px 16px 18px}main{padding:0 16px 24px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px}.controls select{width:100%}#shuffle{grid-column:1/-1}.variants{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;padding-bottom:10px;overscroll-behavior-x:contain}.variant-card{flex:0 0 100%;scroll-snap-align:start;width:100%}.tool-head{gap:12px}.tool-copy{flex-basis:100%}.example-select{width:100%}.tool-head>.control{width:100%}.tool-section{padding:26px 0}.intro{font-size:13px}.stats{padding:16px}}
+</style>
+<script>window.galleryMeta={};window.galleryFiles={};window.galleryFailed=path=>{window.galleryFiles[path]=false};</script>
+<script defer src="/catalog.js" onerror="galleryFailed(this.src)"></script>
+<script defer src="/memory.js" onerror="galleryFailed(this.src)"></script>
+<script defer src="/orders.js" onerror="galleryFailed(this.src)"></script>
+<script defer src="/ai.js" onerror="galleryFailed(this.src)"></script>
+<script defer src="/kit/core.js" onerror="galleryFailed(this.src)"></script>
+<script>
+// Capture descriptions without changing the core contract.
+document.addEventListener('DOMContentLoaded',()=>boot());
+</script>
+</head>
+<body>
+<header>
+<div class="heading"><div class="mark" aria-hidden="true">c</div><div><div class="eyebrow">Coupang · Generative UI</div><h1 id="title">UI kit · 0 tools · 0 variants</h1></div></div>
+<p class="intro">Every primitive is an LLM tool. Explore every visual variant, switch the context, and try a tap.</p>
+<div class="controls">
+<label class="control"><span>Theme</span><select id="theme"><option value="light">Light</option><option value="mint">Mint</option><option value="grape">Grape</option><option value="sun">Sun</option><option value="ocean">Ocean</option><option value="rose">Rose</option><option value="ink">Ink</option></select></label>
+<label class="control"><span>Tool group</span><select id="group"><option value="all">All groups</option><option value="questions">Questions</option><option value="products">Products</option><option value="commerce">Commerce</option><option value="context">Context</option></select></label>
+<button id="shuffle" type="button">↻ Shuffle</button>
+</div>
+<p id="status" class="status" role="status">Loading the tool library…</p>
+</header>
+<main><div id="gallery"></div><section class="stats"><h2>Bandit stats</h2><p>Engagement in this browser. Tap a variant to see what it learns.</p><pre id="stats" aria-live="polite">{}</pre></section><footer>Built for a conversation. Rendered for your phone.</footer></main>
+<script>
+function boot(){
+const groups=['questions','products','commerce','context'];
+const definitions=new Map(), examples=new Map(), orders=new Map();
+const loaded=new Set(), pending=new Set();
+const $=id=>document.getElementById(id);
+let signature='',lastRenderedTheme='';
+const node=(tag,cls,text)=>{const el=document.createElement(tag);if(cls)el.className=cls;if(text!==undefined)el.textContent=text;return el};
+const observer=new ResizeObserver(entries=>{for(const {target,contentRect} of entries){const stage=target.firstElementChild;if(stage)stage.style.zoom=String(Math.min(1,contentRect.width/390));}});
+function refreshStats(){try{$('stats').textContent=JSON.stringify(window.KIT?.stats()||{},null,2)}catch{$('stats').textContent='Stats are unavailable in this browser.'}}
+function argsFor(name){const all=definitions.get(name)?.['x-examples']||[];return all[examples.get(name)||0]||{}}
+function draw(){
+observer.disconnect();const root=$('gallery');root.replaceChildren();
+const names=window.KIT?.tools()||[];
+$('title').textContent=`UI kit · ${names.length} tools · ${names.reduce((n,name)=>n+KIT.variants(name).length,0)} variants`;
+for(const name of names){
+const meta=galleryMeta[name]||{},def=definitions.get(name)||{};
+const section=node('section','tool-section');section.dataset.group=meta.group||'other';section.dataset.tool=name;
+const head=node('div','tool-head'),copy=node('div','tool-copy');
+copy.append(node('span','badge',meta.group||'other'),node('h2','tool-name',name),node('p','tool-description',def.description||meta.description||'Tool definition is loading.'));
+head.append(copy);
+const all=def['x-examples']||[],label=node('label','control');label.append(node('span','','Example arguments'));
+const select=node('select','example-select');select.setAttribute('aria-label',`${name} example`);
+if(!all.length){select.append(new Option('Waiting for examples','0'));select.disabled=true}else all.forEach((_,i)=>select.append(new Option(`Example ${i+1} of ${all.length}`,i)));
+select.value=String(examples.get(name)||0);select.onchange=()=>{examples.set(name,Number(select.value));draw()};label.append(select);head.append(label);section.append(head);
+const variants=node('div','variants');variants.setAttribute('aria-label',`${name} variants`);
+const ids=orders.get(name)||KIT.variants(name);
+for(const id of ids){
+const card=node('article','variant-card'),caption=node('div','variant-label');caption.append(node('span','',id),node('span','','390 px'));
+const preview=node('div','preview'),stage=node('div','stage'),log=node('div','answer','Tap a control to see its answer');log.setAttribute('role','status');
+try{const args=JSON.parse(JSON.stringify(argsFor(name)));args.theme=$('theme').value;args.variant=id;
+const rendered=KIT.render(name,args,{variant:id,theme:args.theme,onAnswer(value,label){let text;try{text=JSON.stringify(value)}catch{text=String(value)}log.textContent=`${label} · value: ${text}`;log.classList.add('answered');refreshStats()}});stage.append(rendered);
+}catch(error){stage.append(node('div','render-error',`Preview unavailable: ${error.message}`));card.dataset.renderError='true'}
+preview.append(stage);card.append(caption,preview,log);variants.append(card);observer.observe(preview);
+}
+section.append(variants);root.append(section);
+}
+if(!names.length)root.append(node('p','empty','The tool groups are still arriving. This gallery will update automatically.'));
+filter();refreshStats();lastRenderedTheme=$('theme').value;
+}
+function filter(){for(const section of $('gallery').children)section.hidden=$('group').value!=='all'&&section.dataset.group!==$('group').value}
+function update(){const next=JSON.stringify([window.KIT?.tools().map(name=>[name,KIT.variants(name),galleryMeta[name]]),[...definitions]]);if(next!==signature||lastRenderedTheme!==$('theme').value){signature=next;draw()}
+const missing=groups.filter(g=>!loaded.has(g));$('status').textContent=missing.length?`Waiting for ${missing.join(', ')} · updates automatically`:'All four groups loaded · swipe on mobile to compare variants';}
+async function sync(){
+if(!window.KIT){$('status').textContent='Kit core is unavailable. Reload once the core file is ready.';return}
+if(!KIT.galleryCaptured){const register=KIT.register;KIT.register=function(name,spec){galleryMeta[name]={group:spec.group,description:spec.description};register.call(KIT,name,spec)};KIT.galleryCaptured=true}
+await Promise.allSettled(groups.map(async group=>{
+if(!loaded.has(group)&&!pending.has(group)){pending.add(group);await new Promise(resolve=>{const script=document.createElement('script');script.src=`/kit/${group}.js`;script.onload=()=>{loaded.add(group);pending.delete(group);resolve()};script.onerror=()=>{pending.delete(group);script.remove();resolve()};document.head.append(script)})}
+try{const response=await fetch(`/kit/tools/${group}.json`,{cache:'no-store'});if(response.ok){const data=await response.json();if(Array.isArray(data))for(const tool of data){const def=tool.function;if(def?.name)definitions.set(def.name,def)}}}catch{/* Builders may still be writing JSON. Keep the last valid definitions. */}
+}));update();
+}
+$('group').onchange=filter;$('theme').onchange=draw;
+$('shuffle').onclick=()=>{for(const name of window.KIT?.tools()||[]){const all=definitions.get(name)?.['x-examples']||[];examples.set(name,Math.floor(Math.random()*Math.max(1,all.length)));const ids=KIT.variants(name).slice();for(let i=ids.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ids[i],ids[j]]=[ids[j],ids[i]]}orders.set(name,ids)}draw();$('status').textContent='Shuffled · random examples and variant order'};
+window.addEventListener('storage',refreshStats);sync();setInterval(sync,5000);
+}
+</script>
+</body>
+</html>

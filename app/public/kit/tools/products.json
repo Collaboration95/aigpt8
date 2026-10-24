@@ -1,0 +1,556 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "show_usual",
+      "description": "Use when the shopper wants to reorder a known previous purchase. Show its actual order provenance in because; do not invent purchase history.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 30,
+            "description": "Short visible heading."
+          },
+          "product_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Exact ID from the product catalogue."
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^\\s*\\S+(?:\\s+\\S+){0,5}\\s*$",
+              "description": "At most six words. Supported reason, aligned with product_ids."
+            },
+            "maxItems": 8
+          },
+          "badges": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            },
+            "maxItems": 8,
+            "description": "Optional short supported labels aligned with product_ids. Never invent safety claims."
+          },
+          "highlight_id": {
+            "type": "string",
+            "description": "ID in product_ids. For alternatives, the current product used for price deltas."
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Actual supplied memory provenance. Omit when no memory supports it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "hero",
+              "receipt",
+              "compact",
+              "timeline",
+              "gradient",
+              "refill"
+            ]
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "product_ids"
+        ]
+      },
+      "x-examples": [
+        {
+          "title": "Your usual toothpaste",
+          "product_ids": [
+            "tp-median"
+          ],
+          "reasons": [
+            "Your saved mint favourite"
+          ],
+          "because": "From your toothpaste order 6 weeks ago",
+          "variant": "compact"
+        },
+        {
+          "title": "Buy it again",
+          "product_ids": [
+            "tp-median"
+          ],
+          "badges": [
+            "Your usual"
+          ],
+          "because": "Demo order · 13 Sep 2026",
+          "variant": "receipt"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "show_picks",
+      "description": "Use when the shopper is browsing or has a broad intent and needs 2–8 relevant recommendations to choose from.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 30,
+            "description": "Short visible heading."
+          },
+          "product_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Exact ID from the product catalogue."
+            },
+            "uniqueItems": true,
+            "minItems": 2,
+            "maxItems": 8
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^\\s*\\S+(?:\\s+\\S+){0,5}\\s*$",
+              "description": "At most six words. Supported reason, aligned with product_ids."
+            },
+            "maxItems": 8
+          },
+          "badges": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            },
+            "maxItems": 8,
+            "description": "Optional short supported labels aligned with product_ids. Never invent safety claims."
+          },
+          "highlight_id": {
+            "type": "string",
+            "description": "ID in product_ids. For alternatives, the current product used for price deltas."
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Actual supplied memory provenance. Omit when no memory supports it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "grid",
+              "carousel",
+              "magazine",
+              "ranked",
+              "stories"
+            ]
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "product_ids"
+        ]
+      },
+      "x-examples": [
+        {
+          "title": "Snack break",
+          "product_ids": [
+            "snack-1",
+            "snack-2",
+            "snack-4",
+            "snack-7"
+          ],
+          "reasons": [
+            "Chocolate cake treat",
+            "Almond biscuit sticks",
+            "Chocolate filled biscuits",
+            "A savoury option"
+          ],
+          "highlight_id": "snack-2",
+          "variant": "grid"
+        },
+        {
+          "title": "Your daily care edit",
+          "product_ids": [
+            "beauty-1",
+            "beauty-3",
+            "beauty-7"
+          ],
+          "reasons": [
+            "Moisturising cream",
+            "Classic cream option",
+            "Hand cream option"
+          ],
+          "variant": "magazine"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "compare_products",
+      "description": "Use when the shopper is deciding between 2–3 known products and needs catalogue feature chips and total prices side by side. Do not imply price per unit or unverified performance.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 30,
+            "description": "Short visible heading."
+          },
+          "product_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Exact ID from the product catalogue."
+            },
+            "uniqueItems": true,
+            "minItems": 2,
+            "maxItems": 3
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^\\s*\\S+(?:\\s+\\S+){0,5}\\s*$",
+              "description": "At most six words. Supported reason, aligned with product_ids."
+            },
+            "maxItems": 8
+          },
+          "badges": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            },
+            "maxItems": 8,
+            "description": "Optional short supported labels aligned with product_ids. Never invent safety claims."
+          },
+          "highlight_id": {
+            "type": "string",
+            "description": "ID in product_ids. For alternatives, the current product used for price deltas."
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Actual supplied memory provenance. Omit when no memory supports it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "columns",
+              "table",
+              "duel",
+              "stacked",
+              "price_bars"
+            ]
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "product_ids"
+        ]
+      },
+      "x-examples": [
+        {
+          "title": "Find your toothpaste",
+          "product_ids": [
+            "tp-median",
+            "tp-sensitive",
+            "tp-herbal"
+          ],
+          "reasons": [
+            "Your usual multipack",
+            "Sensitive option",
+            "Herbal option"
+          ],
+          "highlight_id": "tp-median",
+          "variant": "table"
+        },
+        {
+          "title": "Which canopy size?",
+          "product_ids": [
+            "net-queen",
+            "net-king",
+            "net-premium"
+          ],
+          "reasons": [
+            "Queen size",
+            "King size",
+            "King deluxe"
+          ],
+          "because": "King size · from your Mar bed order",
+          "highlight_id": "net-king",
+          "variant": "columns"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "product_spotlight",
+      "description": "Use when one product fits the shopper’s intent and you should explain why before they choose it.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 30,
+            "description": "Short visible heading."
+          },
+          "product_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Exact ID from the product catalogue."
+            },
+            "uniqueItems": true,
+            "minItems": 1,
+            "maxItems": 1
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^\\s*\\S+(?:\\s+\\S+){0,5}\\s*$",
+              "description": "At most six words. Supported reason, aligned with product_ids."
+            },
+            "maxItems": 8
+          },
+          "badges": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            },
+            "maxItems": 8,
+            "description": "Optional short supported labels aligned with product_ids. Never invent safety claims."
+          },
+          "highlight_id": {
+            "type": "string",
+            "description": "ID in product_ids. For alternatives, the current product used for price deltas."
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Actual supplied memory provenance. Omit when no memory supports it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "hero",
+              "callouts",
+              "editorial",
+              "personal",
+              "split"
+            ]
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "product_ids"
+        ]
+      },
+      "x-examples": [
+        {
+          "title": "A fit for your king bed",
+          "product_ids": [
+            "net-king"
+          ],
+          "reasons": [
+            "King size for your bed"
+          ],
+          "because": "From your Mar bed purchase",
+          "badges": [
+            "King size"
+          ],
+          "variant": "callouts"
+        },
+        {
+          "title": "A little daily care",
+          "product_ids": [
+            "beauty-1"
+          ],
+          "reasons": [
+            "Moisturising cream for your routine"
+          ],
+          "variant": "personal"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "show_alternatives",
+      "description": "Use when the shopper wants cheaper, premium, or different options to the current product. Include the current item in product_ids and identify it with highlight_id; deltas use catalogue total prices.",
+      "parameters": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 30,
+            "description": "Short visible heading."
+          },
+          "product_ids": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "Exact ID from the product catalogue."
+            },
+            "uniqueItems": true,
+            "minItems": 2,
+            "maxItems": 3
+          },
+          "reasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 80,
+              "pattern": "^\\s*\\S+(?:\\s+\\S+){0,5}\\s*$",
+              "description": "At most six words. Supported reason, aligned with product_ids."
+            },
+            "maxItems": 8
+          },
+          "badges": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 24
+            },
+            "maxItems": 8,
+            "description": "Optional short supported labels aligned with product_ids. Never invent safety claims."
+          },
+          "highlight_id": {
+            "type": "string",
+            "description": "ID in product_ids. For alternatives, the current product used for price deltas."
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Actual supplied memory provenance. Omit when no memory supports it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "ladder",
+              "swap",
+              "toggle",
+              "tiers",
+              "rail"
+            ]
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "title",
+          "product_ids",
+          "highlight_id"
+        ]
+      },
+      "x-examples": [
+        {
+          "title": "Try a lower total",
+          "product_ids": [
+            "tp-median",
+            "tp-mint",
+            "tp-herbal"
+          ],
+          "highlight_id": "tp-median",
+          "reasons": [
+            "Your current multipack",
+            "Lower total single item",
+            "Herbal single item"
+          ],
+          "variant": "ladder"
+        },
+        {
+          "title": "Other king size options",
+          "product_ids": [
+            "net-king",
+            "net-premium"
+          ],
+          "highlight_id": "net-king",
+          "reasons": [
+            "Current king canopy",
+            "Deluxe king canopy"
+          ],
+          "because": "From your Mar bed purchase",
+          "variant": "toggle"
+        }
+      ]
+    }
+  }
+]
