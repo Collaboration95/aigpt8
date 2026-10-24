@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {createPreferenceEngine} from './model.mjs';
+import {createPreferenceEngine,GURU} from './model.mjs';
 const catalogue=JSON.parse(fs.readFileSync(new URL('../public/data/products.json',import.meta.url)));
 const engine=createPreferenceEngine(catalogue);
 const event=(s,id,label)=>({sid:s.sid,run_id:s.run_id,event_id:id,game:'rapid',item_id:'snack-2',label});
@@ -54,8 +54,15 @@ test('snack reactions move related items more than unrelated home history',()=>{
  const e=createPreferenceEngine(catalogue),s=e.reset('locality');
  const r=e.event(event(s,'snack-want',1));
  const snack=r.after.predictions.find(p=>p.item_id==='snack-2');
- const bed=r.after.predictions.find(p=>p.item_id==='bed-king');
+ const bed=r.after.predictions.find(p=>p.item_id==='bed-sheet-king');
  assert.ok(snack.deltaP>0);
  assert.ok(snack.deltaP>Math.abs(bed.deltaP)*3);
  for(const w of r.after.weights.filter(w=>/^(bias|price:|band:|hist:)/.test(w.feature)))assert.equal(w.delta,0);
+});
+
+test('Guru history contains a King sheet cover, not a bed frame',()=>{
+ assert.deepEqual(GURU[0],{item_id:'bed-sheet-king',date:'2026-03-12'});
+ assert.ok(catalogue.some(p=>p.id===GURU[0].item_id));
+ assert.ok(!GURU.some(o=>o.item_id==='bed-king'));
+ assert.deepEqual(engine.reset('history-check').demoOrders,GURU);
 });

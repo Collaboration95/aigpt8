@@ -1,6 +1,6 @@
 import { createHash, randomUUID } from 'node:crypto';
 export const GURU = [
-  ['bed-king','2026-03-08'], ['bed-curtain','2026-07-11'],
+  ['bed-sheet-king','2026-03-12'], ['bed-curtain','2026-07-11'],
   ['baby-monitor','2026-08-15'], ['tp-median','2026-09-13']
 ].map(([item_id,date]) => ({item_id,date}));
 const clip = (v,a,b) => Math.max(a,Math.min(b,v));
