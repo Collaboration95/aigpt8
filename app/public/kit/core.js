@@ -53,7 +53,7 @@
         won: n => '₩' + Number(n || 0).toLocaleString('en-US'),
         answer(value, label) {
           if (!answered) { answered = true; const secs = (performance.now() - shown) / 1000; reward(name, variant, secs < 8 ? 1 : 0.5); }
-          opts.onAnswer?.(value, label ?? String(value));
+          return opts.onAnswer?.(value, label ?? String(value));
         },
       };
       const el = t.variants[variant](args, ctx);
@@ -65,6 +65,7 @@
     },
   };
 
+  KIT.css('image-edges', `.pimg{isolation:isolate;clip-path:inset(0 round 12px)}.pimg>img,.pimg>svg{position:absolute!important;inset:-1px!important;width:calc(100% + 2px)!important;height:calc(100% + 2px)!important;max-width:none!important;display:block!important;object-fit:cover}.pimg::after{display:none!important}`);
   KIT.css('core', `
   .kit{--acc:#e52528;--ink:#16161a;--sub:#6b6b76;--card:#fff;--soft:#f5f5f7;--r:18px;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--ink)}
   .kit button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}

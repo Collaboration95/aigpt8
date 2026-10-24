@@ -81,7 +81,8 @@
 .pm-art{display:block;width:100%;height:100%}
 .pm .im{display:block;position:relative;flex:none;aspect-ratio:1;min-width:0}
 .pm-media{display:block;position:absolute;inset:0;width:100%;height:100%;overflow:hidden;border-radius:14px;background:#f5f5f7}
-.pm-media .pimg{width:100%;height:100%;aspect-ratio:auto}
+.pm-media .pimg{width:100%;height:100%;aspect-ratio:auto;isolation:isolate;clip-path:inset(0 round 12px)}
+.pimg>img,.pimg>svg{position:absolute!important;inset:-1px!important;width:calc(100% + 2px)!important;height:calc(100% + 2px)!important;max-width:none!important;object-fit:cover}.pimg::after{display:none!important}
 .pm-media>img,.pm-photo{display:block;width:100%;height:100%;object-fit:cover}
 .pm-media svg{display:block;width:100%;height:100%}
 .pm .im>.pm-art{position:absolute;inset:0;padding:8px;border-radius:14px;background:#f5f5f7}

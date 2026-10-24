@@ -28,26 +28,56 @@
   }
   function bind(el, ctx) {
     el.addEventListener('click', e => {
-      if (el.classList.contains('kit-frozen')) { e.preventDefault(); return; }
-      const b = e.target.closest('button[data-action]'); if (!b || b.disabled) return;
-      const key = b.dataset.key, action = b.dataset.action;
-      if (action === 'forget') {
-        ctx.answer({forget:key}, `Forget ${b.dataset.label || key}`);
-        const row = b.closest('[data-fact]'); if (row) { row.classList.add('kx-removed'); row.querySelectorAll('button').forEach(x => x.disabled = true); const status = row.querySelector('.kx-forgotten'); if (status) status.textContent = 'Forgotten'; }
-      } else if (action === 'change') ctx.answer({change:key}, `Change ${b.dataset.label || key}`);
-      else if (action === 'expand') { const detail = el.querySelector('.kx-detail'); detail.hidden = !detail.hidden; b.setAttribute('aria-expanded', String(!detail.hidden)); }
+      const b=e.target.closest('button[data-action]');
+      if (!b || b.disabled || el.classList.contains('kit-frozen')) return;
+      if(b.dataset.action==='expand') {const detail=el.querySelector('.kx-detail');detail.hidden=!detail.hidden;b.setAttribute('aria-expanded',String(!detail.hidden));}
     });
-    el.querySelectorAll('button[data-key]').forEach(b => { const row = b.closest('[data-fact]'); b.dataset.label = row?.dataset.label || b.dataset.key; });
+    return el;
+  }
+  function sourceLabel(f) {return f.because.replace(/^(inferred )?from (your )?/i,'').replace(/ · demo order$/i,'');}
+  function contextCard(args,ctx,variant,compact=false) {
+    const fs=facts(args,ctx);
+    if(!fs.length && args.label)fs.push(...facts({facts:[args]},ctx));
+    const el=shell('context-lines', '');
+    let frozen=false,pending=false;
+    fs.forEach((f,i)=>{
+      const trigger=document.createElement('button');trigger.type='button';trigger.className='kx-source-line';
+      trigger.innerHTML=compact ? `<span>✦ Used: ${esc(i===0?'past orders · ':'')}${esc(f.label)}</span><span aria-hidden="true">›</span>` : `<span>✦ <strong>${esc(f.label)}</strong> · from ${esc(sourceLabel(f))}</span><span aria-hidden="true">›</span>`;
+      trigger.setAttribute('aria-haspopup','dialog');trigger.setAttribute('aria-label',`Why this? ${f.label} · from ${sourceLabel(f)}`);
+      const dialog=document.createElement('dialog');dialog.className='kx-source-sheet kit';
+      const product=ctx.product(f.source_product_id);
+      const order=ctx.memory?.pastOrders?.find(o=>o.items?.some(item=>item.id===f.source_product_id));
+      dialog.innerHTML=`<div class="kx-sheet-grip"></div><div class="kx-sheet-head"><h3>Why this?</h3><button type="button" class="kx-close" aria-label="Close source">×</button></div><p class="kx-sheet-fact">${esc(f.label)}</p><div class="kx-sheet-source">${photo(f,ctx)}<div><strong>${esc(product?.name || 'This conversation')}</strong><small>${esc(f.because)}</small>${order?`<small>Order #${esc(order.id)} · ${esc(order.date)}</small><small>Demo order history</small>`:''}</div></div><div class="kx-sheet-actions"><button type="button" data-context-action="change">Change</button><button type="button" data-context-action="forget">Don't use this</button></div><p class="kx-sheet-status" role="status" aria-live="polite"></p>`;
+      dialog.setAttribute('aria-label',`Why this? ${f.label}`);
+      const status=dialog.querySelector('.kx-sheet-status');
+      trigger.onclick=()=>{dialog.querySelector('.kx-sheet-actions').hidden=frozen;if(!pending)status.textContent=frozen?'Source used for this earlier turn.':'';dialog.showModal();};
+      dialog.querySelector('.kx-close').onclick=()=>dialog.close();
+      dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
+      dialog.querySelectorAll('[data-context-action]').forEach(b=>b.onclick=async()=>{
+        if(frozen||pending)return;
+        pending=true;dialog.setAttribute('aria-busy','true');dialog.querySelectorAll('[data-context-action]').forEach(x=>x.disabled=true);
+        status.textContent=b.dataset.contextAction==='forget'?'Updating context…':'Opening choices…';
+        try {
+          const result=await ctx.answer({action:b.dataset.contextAction,key:f.key},`${b.dataset.contextAction==='forget'?"Don't use":"Change"} ${f.label}`);
+          if(result===false || result?.error)throw Error('Context update failed');
+          status.textContent=b.dataset.contextAction==='forget'?'Not used for future recommendations.':'Choose a replacement in the next turn.';
+          if(b.dataset.contextAction==='forget')trigger.innerHTML=`<span>✦ ${esc(f.label)} · no longer used</span><span aria-hidden="true">›</span>`;
+        } catch {status.textContent='Could not update. Try again.';}
+        finally {pending=false;dialog.removeAttribute('aria-busy');dialog.querySelectorAll('[data-context-action]').forEach(x=>x.disabled=frozen);}
+      });
+      el.append(trigger,dialog);
+    });
+    el.freeze=()=>{frozen=true;el.classList.add('kx-history');el.querySelectorAll('[data-context-action]').forEach(x=>x.disabled=true);el.querySelectorAll('.kx-sheet-actions').forEach(x=>x.hidden=true);};
     return el;
   }
   function register(name, description, renderers) { KIT.register(name, {group:'context',description,variants:renderers}); }
 
   const thinking = {};
-  for (const variant of ['checklist','terminal','orbit','ring','scanner','toasts']) thinking[variant] = args => {
+  for (const variant of ['checklist','terminal','orbit','ring','scanner','toasts']) thinking[variant] = (args,ctx) => {
     const steps = list(args.steps?.length ? args.steps : ['Checking past orders','Connecting your context','Finding your fit']);
     const rows = steps.map((s,i) => `<div class="kx-step" style="--i:${i}"><span class="kx-step-mark" aria-hidden="true">${variant === 'terminal' ? '›' : variant === 'orbit' ? '✦' : '✓'}</span><span>${esc(text(s))}</span></div>`).join('');
     const ring = '<div class="kx-ring" aria-hidden="true"><span>✦</span></div>';
-    const el = shell(`thinking kx-thinking-${variant}`, `${head('CONTEXT IN MOTION','Connecting the dots')}${variant === 'ring' || variant === 'orbit' ? ring : ''}<div class="kx-steps">${rows}</div><div class="kx-thinking-status" role="status" aria-live="polite">Using your context…</div>`);
+    const el = shell(`thinking kx-thinking-${variant}`, `${head('YOUR CONTEXT','Finding your fit')}${variant==='toasts'?`<div class="kx-toast-photo">${ctx.img(ctx.product('bed-king'))}<span>Past orders<br><strong>A familiar starting point</strong></span></div>`:''}${variant === 'ring' || variant === 'orbit' ? ring : ''}<div class="kx-steps">${rows}</div><div class="kx-thinking-status" role="status" aria-live="polite">Using your context…</div>`);
     el.setAttribute('aria-busy','true');
     const duration = Math.max(800,Math.min(1500,Number(args.duration ?? args.ms) || 1100));
     el.style.setProperty('--kx-duration',`${duration}ms`);
@@ -64,29 +94,12 @@
   };
   register('thinking_steps','Show a brief context-checking animation while preparing the next shopping turn.',thinking);
 
-  const inference = {};
-  for (const variant of ['badge','sticky','banner','bubble','chip','receipt']) inference[variant] = (args,ctx) => {
-    const f = facts(args,ctx)[0] || facts({facts:[{key:args.key,label:args.label,because:args.because,source_product_id:args.source_product_id}]},ctx)[0];
-    const edit = button('change',f.key,'Change',`Change ${f.label}`), forget = button('forget',f.key,'×',`Forget ${f.label}`);
-    let html;
-    if (variant === 'badge') html = `<div class="kx-row"><span class="kx-spark">✦</span><strong>${esc(f.label)}</strong>${edit}</div>${provenance(f,ctx)}`;
-    if (variant === 'sticky') html = `${eyebrow('A LITTLE CONTEXT')}<h3>${esc(f.label)}</h3>${provenance(f,ctx)}<div class="kx-actions">${edit}${forget}</div>`;
-    if (variant === 'banner') html = `<div class="kx-row"><span class="kx-symbol">✦</span><div>${eyebrow('WE ASSUMED')}<strong>${esc(f.label)}</strong></div>${edit}</div>${provenance(f,ctx)}`;
-    if (variant === 'bubble') html = `${eyebrow('WHY THIS DEFAULT?')}<h3>${esc(f.label)}</h3>${provenance(f,ctx)}${edit}`;
-    if (variant === 'chip') html = `<div class="kx-row"><span class="kx-spark">✦</span><strong>${esc(f.label)}</strong>${forget}</div>${provenance(f,ctx)}${edit}`;
-    if (variant === 'receipt') html = `${eyebrow('FROM YOUR ORDER HISTORY')}${provenance(f,ctx,true)}<div class="kx-row kx-receipt-bottom"><strong>↳ ${esc(f.label)}</strong>${edit}${forget}</div>`;
-    const el = shell(`inference kx-inference-${variant}`,`<div data-fact data-label="${esc(f.label)}">${html}<span class="kx-forgotten" role="status"></span></div>`);
-    return bind(el,ctx);
-  };
-  register('note_inference','Use when applying one inferred default; show the source and let the customer correct or forget it.',inference);
-
-  const recap = {};
-  for (const variant of ['profile','sources','cloud','timeline','home']) recap[variant] = (args,ctx) => {
-    const fs = facts(args,ctx);
-    const rows = fs.map((f,i) => `<div class="kx-fact" data-fact data-label="${esc(f.label)}"><div class="kx-fact-body">${variant === 'home' ? `<span class="kx-room-icon" aria-hidden="true">${({bed:'🛏',baby:'🧸',room:'🪟',toothpasteUsual:'🪥'})[f.key] || '✦'}</span>` : variant === 'sources' ? photo(f,ctx) : variant === 'timeline' ? `<span class="kx-node">${String(i+1).padStart(2,'0')}</span>` : ''}<div><strong>${esc(f.label)}</strong>${provenance(f,ctx)}</div></div>${button('forget',f.key,'×',`Forget ${f.label}`)}<span class="kx-forgotten" role="status"></span></div>`).join('');
-    return bind(shell(`recap kx-recap-${variant}`,`${variant === 'profile' ? '<div class="kx-avatar" aria-hidden="true">G<span>✦</span></div>' : ''}${head('YOUR CONTEXT',variant === 'home' ? 'A little map of home' : variant === 'timeline' ? 'Past orders, present fit' : 'Remembered for this turn')}<div class="kx-facts">${rows}</div><small class="kx-footnote">You decide what stays.</small>`),ctx);
-  };
-  register('memory_recap','Use when two to five saved facts materially affect this turn; show sources and individual forget controls.',recap);
+  const inference={};
+  for(const variant of ['badge','sticky','banner','bubble','chip','receipt','used'])inference[variant]=(args,ctx)=>contextCard(args,ctx,variant,variant==='used');
+  register('note_inference','One inferred fact with a compact source label; tap Why this? to change or exclude it.',inference);
+  const recap={};
+  for(const variant of ['profile','sources','cloud','timeline','home','used'])recap[variant]=(args,ctx)=>contextCard(args,ctx,variant,variant==='used');
+  register('memory_recap','Sources used for this turn, with individual explanation and correction controls.',recap);
 
   const moods = [
     [/night|bed|sleep/i,'A softer night','Your bedroom, considered.','☾','bed-king','bed-curtain','night'],
@@ -111,11 +124,16 @@
     if (variant === 'emoji') art = `<span class="kx-big-emoji" aria-hidden="true">${emoji}</span>`;
     if (variant === 'particles') art = `<div class="kx-particles" aria-hidden="true">${Array.from({length:9},(_,i) => `<span style="--i:${i};left:${8+(i*29)%85}%;top:${8+(i*17)%77}%">${emoji}</span>`).join('')}</div>`;
     if (variant === 'collage') { const products = [ctx.product(p1),ctx.product(p2)].filter(Boolean); art = `<div class="kx-collage">${products.map(p => `<figure>${ctx.img(p,'kx-scene-photo')}<figcaption>${esc(p.brand)}<br>${esc(p.name)} · ${ctx.won(p.price)}</figcaption></figure>`).join('')}</div>`; }
-    if (variant === 'poster') art = '<div class="kx-accent-shape" aria-hidden="true">✳</div>';
+    if (variant === 'poster' || variant === 'particles') art += `<div class="kx-scene-hero">${ctx.img(ctx.product(p1))}<span>${esc(ctx.product(p1)?.brand || '')} · ${ctx.won(ctx.product(p1)?.price)}</span></div>`;
     return shell(`scene kx-scene-${variant}`,`${eyebrow(String(args.scene || 'night bedroom').replace(/[_-]/g,' '))}<h2>${esc(args.title || title)}</h2><p>${esc(args.subtitle || subtitle)}</p>${art}`);
   };
   register('scene_header','Use at the start of a shopping turn to set a relevant mood from a scene keyword, without adding a question.',scenes);
 
+  KIT.css('context-polish', `
+.kx-reasons-grid>div:last-child:nth-child(odd){grid-column:1/-1}.kx-context-lines{padding:4px!important;border:0!important;border-radius:12px!important;background:transparent!important;overflow:visible!important}.kx-source-line{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:44px;border:0;background:var(--soft);border-radius:12px;padding:10px 12px;margin:4px 0;font-size:11px!important;line-height:1.5;text-align:left;color:var(--sub)!important}.kx-source-line>span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}.kx-source-line strong{font-weight:650;color:var(--ink)}.kx-history .kx-source-line{background:transparent;cursor:pointer}.kx-history{opacity:1!important;filter:none!important;pointer-events:auto!important}.kx-source-sheet{position:fixed;inset:auto 0 0;margin:0 auto;width:min(100%,430px);max-height:85dvh;overflow-y:auto;border:0;border-radius:24px 24px 0 0;padding:12px 22px calc(22px + env(safe-area-inset-bottom));background:var(--card,#fff);color:var(--ink,#16161a);box-sizing:border-box;box-shadow:0 -10px 60px #0002;pointer-events:auto;--soft:#f5f5f7;--sub:#6b6b76}.kx-source-sheet::backdrop{background:#15151a55}.kx-sheet-grip{height:4px;width:36px;background:#ddd;border-radius:8px;margin:0 auto 8px}.kx-sheet-head{display:flex;justify-content:space-between;align-items:center}.kx-sheet-head h3{font-size:22px;margin:10px 0}.kx-close{width:44px;height:44px;border:0;background:var(--soft);border-radius:50%;font-size:24px!important}.kx-sheet-fact{font-size:18px;font-weight:650}.kx-sheet-source{display:flex;gap:14px;background:var(--soft);border-radius:16px;padding:14px;align-items:center}.kx-sheet-source .pimg{width:76px;height:90px;flex:none}.kx-sheet-source strong{font-size:13px}.kx-sheet-source small{display:block;font-size:11px;color:var(--sub);line-height:1.5;margin-top:5px}.kx-sheet-actions{display:flex;gap:10px;margin-top:20px}.kx-sheet-actions[hidden]{display:none}.kx-sheet-actions button{flex:1;min-height:48px;border:1px solid #ddd;border-radius:12px;background:white;font-weight:650}.kx-sheet-actions button:first-child{background:#19191e;color:white;border-color:#19191e}.kx-sheet-actions button:disabled{opacity:.5}.kx-sheet-status{font-size:12px;line-height:1.5;color:var(--sub);min-height:18px}.kx-source-line:focus-visible,.kx-source-sheet button:focus-visible{outline:3px solid #1677ff;outline-offset:2px}
+.kx-thinking-toasts{padding:20px!important;background:var(--soft)!important}.kx-thinking-toasts .kx-step{margin-left:0!important;transform:none!important}.kx-toast-photo{display:flex;gap:12px;align-items:center;margin:18px 0;font-size:11px;color:var(--sub)}.kx-toast-photo .pimg{width:66px;height:66px}.kx-toast-photo strong{display:block;font-size:13px;color:var(--ink);margin-top:4px}
+.kx-scene-particles,.kx-scene-poster{isolation:isolate;display:block!important;background:var(--soft)!important;border:0!important}.kx-scene-particles .kx-particles{inset:0 0 auto auto!important;width:90px;height:110px;overflow:hidden;z-index:0!important;opacity:.35}.kx-scene-particles h2,.kx-scene-poster h2{position:relative;max-width:250px;font-size:36px!important;z-index:1}.kx-scene-hero{position:relative;margin:22px 0 0}.kx-scene-hero .pimg{display:block;width:100%;height:210px;border-radius:50px 10px 10px 10px;aspect-ratio:auto}.kx-scene-hero>span{display:block;font-size:10px;color:var(--sub);margin-top:10px}.kx-scene-poster h2{font-family:Georgia,serif;font-weight:500;letter-spacing:-1px!important;font-size:42px!important}.kx-scene-poster .kx-scene-hero .pimg{border-radius:120px 120px 8px 8px;height:245px}.kx-scene-poster .kx-eyebrow{border-bottom:1px solid var(--sub);padding-bottom:12px}
+`);
   const paths = {};
   for (const variant of ['trail','stepper','map','breadcrumbs','battery']) paths[variant] = args => {
     const stages = list(args.stages?.length ? args.stages : ['Weather','Vibe','Size','Done'],8).map(text);

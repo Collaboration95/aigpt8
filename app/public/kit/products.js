@@ -10,6 +10,7 @@
     let ids = Array.isArray(a.product_ids) ? a.product_ids : [];
     if (!ids.length && tool === 'show_usual') ids = [ctx.memory?.facts?.toothpasteUsual];
     let products = [...new Set(ids)].map(id => ctx.product(id)).filter(Boolean).slice(0, tool === 'show_picks' ? 8 : tool === 'show_usual' || tool === 'product_spotlight' ? 1 : 3);
+    root.dataset.count=products.length;
     const original = products.slice();
     const ix = p => original.findIndex(x => x.id === p.id);
     const reason = p => value(a.reasons, p, ix(p)) || '';
@@ -33,6 +34,9 @@
       if (variant === 'gradient') body = `<div class="kp-gradient"><span class="kp-number" aria-hidden="true">01</span>${card(p,'kp-hero','Reorder your usual')}</div>`;
       if (variant === 'refill') body = `<div class="kp-refill"><div class="kp-refillmark" aria-hidden="true">↻</div><div><span class="kp-eyebrow">KEEP YOUR ROUTINE</span><p class="kp-foot">Ready for a refill?</p></div>${card(p,'kp-row','Reorder')}</div>`;
     } else if (tool === 'show_picks') {
+      if (variant === 'folio') body = `<div class="kp-folio">${products.map((p,i)=>`<div class="kp-folio-item"><span class="kp-folio-num">0${i+1} / THE EDIT</span>${card(p,'kp-hero','Choose this')}</div>`).join('')}</div>`;
+      if (variant === 'gallery') body = `<div class="kp-gallery">${products.map((p,i)=>`<div class="kp-gallery-item"><span class="kp-gallery-num">${String(i+1).padStart(2,'0')}</span>${card(p,'','Take a look')}</div>`).join('')}</div>`;
+      if (variant === 'ribbon') body = `<div class="kp-ribbons">${products.map((p,i)=>`<div class="kp-ribbon"><span class="kp-eyebrow">PICK ${i+1}</span>${card(p,'kp-row','Choose this')}</div>`).join('')}</div>`;
       if (variant === 'grid') body = `<div class="kp-grid">${products.map(p => card(p)).join('')}</div>`;
       if (variant === 'carousel') body = `<div class="kp-scroll">${products.map(p => card(p,'','Pick this')).join('')}</div><p class="kp-foot">Swipe to explore →</p>`;
       if (variant === 'magazine') body = `<div class="kp-magazine">${products.map((p,i) => card(p,i === 0 ? 'kp-cover' : 'kp-row')).join('')}</div>`;
@@ -77,8 +81,14 @@
     root.freeze = () => { locked = true;root.classList.add('kit-frozen');root.querySelectorAll('button').forEach(b=>b.disabled=true);if(selected)root.dataset.selected=selected.id; };
     return root;
   }
-  const variants = {show_usual:['hero','receipt','compact','timeline','gradient','refill'],show_picks:['grid','carousel','magazine','ranked','stories'],compare_products:['columns','table','duel','stacked','price_bars'],product_spotlight:['hero','callouts','editorial','personal','split'],show_alternatives:['ladder','swap','toggle','tiers','rail']};
+  const variants = {show_usual:['hero','receipt','compact','timeline','gradient','refill'],show_picks:['grid','carousel','magazine','ranked','stories','folio','gallery','ribbon'],compare_products:['columns','table','duel','stacked','price_bars'],product_spotlight:['hero','callouts','editorial','personal','split'],show_alternatives:['ladder','swap','toggle','tiers','rail']};
   Object.entries(variants).forEach(([name, ids])=>KIT.register(name,{group:'products',description:defaults[name],variants:Object.fromEntries(ids.map(id=>[id,(a,c)=>render(name,id,a,c)]))}));
+  KIT.css('products-polish', `
+.kp-grid>.kp-product:last-child:nth-child(odd){grid-column:1/-1;display:grid;grid-template-columns:140px 1fr;align-items:center}.kp-grid>.kp-product:only-child{display:flex}.kp-root[data-count="2"] .kp-grid{grid-template-columns:1fr}.kp-root[data-count="2"] .kp-grid>.kp-product{display:grid;grid-template-columns:145px 1fr;min-height:220px;align-items:center}.kp-root[data-count="2"] .kp-grid .kp-name{font-size:18px}.kp-root[data-count="2"] .kp-ranked .kp-row{grid-template-columns:120px 1fr;min-height:210px}.kp-root[data-count="2"] .kp-ranked .kp-photo{width:120px;height:170px}.kp-root[data-count="2"] .kp-ranked .kp-name{font-size:17px}.kp-root[data-count="2"] .kp-ranked .kp-price{font-size:24px}
+.kp-folio{display:grid;gap:20px}.kp-folio-item{border-top:1px solid var(--ink);padding-top:12px}.kp-folio-num{font:10px monospace;letter-spacing:2px;display:block;margin-bottom:12px}.kp-folio .kp-product{background:transparent;padding:0}.kp-folio .kp-photo{aspect-ratio:1.6}.kp-folio .kp-name{font:600 25px Georgia}.kp-folio .kp-price{font-size:27px}.kp-folio .kp-action{background:var(--acc);color:var(--card)}
+.kp-gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px 12px}.kp-gallery-item{position:relative;min-width:0}.kp-gallery-item:nth-child(even){padding-top:42px}.kp-gallery .kp-product{background:transparent;padding:0}.kp-gallery .kp-photo{aspect-ratio:.72;border-radius:100px 100px 15px 15px;overflow:hidden}.kp-gallery .kp-photo .pimg{aspect-ratio:unset}.kp-gallery .kp-name{font:600 17px Georgia}.kp-gallery-num{font:italic 30px Georgia;display:block;margin-bottom:10px;color:var(--sub)}.kp-gallery-item:last-child:nth-child(odd){grid-column:1/-1}.kp-gallery-item:last-child:nth-child(odd) .kp-photo{aspect-ratio:1.8}
+.kp-ribbons{display:grid;gap:16px}.kp-ribbon{background:var(--soft);border-radius:5px 30px 30px 5px;border-left:4px solid var(--acc);padding:14px}.kp-ribbon .kp-eyebrow{margin:0 0 12px}.kp-ribbon .kp-product{padding:0;background:transparent;grid-template-columns:112px 1fr}.kp-ribbon .kp-photo{width:112px;height:140px}.kp-ribbon .kp-price{font-size:25px}.kp-ribbon .kp-name{font-size:17px}
+`);
   KIT.css('products', `
   .kp-root{padding:20px;background:var(--card);border-radius:var(--r);max-width:100%;min-width:0;overflow:hidden;isolation:isolate;box-sizing:border-box;animation:kp-enter .25s ease-out}
   .kp-root *{box-sizing:border-box}.kp-root.kit-frozen{opacity:1;filter:none}.kp-root button:disabled{cursor:default;opacity:1}

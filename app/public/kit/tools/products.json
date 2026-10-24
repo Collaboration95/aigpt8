@@ -164,7 +164,10 @@
               "carousel",
               "magazine",
               "ranked",
-              "stories"
+              "stories",
+              "folio",
+              "gallery",
+              "ribbon"
             ]
           },
           "theme": {
@@ -185,6 +188,18 @@
         ]
       },
       "x-examples": [
+        {
+          "title": "A softer night",
+          "product_ids": [
+            "net-single",
+            "net-king"
+          ],
+          "reasons": [
+            "Compact fit",
+            "Extra room"
+          ],
+          "variant": "folio"
+        },
         {
           "title": "Snack break",
           "product_ids": [
@@ -215,6 +230,30 @@
             "Hand cream option"
           ],
           "variant": "magazine"
+        },
+        {
+          "title": "A softer night",
+          "product_ids": [
+            "net-single",
+            "net-king"
+          ],
+          "reasons": [
+            "Compact fit",
+            "Extra room"
+          ],
+          "variant": "gallery"
+        },
+        {
+          "title": "A softer night",
+          "product_ids": [
+            "net-single",
+            "net-king"
+          ],
+          "reasons": [
+            "Compact fit",
+            "Extra room"
+          ],
+          "variant": "ribbon"
         }
       ]
     }

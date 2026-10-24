@@ -3,7 +3,7 @@
     "type": "function",
     "function": {
       "name": "thinking_steps",
-      "description": "Use while preparing a shopping turn to show brief checks of known context. Only mention context actually available, not fabricated hidden reasoning. Resolves in 800\u20131500ms.",
+      "description": "Use while preparing a shopping turn to show brief checks of known context. Only mention context actually available, not fabricated hidden reasoning. Resolves in 800–1500ms.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -55,15 +55,15 @@
         {
           "steps": [
             "Checking past orders",
-            "King bed \u00b7 Mar demo order",
-            "Baby monitor \u00b7 Aug demo order"
+            "King bed · Mar demo order",
+            "Baby monitor · Aug demo order"
           ],
           "duration": 1100
         },
         {
           "steps": [
             "Checking your usual",
-            "Median \u00b7 Sep demo order"
+            "Median · Sep demo order"
           ],
           "duration": 900
         }
@@ -74,7 +74,7 @@
     "type": "function",
     "function": {
       "name": "note_inference",
-      "description": "Use when applying a single inferred default, such as King bed size from a prior order. Shows its reason and offers Change and/or Forget. These emit change/forget with the fact key.",
+      "description": "Use when applying a single inferred default, such as King bed size from a prior order. Shows its reason and offers Change and/or Forget. These emit change/forget with the fact key. Compact source line opens Why this? with source details. Change and Don't use this emit {action:\"change\"|\"forget\",key}. The used variant is a compact Used: past orders pill for later turns.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -117,7 +117,8 @@
               "banner",
               "bubble",
               "chip",
-              "receipt"
+              "receipt",
+              "used"
             ],
             "description": "Optional visual style; omit to let the frontend choose."
           },
@@ -145,7 +146,7 @@
             {
               "key": "bed",
               "label": "King bed",
-              "because": "From your Mar bed purchase \u00b7 demo order",
+              "because": "From your Mar bed purchase · demo order",
               "source_product_id": "bed-king"
             }
           ]
@@ -169,6 +170,17 @@
               "source_product_id": "tp-median"
             }
           ]
+        },
+        {
+          "variant": "used",
+          "facts": [
+            {
+              "key": "room",
+              "label": "bedroom",
+              "because": "From your bedroom curtain demo order",
+              "source_product_id": "bed-curtain"
+            }
+          ]
         }
       ]
     }
@@ -177,7 +189,7 @@
     "type": "function",
     "function": {
       "name": "memory_recap",
-      "description": "Use when two to five known facts affect this shopping turn. Give each fact its source; the customer can forget any fact independently. Purchase-based household facts are inferences, not certainties.",
+      "description": "Use when two to five known facts affect this shopping turn. Give each fact its source; the customer can forget any fact independently. Purchase-based household facts are inferences, not certainties. Compact source line opens Why this? with source details. Change and Don't use this emit {action:\"change\"|\"forget\",key}. The used variant is a compact Used: past orders pill for later turns.",
       "parameters": {
         "type": "object",
         "properties": {
@@ -219,7 +231,8 @@
               "sources",
               "cloud",
               "timeline",
-              "home"
+              "home",
+              "used"
             ],
             "description": "Optional visual style; omit to let the frontend choose."
           },
@@ -247,7 +260,7 @@
             {
               "key": "bed",
               "label": "King bed",
-              "because": "From your Mar bed purchase \u00b7 demo order",
+              "because": "From your Mar bed purchase · demo order",
               "source_product_id": "bed-king"
             },
             {
@@ -276,6 +289,23 @@
               "key": "brushEvery",
               "label": "Replace brush every 3 months",
               "because": "Demo care reminder, not a past purchase"
+            }
+          ]
+        },
+        {
+          "variant": "used",
+          "facts": [
+            {
+              "key": "room",
+              "label": "bedroom",
+              "because": "From your bedroom curtain demo order",
+              "source_product_id": "bed-curtain"
+            },
+            {
+              "key": "bed",
+              "label": "King",
+              "because": "From your Mar bed purchase · demo order",
+              "source_product_id": "bed-king"
             }
           ]
         }
@@ -477,15 +507,15 @@
         {
           "title": "Why a King-size net?",
           "points": [
-            "King bed \u00b7 Mar demo order",
-            "Bedroom \u00b7 curtain demo order",
-            "Baby at home \u00b7 inferred from monitor order"
+            "King bed · Mar demo order",
+            "Bedroom · curtain demo order",
+            "Baby at home · inferred from monitor order"
           ]
         },
         {
           "title": "Why your usual?",
           "points": [
-            "Median \u00b7 Sep demo order",
+            "Median · Sep demo order",
             "Your saved cadence is 6 weeks"
           ]
         }
