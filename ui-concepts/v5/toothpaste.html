@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Coupang · toothpaste</title>
+<link rel="icon" href="data:,">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;color:#111}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;min-height:44px}
+.app{position:relative;width:100%;height:100dvh;display:flex;flex-direction:column;background:#fff;overflow:hidden;padding-top:env(safe-area-inset-top)}
+.top{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;height:52px;flex:none;position:relative}
+.logo{font-weight:900;font-size:21px;letter-spacing:-.5px;color:#f6a800}.logo b{color:#e52528}
+.dbg{position:absolute;left:50%;top:4px;transform:translateX(-50%);font:600 9px/1 ui-monospace,monospace;color:#999;pointer-events:none;white-space:nowrap}
+.cart{width:44px;height:44px;display:grid;place-items:center;position:relative}
+.cart i.on{display:block}.cart i{position:absolute;top:5px;right:3px;background:#e52528;color:#fff;font:700 10px/16px sans-serif;min-width:16px;text-align:center;border-radius:8px;font-style:normal;display:none}
+.scroll{position:relative;flex:1;overflow-y:auto;overflow-x:hidden;padding:0 14px 12px;scroll-behavior:smooth}
+.home{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding-bottom:40px;transition:opacity .2s,transform .2s}
+.home.out{opacity:0;transform:translateY(-16px)}
+.mark{width:44px;height:44px;border-radius:14px;background:#e52528;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
+.home h1{font-size:24px;line-height:1.25;font-weight:600;margin:0;max-width:280px;letter-spacing:-.3px}
+.bar{flex:none;padding:6px 12px calc(10px + env(safe-area-inset-bottom));background:#fff}
+.sur{display:inline-flex;align-items:center;padding:0 14px;min-height:44px;border:1px solid #e4e4e7;border-radius:22px;font-size:14px;margin:0 0 6px 4px}
+.sur[hidden]{display:none}
+.comp{display:flex;align-items:center;gap:4px;border:1px solid #e4e4e7;border-radius:28px;padding:4px 6px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.comp button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;color:#555}
+.comp input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:16px;height:44px;background:none}
+.comp .send{background:#111;color:#fff}
+.pm-block.pm-frozen .pm-shipit:not(.done){display:none}
+.pm-block.pm-frozen .pm-subscription .nx:empty{display:none}
+.sp{flex:none}
+/* board */
+.board .stage{display:flex;gap:28px;justify-content:center;align-items:flex-start;padding:24px;min-height:100vh;background:#eceef2}
+.board .app{width:390px;height:844px;border-radius:44px;border:10px solid #111;box-shadow:0 20px 60px rgba(0,0,0,.25);flex:none}
+.steps{display:none}.board .steps{display:flex;flex-direction:column;gap:8px;width:230px;padding-top:30px}
+.steps button{background:#fff;border-radius:14px;text-align:left;padding:0 14px;font-weight:600;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.steps p{margin:0 0 6px;font-size:12px;color:#666}
+</style></head>
+<body>
+<div class="stage">
+<div class="steps"><p>Steps (arrow keys)</p>
+<button data-i="0">1 · toothpaste</button>
+<button data-i="1">2 · first answer</button>
+<button data-i="2">3 · next answer</button>
+<button data-i="3">4 · Ship it</button></div>
+<div class="app" id="app">
+ <div class="top"><div class="logo"><b>coupang</b>.</div><span class="dbg" id="dbg" hidden></span>
+  <button class="cart" aria-label="Cart"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg><i id="badge"></i></button></div>
+ <div class="scroll" id="sc">
+  <div class="home" id="home"><div class="mark">C</div>
+  <h1>Hey Guru, what are you planning to buy?</h1></div>
+ </div>
+ <div class="bar"><button class="sur" id="sur">Surprise me</button>
+  <form class="comp" id="f"><button type="button" aria-label="Add"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+  <input id="in" placeholder="Ask anything" autocomplete="off" enterkeyhint="send">
+  <button type="button" aria-label="Mic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></button>
+  <button class="send" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></form></div>
+</div></div>
+<script src="primitives.js"></script>
+<script>
+const $=s=>document.querySelector(s), sc=$('#sc'), won=P.won;
+const QS=new URLSearchParams(location.search);
+if(QS.has('board')&&innerWidth>700)document.body.classList.add('board');
+
+/* ---------- catalogue ---------- */
+const FL={mint:{l:'Mint',c:'#19b394',d:'#0b6e5c',p:0},charcoal:{l:'Charcoal',c:'#454b5c',d:'#1b1e29',p:1200},herbal:{l:'Herbal',c:'#6cc23a',d:'#357a14',p:700},berry:{l:'Kids berry',c:'#ff5c8a',d:'#b21f53',p:400}};
+const SE={normal:{l:'Everyday',p:0},white:{l:'Whitening',p:1500,c:'#3fa0ff',d:'#1b5fb8'},gentle:{l:'Sensitive',p:2300,c:'#9a78ff',d:'#5a3cc4'}};
+function prodOf(s){const f=FL[s.flavour||'mint'],e=SE[s.sens||'normal'];
+ let n=('Median '+(s.sens&&s.sens!=='normal'?e.l+' ':'')+(s.flavour&&s.flavour!=='mint'?f.l:'')).trim();if(n==='Median')n='Median Toothpaste';
+ const p=8900+f.p+e.p;const tint=!(s.flavour&&s.flavour!=='mint')&&e.c;return{n,s:'120g ×3 · '+won(p/3)+' / tube',p,c:tint?e.c:f.c,d:tint?e.d:f.d}}
+const tubeOf=p=>p.art||P.art.tube(p.c,p.d);
+const BRUSH={n:'Soft toothbrush ×4',p:3900,s:'Rocket · tomorrow',c:'#ffb703',d:'#e5500b'};
+const BRUSH_ALT={swap:{n:'Kids toothbrush ×4',p:4200,s:'Rocket · tomorrow',c:'#ff5c8a',d:'#b21f53'},cheap:{n:'Basic toothbrush ×4',p:2500,s:'Rocket · tomorrow',c:'#6cc23a',d:'#357a14'}};
+const VALUE={n:'Median Value',s:'120g ×3 · '+won(7400/3)+' / tube',p:7400,c:'#8fd3ff',d:'#2d7bc4'};
+const BRANDS=[{n:'2080 Cavity',s:'120g ×3',p:8200,c:'#e8333a',d:'#9a1017'},{n:'Colgate Total',s:'120g ×3',p:9500,c:'#2f6fdc',d:'#173f8c'},{n:'Sensodyne',s:'100g ×3',p:12900,c:'#27b5c9',d:'#0f6877'}];
+
+/* ---------- generator: compose(intent, seed) -> sequence of primitive configs ---------- */
+const THEMES=['mint','grape','sunny','bubblegum','ink','sky'], SCENES=['bubbles','leaves','stars','waves','sun','confetti'], LAYOUTS=['bleed','card','blob','ticket'];
+function mulberry(a){return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function compose(intent,seed){
+ const rnd=mulberry(seed*2654435761), pick=a=>a[Math.floor(rnd()*a.length)];
+ const variant=(Math.abs(seed-1))%4, sh=Math.floor(Math.abs(seed-1)/4);
+ const usual=prodOf({}), tube=(k)=>P.art.tube(FL[k].c,FL[k].d);
+ const flOpts=()=>Object.keys(FL).map(k=>({v:k,l:FL[k].l,c:FL[k].c,tag:k==='mint'?'Usual':undefined}));
+ const bucket=v=>v<=33?{sens:'white'}:v>=67?{sens:'gentle'}:{sens:'normal'};
+ const sensSay=v=>v<=33?'Whitening':v>=67?'Gentle':'Balanced';
+ /* question factories: same fact, many primitive shapes */
+ const flavour=(style)=>{const route=v=>({flavour:v}),demo=pick(['charcoal','herbal','berry']);
+  const spec={swatch:{p:'Swatch',cfg:{label:'Flavour?',options:flOpts()}},
+   chips:{p:'ChoiceChips',cfg:{label:'Flavour?',options:Object.keys(FL).map(k=>({v:k,l:FL[k].l,i:{mint:'🍃',charcoal:'⚫',herbal:'🌿',berry:'🍓'}[k]}))}},
+   carousel:{p:'Carousel',cfg:{label:'Flavour?',items:Object.keys(FL).map(k=>({v:k,l:FL[k].l,s:k==='mint'?'Usual':'+'+won(FL[k].p),art:tube(k)}))}}}[style];
+  return{need:'flavour',parts:[Object.assign(spec,{route,demo})]}};
+ const sens=(style)=>{const spec={
+   segmented:{p:'Segmented',cfg:{label:'Focus?',options:[{v:'normal',l:'Everyday'},{v:'white',l:'Whitening'},{v:'gentle',l:'Sensitive'}]},route:v=>({sens:v}),demo:'white'},
+   slider:{p:'Slider',cfg:{label:'Whitening ↔ Gentle',lo:'Whitening',hi:'Gentle',value:50,say:sensSay},route:bucket,demo:pick([12,88])},
+   aorb:{p:'AorB',cfg:{label:'Whitening or gentle?',options:[{v:'white',l:'Whitening',s:'Brighter',art:P.art.tube('#3fa0ff','#1b5fb8')},{v:'gentle',l:'Gentle',s:'Sensitive teeth',art:P.art.tube('#9a78ff','#5a3cc4')}]},route:v=>({sens:v}),demo:'gentle'},
+   toggle:{p:'Toggle',cfg:{label:'Quick check',text:'Sensitive teeth?',sub:'Gentler formula',yes:'Sensitive',no:'Everyday',noChip:true},route:v=>({sens:v?'gentle':'normal'}),demo:true},
+   thisorthat:{p:'ThisOrThat',cfg:{label:'Pick one',options:[{v:'white',l:'Whitening',s:'Brighter',art:P.art.tube('#3fa0ff','#1b5fb8')},{v:'gentle',l:'Gentle',s:'Sensitive teeth',art:P.art.tube('#9a78ff','#5a3cc4')}]},route:v=>({sens:v}),demo:'white'}}[style];
+  return{need:'sens',parts:[spec]}};
+ const fStyle=pick(['swatch','chips','carousel']), sStyle=pick(['segmented','slider','aorb','toggle','thisorthat']);
+ const usualHero={p:'ProductHero',cfg:{name:usual.n,price:usual.p,sub:usual.s,badge:'Your usual',art:tubeOf(usual)}};
+ const entryTitle='Toothpaste'; let entry,asks;
+ if(variant===0){ // hero + A/B  -> one question
+  entry=[usualHero,{p:'AorB',cfg:{label:'Again?',options:[{v:'usual',l:'Usual',s:'One tap',art:tubeOf(usual)},{v:'new',l:'Try new',s:'Quick pick',art:P.art.can('#ff9a3c','#c25a0a','✨')}]},route:v=>v==='usual'?{mode:'usual'}:{mode:'new'},demo:'new'}];
+  asks=[rnd()<.5?flavour(pick(['swatch','chips','carousel'])):sens(sStyle)];
+ }else if(variant===1){ // swatch + usual row -> sens
+  entry=[Object.assign(flavour('swatch').parts[0],{route:v=>v==='mint'?{mode:'usual'}:{flavour:v}}),
+   {p:'ProductRow',cfg:{label:'Or',name:usual.n,price:usual.p,badge:'Your usual',art:tubeOf(usual),tap:true,value:'usual',say:'Usual'},route:()=>({mode:'usual'})}];
+  asks=[sens(sStyle)];
+ }else if(variant===2){ // compare + slider -> flavour
+  const wh=prodOf({sens:'white'});
+  entry=[{p:'Compare',cfg:{label:'Usual vs new',items:[{v:'usual',l:'Usual',say:'Usual',price:usual.p,badge:'Yours',specs:['Mint','Everyday'],art:tubeOf(usual)},{v:'new',l:'Median Whitening',say:'Whitening',price:wh.p,specs:['Mint','Brighter'],art:tubeOf(wh)}],cta:'Pick'},route:v=>v==='usual'?{mode:'usual'}:{sens:'white'}},
+   {p:'Slider',cfg:{label:'Whitening ↔ Gentle',lo:'Whitening',hi:'Gentle',value:50,say:sensSay},route:bucket,demo:pick([10,90])}];
+  asks=[flavour(pick(['chips','carousel']))];
+ }else{ // product grid -> the other fact
+  const tl=(v,l,k,badge,s)=>{const p=prodOf(s);return{v,l,price:p.p,art:tubeOf(p),badge}};
+  entry=[{p:'ProductGrid',cfg:{label:'Pick one',items:[tl('usual','Usual',0,'Yours',{}),tl('white','Whitening',0,0,{sens:'white'}),tl('gentle','Sensitive',0,0,{sens:'gentle'}),tl('herbal','Herbal',0,0,{flavour:'herbal'})]},
+    route:v=>({usual:{mode:'usual'},white:{sens:'white'},gentle:{sens:'gentle'},herbal:{flavour:'herbal'}}[v]),demo:pick(['white','gentle','herbal'])}];
+  asks=[flavour(fStyle),sens(sStyle)];
+ }
+ const ti=(variant+sh)%6, si=(variant*5+sh)%6, li=(variant*3+sh)%4;
+ return{intent,seed,variant,id:seed+'ABCD'[variant],ti,si,li,theme:THEMES[ti],scene:SCENES[si],layout:LAYOUTS[li],
+  title:entryTitle,entry,asks,askScene:rnd()<.5,
+  ship:{display:rnd()<.5?'hero':'row',order:rnd()<.5?['addon','cad']:['cad','addon']}};
+}
+
+/* ---------- runtime ---------- */
+const SEED=QS.has('seed')?(parseInt(QS.get('seed'),10)||1):1+Math.floor(Math.random()*9999);
+const plan=compose('toothpaste',SEED); window.SEED=SEED; window.plan=plan;
+if(QS.get('debug')==='1'){const d=$('#dbg');d.hidden=false;d.textContent='#'+plan.id+' · '+plan.theme+' · '+plan.layout+' · '+plan.entry.map(e=>e.p).join('+')}
+let S={}, live=null, locked=false, started=false, cartN=0, nStage=0, lastBub=null;
+function setCart(n){cartN=Math.max(0,n);const b=$('#badge');if(cartN)b.textContent=cartN;b.classList.toggle('on',cartN>0)}
+const sp=document.createElement('div');sp.className='sp';
+function fit(){if(!lastBub)return;if(sc.lastChild!==sp)sc.appendChild(sp);const h=sp.offsetHeight;sp.style.height=Math.max(0,sc.clientHeight-(sc.scrollHeight-h-lastBub.offsetTop)+6)+'px'}
+const ro=new ResizeObserver(()=>fit());
+function settle(){requestAnimationFrame(()=>{fit();if(lastBub)sc.scrollTo({top:Math.max(0,lastBub.offsetTop-6),behavior:'smooth'})})}
+function bubble(t){const b=P.UserBubble({text:t});sc.insertBefore(b,sp.parentNode===sc?sp:null);lastBub=b;settle()}
+function mount(blk){sc.insertBefore(blk,sp.parentNode===sc?sp:null);ro.disconnect();ro.observe(blk);settle()}
+function freezeAll(){sc.querySelectorAll('.pm-block').forEach(b=>b.freeze&&b.freeze())}
+function turn(label,fn){if(locked)return;locked=true;freezeAll();bubble(label);setTimeout(()=>{fn();locked=false},160)}
+
+function newBlock(role,title){
+ const k=nStage++, off=role==='entry'?0:role==='ask'?1:2;
+ const scene=role==='entry'||role==='ship'||(role==='ask'&&plan.askScene)?SCENES[(plan.si+off)%6]:null;
+ return P.Block({theme:THEMES[(plan.ti+off)%6],layout:LAYOUTS[(plan.li+off)%4],scene,title:scene?title:null,sceneHeight:role==='ask'?48:64});
+}
+function specBlock(role,parts,title){
+ const blk=newBlock(role,title);let demoEl=null,demoVal;
+ parts.forEach(spec=>{const cfg=Object.assign({},spec.cfg);
+  if(spec.route)cfg.onAnswer=(v,l)=>turn(l,()=>{Object.assign(S,spec.route(v));advance()});
+  const el=P[spec.p](cfg);blk.add(el);if(spec.demo!==undefined&&!demoEl){demoEl=el;demoVal=spec.demo}});
+ live={kind:role,demo:()=>demoEl&&demoEl.pick(demoVal)};mount(blk);return blk;
+}
+function advance(){
+ if(S.mode==='usual')return shipBlock('usual');
+ const a=plan.asks.find(a=>S[a.need]===undefined);
+ if(a)return specBlock('ask',a.parts,'Quick one');
+ shipBlock('pick');
+}
+const curProd=()=>S.alt||prodOf(S);
+function items(){const p=curProd(),it=[{art:tubeOf(p),name:p.n,price:p.p,sub:p.s}];if(S.brush)it.push({art:P.art.brush(S.brush.c,S.brush.d),name:S.brush.n,price:S.brush.p,sub:S.brush.s});return it}
+const total=()=>items().reduce((a,i)=>a+i.price,0);
+const dateIn=w=>{const d=new Date();d.setDate(d.getDate()+1+w*7);return d.toLocaleDateString('en-US',{month:'short',day:'numeric'})};
+
+function shipEl(blk){
+ const it=items();
+ const el=P.ShipIt({total:total(),items:it,morph:false,
+  note:()=>S.cad?'↻'+S.cad+'w':'',
+  onAnswer:(v,l)=>{locked=true;bubble('Ship it')},
+  onShipped:(snap)=>{blk.freeze();receipt(snap);locked=false}});
+ return el;
+}
+function shipBlock(kind){
+ const p=curProd(), isUsual=!S.alt&&p.p===prodOf({}).p&&p.n===prodOf({}).n;
+ const title=S.altTitle||(kind==='repeat'?'Repeat':kind==='bundle'?'With brush':isUsual?'Your usual':'Your pick');
+ const blk=newBlock('ship',title); S.altTitle=null;
+ const it=items(), tp=tubeOf(p);
+ const disp=plan.ship.display==='hero'?{p:'ProductHero',cfg:{name:p.n,price:p.p,sub:p.s,badge:isUsual?'Your usual':null,art:tp}}
+   :{p:'ProductRow',cfg:{name:p.n,price:p.p,sub:'',badge:isUsual?'Your usual':null,art:tp}};
+ const parts={};
+ if(kind==='bundle'||kind==='repeat'){
+  parts.display=P.Bundle({items:it,total:total()});
+ }else parts.display=P[disp.p](disp.cfg);
+ if(kind==='bundle'){
+  parts.note=P.NotThis({name:S.brush.n,art:P.art.brush(S.brush.c,S.brush.d),sub:won(S.brush.p),noun:'brush',onAnswer:(v,l)=>turn(l,()=>{
+   if(v==='Remove'){S.brush=null;S.noAdd=true;S.altTitle='Your pick'}else S.brush=v==='Swap'?BRUSH_ALT.swap:BRUSH_ALT.cheap;
+   shipBlock(S.brush?'bundle':'pick')})});
+ }
+ if(kind==='repeat')parts.trail=P.PathTrail({steps:['Today',dateIn(S.cad),dateIn(S.cad*2)],at:0});
+ if(!S.brush&&!S.noAdd&&(kind==='usual'||kind==='pick'))parts.addon=P.MultiTick({label:'Add?',instant:true,options:[{v:'brush',l:'Toothbrush',n:'+'+won(BRUSH.p)}],onAnswer:()=>turn('Add toothbrush',()=>{S.brush=BRUSH;shipBlock('bundle')})});
+ if(!S.cad&&(kind==='usual'||kind==='pick'||kind==='bundle'))parts.cad=P.Subscription({label:'Repeat?',options:[4,6,8],onAnswer:(w)=>turn('Every '+w+'w',()=>{S.cad=w;shipBlock('repeat')})});
+ parts.ship=shipEl(blk);
+ if(kind!=='repeat')parts.fb=P.FeedbackBar({options:['Too pricey','Other brand'],onAnswer:(v,l)=>turn(l,()=>v==='Too pricey'?pricey():brands())});
+ const order=['display','note','trail',...plan.ship.order,'ship','fb'];
+ order.forEach(k=>parts[k]&&blk.add(parts[k]));
+ live={kind:'ship',demo:()=>parts.ship.pick()};mount(blk);
+}
+function altBlock(was,title){
+ const now=curProd(), blk=newBlock('ship',title);
+ blk.add(P.DiffList({rows:[{k:'-',l:was.n,r:won(was.p)},{k:'+',l:now.n,r:won(now.p)}]}));
+ blk.add(P.PriceTag({price:total(),delta:now.p-was.p}));
+ const se=shipEl(blk);blk.add(se);live={kind:'ship',demo:()=>se.pick()};mount(blk);
+}
+function pricey(){const was=curProd();S.alt=was.p>8900?prodOf({}):VALUE;altBlock(was,'Cheaper')}
+function brands(){
+ const was=curProd(), blk=newBlock('ask','Other brand');let el;
+ el=P.ProductGrid({label:'Brand?',items:BRANDS.map((b,i)=>({v:i,l:b.n,price:b.p,art:tubeOf(b)})),onAnswer:(i,l)=>turn(l,()=>{S.alt=BRANDS[i];altBlock(was,'Swapped')})});
+ blk.add(el);live={kind:'ask',demo:()=>el.pick(0)};mount(blk);
+}
+function receipt(snap){
+ const blk=P.Block({layout:'plain',theme:'plain'});
+ const rc=P.Receipt({items:snap.items.map(i=>({art:i.art})),total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onUndo:f=>setCart(cartN+(f?-snap.items.length:snap.items.length))});
+ blk.add(rc);setCart(cartN+snap.items.length);live=null;mount(blk);
+}
+
+/* ---------- turns ---------- */
+function run(t){
+ t=(t||'').trim()||'toothpaste';$('#sur').hidden=true;
+ if(started){return}
+ started=true;locked=true;const home=$('#home');
+ const go=()=>{bubble(t);specBlock('entry',plan.entry,plan.title);locked=false};
+ if(home){home.classList.add('out');setTimeout(()=>{home.remove();go()},200)}else go();
+}
+$('#f').onsubmit=e=>{e.preventDefault();const v=$('#in').value;$('#in').value='';run(v)};
+$('#sur').onclick=()=>run('toothpaste');
+
+/* ---------- demo hooks ---------- */
+const adv=()=>{if(!started)return run('toothpaste');if(live&&!locked)live.demo()};
+const fin=()=>{if(!started)return run('toothpaste');
+ if(live&&live.kind!=='ship'&&!locked){live.demo();setTimeout(()=>{if(live&&live.kind==='ship'&&!locked)live.demo()},260)}
+ else if(live&&!locked)live.demo()};
+window.demoSteps=[adv,adv,adv,fin];
+const S_=[...document.querySelectorAll('.steps button')];
+S_.forEach(b=>b.onclick=()=>window.demoSteps[+b.dataset.i]());
+let si=0;addEventListener('keydown',e=>{if(e.target.id==='in')return;if(e.key==='ArrowRight'||e.key==='ArrowDown'){window.demoSteps[Math.min(si,3)]();si=Math.min(si+1,4)}});
+</script></body></html>

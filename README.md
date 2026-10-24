@@ -1,5 +1,7 @@
 # Team 8
 
+Start with [PLAN.md](PLAN.md) (current decisions), then [ARCHITECTURE.md](ARCHITECTURE.md); [HANDOFF.md](HANDOFF.md) has the design history.
+
 Read [the transcript decision brief](briefing/DECISION-BRIEF.md) alongside [the extracted slide information](slides-info/SLIDES-INFO.md) when making challenge decisions. These preserve their different sources; check open questions against the official written brief or organizers before treating uncertain wording as a rule.
 
 The [briefing folder](briefing/README.md) preserves the original transcript, source references, both extraction passes, speaker uncertainties, and the run record.

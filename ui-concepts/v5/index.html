@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Coupang · v5 flows</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font:16px -apple-system,system-ui,sans-serif;background:#eceef2;color:#111;padding:28px 20px 40px}
+h1{font-weight:600;font-size:20px;margin:0 0 8px;text-align:center}
+section{margin:28px 0 8px}
+h2{font-size:15px;font-weight:600;margin:0 0 14px;text-align:center;color:#555}
+h2 a{color:inherit}
+.row{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.card{display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone{width:calc(410px*var(--s));height:calc(864px*var(--s));border-radius:calc(44px*var(--s));background:#111;padding:calc(10px*var(--s));box-shadow:0 12px 36px #0003;overflow:clip}
+.phone iframe{width:390px;height:844px;border:0;border-radius:34px;background:#fff;transform:scale(var(--s));transform-origin:0 0;display:block}
+.label{display:block;text-align:center;color:#111;text-decoration:none;background:#fff;border-radius:12px;padding:8px 14px;box-shadow:0 1px 3px #0002;font-size:13px;font-weight:600;max-width:calc(410px*var(--s));white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.label:hover{box-shadow:0 2px 8px #0003}
+</style></head><body>
+<h1>Coupang · v5 flows</h1>
+<p style="text-align:center;margin:0;font-size:14px"><a href="primitives.html">Primitives</a> · <a href="games.html">Games lab</a></p>
+<div id="all"></div>
+<script>
+// Each screen = a fresh iframe of the flow, replayed to step k from here (same origin).
+const click=sel=>(d,i)=>d.querySelectorAll(sel)[i].click();
+const flows=[
+ {f:'camping',t:'Camping',steps:['Camping','Weather','Vibe','Style','Crew','Look','Too pricey','Ship it'],run:(d,i,w)=>w.demoSteps[i]()},
+ {f:'toothpaste',q:'?seed=1',t:'Toothpaste · run 1',steps:['Toothpaste','Answer','Answer','Ship it'],run:(d,i,w)=>w.demoSteps[i]()},
+ {f:'toothpaste',q:'?seed=3',t:'Toothpaste · run 3',steps:['Toothpaste','Answer','Answer','Ship it'],run:(d,i,w)=>w.demoSteps[i]()},
+ {f:'surprise',t:'Surprise me',steps:['Surprise me','Rank it','Your picks','This or That','Ship it'],run:(d,i,w)=>w.demoSteps[i]()},
+ {f:'mosquito',t:'Mosquitoes',steps:['Mosquitoes','Net','Cheaper one'],run:click('#side button')},
+];
+const board=innerWidth>700?'?board=1':'';
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+all.innerHTML=flows.map((F,fi)=>`<section><h2><a href="${F.f}.html${F.q?F.q+(board?'&board=1':''):board}">${F.t} →</a></h2><div class="row">`+
+ ['Home',...F.steps].map((s,k)=>`<div class="card"><div class="phone"><iframe data-f="${fi}" data-k="${k}" src="${F.f}.html${F.q||''}" title="${F.t} ${s}"></iframe></div><a class="label" href="${F.f}.html${F.q?F.q+(board?'&board=1':''):board}">${k?k+' · ':''}${s}</a></div>`).join('')+
+ `</div></section>`).join('');
+document.querySelectorAll('iframe').forEach(fr=>fr.addEventListener('load',async()=>{
+ const F=flows[fr.dataset.f],k=+fr.dataset.k,w=fr.contentWindow;
+ // keep the flows' scrollIntoView inside the phone (don't scroll this page)
+ w.Element.prototype.scrollIntoView=function(o){
+  let p=this.parentElement;
+  while(p&&!(p.scrollHeight>p.clientHeight&&/auto|scroll/.test(w.getComputedStyle(p).overflowY)))p=p.parentElement;
+  if(!p)return;
+  const r=this.getBoundingClientRect(),q=p.getBoundingClientRect();
+  const top=p.scrollTop+(o&&o.block==='end'?r.bottom-q.bottom:r.top-q.top);
+  p.scrollTo({top,behavior:'smooth'});
+ };
+ await sleep(400);
+ for(let i=0;i<k;i++){try{F.run(w.document,i,w)}catch(e){console.warn(F.f,i,e)}await sleep(1300)}
+},{once:true}));
+function fit(){
+ const w=innerWidth-40,gap=24,max=Math.max(...flows.map(F=>F.steps.length+1));
+ let cols=Math.min(max,Math.max(1,Math.floor((w+gap)/(200+gap))));
+ if(innerWidth<700)cols=2;
+ const s=Math.min((w-(cols-1)*gap)/cols/410-.005,.8);
+ document.body.style.setProperty('--s',s.toFixed(3));
+}
+fit();addEventListener('resize',fit);
+</script>
+</body></html>
