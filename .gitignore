@@ -12,3 +12,4 @@ node_modules/
 .DS_Store
 app/data/prefs.json
 app/data/sessions/
+app/data/

@@ -306,26 +306,42 @@ function syncCatalog(){const items=window.CATALOG&&CATALOG.items||[];if(!items.l
 syncCatalog();
 function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size==='full'?'100%':size+'px'};height:${size==='full'?'auto':size+'px'};${size==='full'?'aspect-ratio:1':''}">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
 if(window.CATALOG&&CATALOG.onMode)CATALOG.onMode(()=>{$$('.product-art').forEach(el=>{const p=P[el.dataset.product];el.innerHTML=CATALOG.imgHTML(p.item,'product-photo')})});
-const sid=localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
-let prefState={weights:{},history:[]},startWeights={},pending=Promise.resolve(),signalError=false;
-const initialPrefs=fetch('/api/prefs?sid='+encodeURIComponent(sid)).then(r=>r.json()).then(d=>{prefState=d;startWeights={...d.weights}}).catch(()=>{});pending=initialPrefs;
-function emit(p,delta,action,extra={}){const signals={['cat:'+p.cat]:delta,...extra};if(p.item&&p.item.brand)signals['brand:'+p.item.brand.toLowerCase().replace(/\s+/g,'-')]=+(delta*.25).toFixed(3);p.tags.forEach(t=>signals['trait:'+t]=+(delta*.35).toFixed(3));const source=cur+' · '+action+' · '+p.n;pending=pending.then(async()=>{const r=await fetch('/api/prefs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sid,signals,source})});if(!r.ok)throw Error('Preference save failed');prefState=await r.json();signalError=false}).catch(()=>{signalError=true});}
-function tasteHTML(){const entries=Object.entries(prefState.weights).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,4);const max=Math.max(1,...entries.map(([,v])=>Math.abs(v)));return `<div class="taste"><div class="taste-head">Your taste · ${signalError?'save unavailable':'updated'} <a href="/dashboard.html?sid=${encodeURIComponent(sid)}">View engine ↗</a></div>${entries.map(([k,v])=>{const before=startWeights[k]||0,d=v-before;return `<div class="taste-row"><span>${esc(k.split(':').slice(1).join(':'))}</span><b class="${d<0?'down':'up'}">${before.toFixed(1)} → ${v.toFixed(1)} (${d>=0?'+':''}${d.toFixed(1)})</b><i><em style="width:${Math.abs(v)/max*100}%;background:${v<0?'#ee5960':'#13a27d'}"></em></i></div>`}).join('')}</div>`;}
+const sid=new URLSearchParams(location.search).get('sid')||localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
+let modelState=null,prefState={weights:{}},startWeights={},pending=Promise.resolve(),signalError=false,waiting=0;
+const save=document.createElement('div');save.id='ml-save';save.style='font:12px system-ui;padding:8px 4px;color:#586174';$('.card').before(save);
+function status(){save.textContent=signalError?'Learning pending · tap to retry':waiting?`Saving ${waiting} choice${waiting===1?'':'s'}…`:'Guru · demo profile · choices saved';}
+async function loadModel(){const r=await fetch('/api/model?sid='+encodeURIComponent(sid));if(!r.ok)throw Error('Model unavailable');modelState=await r.json();return modelState;}
+const initialPrefs=loadModel().catch(()=>{});pending=initialPrefs;
+function postEvent(fields){
+ const event={sid,event_id:crypto.randomUUID(),ts:Date.now(),...fields};
+ const runAtTap=modelState?.run_id;waiting++;status();
+ pending=pending.then(async()=>{
+  for(;;){try{
+   if(!modelState)await loadModel();event.run_id??=runAtTap||modelState.run_id;
+   const r=await fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(event)});
+   if(!r.ok){const d=await r.json();throw Error(d.error||'Save failed');}
+   const receipt=await r.json();modelState=receipt.after;waiting--;signalError=false;status();return;
+  }catch(e){signalError=true;status();save.textContent+=' · '+e.message;save.setAttribute('role','button');save.tabIndex=0;
+   await new Promise(resolve=>{save.onclick=resolve;save.onkeydown=e=>{if(e.key==='Enter')resolve()}});save.onclick=null;save.removeAttribute('role');
+  }}
+ });
+}
+function emit(p,delta,action){
+ if(!p?.item){signalError=true;save.textContent='Learning unavailable · catalogue item missing';return;}
+ const game=cur==='basket'?'budget':cur;
+ if(game==='budget'||game==='bracket')return;
+ const label=action==='Meh'||action==='Timed out'?null:delta>0?1:0;
+ postEvent({game,item_id:p.item.id,label,...(game==='price'?{stage:'verdict'}:{})});
+}
+function tasteHTML(){const top=modelState?.top||[];return `<div class="taste"><div class="taste-head">Buy-intent · demo model <a href="/dashboard.html?sid=${encodeURIComponent(sid)}">View engine ↗</a></div><small>synthetic prior · live game learning</small>${top.slice(0,3).map(p=>`<div class="taste-row"><span>${esc(CATALOG.get(p.item_id).name)}</span><b>${(p.beforeP*100).toFixed(1)} → ${(p.p_buy*100).toFixed(1)}%</b></div>`).join('')}</div>`;}
+status();
 function reward(){const today=new Date().toLocaleDateString('en-CA'),yesterday=new Date(Date.now()-86400000).toLocaleDateString('en-CA');let r;try{r=JSON.parse(localStorage.getItem('t8-rewards')||'{}')}catch{r={}};r.streak=r.day===today?r.streak||1:r.day===yesterday?(r.streak||0)+1:1;r.day=today;r.coins=(r.coins||0)+120;localStorage.setItem('t8-rewards',JSON.stringify(r));return r;}
 
 /* ---------- learn + result ---------- */
 const PAL=['#ffd9ea','#fff0b3','#d6f5e3','#e3dcff'];
-function learn(w,ex,seen,pp){
-  const tags=Object.entries(w).filter(([t,v])=>v>0&&LB[t]).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
-  const chips=[...new Set([...ex,...tags.slice(0,3).map(t=>LB[t])])].slice(0,4);
-  const sc=ALL.filter(p=>!seen.has(p.id)).map(p=>{let s=(prefState.weights['cat:'+p.cat]||0)+(p.item?(prefState.weights['brand:'+p.item.brand.toLowerCase().replace(/\s+/g,'-')]||0):0),best=p.tags[0],bv=0;
-    p.tags.forEach(t=>{const v=(w[t]||0)+(prefState.weights['trait:'+t]||0);s+=v;if(v>bv){bv=v;best=t}});
-    if(pp)s-=Math.abs(Math.log(p.pr/pp))*.7;
-    if(ex.includes('Novelty seeker')&&p.rare)s+=1.5;
-    return{p,s,best}}).sort((a,b)=>b.s-a.s);
-  const top=sc.slice(0,3);
-  if(!top.some(x=>x.p.rare)){const r=sc.find(x=>x.p.rare);if(r)top[2]=r}
-  return{chips,picks:top.map(x=>({p:x.p,why:LB[x.best]||'For you'})),total:top.reduce((a,x)=>a+x.p.pr,0)};
+function learn(){
+ const picks=(modelState?.top||[]).slice(0,3).map(row=>{const item=CATALOG.get(row.item_id);return {p:{id:item.id,item,n:item.name,s:item.name,pr:item.price},why:(100*row.p_buy).toFixed(1)+'% intent'};});
+ return {chips:[modelState?.segment||'Still learning'],picks,total:picks.reduce((n,x)=>n+x.p.pr,0)};
 }
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function confetti(){
@@ -428,7 +444,7 @@ start(S,fin,cnt){
     $('#act').innerHTML='<div class="pair"><button class="cta g" id="no">✕ Pass</button><button class="cta" id="yes">♥ Worth it</button></div>';
     const rv=$('#rv');rv.innerHTML=`<span>Real</span><b id="cn">${won(RM?p.pr:0)}</b><span class="vd ${v[0]}">${v[1]}</span>`;
     if(!RM){const t0=performance.now();(function f(t){if(!alive)return;const k=clamp((t-t0)/(fast?220:480),0,1);$('#cn').textContent=won(p.pr*(1-Math.pow(1-k,3)));if(k<1)raf=requestAnimationFrame(f)})(t0)}
-    buzz();emit(p,0,'Price guess',{'trait:price-savvy':a<.12?.3:a<.3?.1:0});log.push({p,err,a,ok:null});
+    buzz();if(p.item)postEvent({game:'price',stage:'guess',item_id:p.item.id,guess:g});log.push({p,err,a,ok:null});
     const nx=ok=>e=>{cancelAnimationFrame(raf);pop(e.currentTarget);log[log.length-1].ok=ok;emit(p,ok?.3:-.2,ok?'Worth it':'Pass');$$('#act button').forEach(b=>b.disabled=true);setTimeout(()=>{if(!alive)return;i++;if(i<ids.length)round();else finish()},RM?0:180)};
     $('#no').onclick=nx(0);$('#yes').onclick=nx(1)}
   function finish(){const w={},ex=[],ok=log.filter(l=>l.ok),no=log.filter(l=>!l.ok);
@@ -456,7 +472,7 @@ start(S,fin,cnt){
   $$('.bt',S).forEach(b=>b.onclick=()=>{const id=b.dataset.id,on=sel.has(id);
     if(!on&&sum()+P[id].pr>BUD){const m=$('#mt');m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');buzz();return}
     emit(P[id],on?-.3:.3,on?'Remove from budget':'Add to budget',{'trait:frugal':on?-.1:.1});on?sel.delete(id):sel.add(id);b.setAttribute('aria-pressed',!on);pop(b,1.08);upd()});
-  $('#done').onclick=e=>{pop(e.currentTarget);const w={},ex=[],s=sum(),ch=[...sel].map(id=>P[id]),secs=(performance.now()-t0)/1000;
+  $('#done').onclick=e=>{pop(e.currentTarget);e.currentTarget.disabled=true;postEvent({game:'budget',selected_ids:[...sel].map(id=>P[id].item?.id),budget:BUD});const w={},ex=[],s=sum(),ch=[...sel].map(id=>P[id]),secs=(performance.now()-t0)/1000;
     ch.forEach(p=>p.tags.forEach(t=>w[t]=(w[t]||0)+1));
     if(s/BUD>=.85)ex.push('Budget master');else if(s/BUD<.5)ex.push('Saver');
     const ap=s/ch.length;if(ap<6500)ex.push('Deal hunter');
@@ -474,7 +490,7 @@ start(S,fin,cnt){
     const side=p=>`<button class="dl" data-id="${p.id}">${sv(p,'full')}<b class="dn">${p.s||p.n}</b><span class="sp">${won(p.pr)}</span></button>`;
     S.innerHTML=`<div class="rnd">${NAMES[r]}</div><div class="duel">${side(a)}${side(b)}<i class="vs">VS</i></div><div class="dots">${Array.from({length:7},(_,k)=>`<i class="${k<step?'on':''}"></i>`).join('')}</div>`;
     enter();$$('.dl',S).forEach(bn=>bn.onclick=()=>choose(bn))}
-  function choose(bn){if(lock)return;lock=true;emit(P[bn.dataset.id],.35,'Bracket winner');const cr=rounds[r],w=bn.dataset.id,l=cr[m*2]===w?cr[m*2+1]:cr[m*2];
+  function choose(bn){if(lock)return;lock=true;const cr=rounds[r],w=bn.dataset.id,l=cr[m*2]===w?cr[m*2+1]:cr[m*2];if(P[w].item&&P[l].item)postEvent({game:'bracket',pair:{winner:P[w].item.id,loser:P[l].item.id}});
     $$('.dl',S).forEach(x=>x.classList.add(x===bn?'win':'lose'));pop(bn,1.1);
     setTimeout(()=>{if(!alive)return;nxt.push(w);if(r===0)qlose.push(l);if(r===1)semis.push(l);if(r===2){champ=w;finalist=l}
       m++;step++;if(m*2>=cr.length){r++;rounds[r]=nxt.slice();nxt.length=0;m=0}
@@ -490,7 +506,8 @@ start(S,fin,cnt){
 /* ================= RAPID FIRE ================= */
 G.rapid={name:'Rapid fire',ico:'⚡',ink:'#b45309',bg:'linear-gradient(160deg,#fff1b8,#ffe0cc)',
 start(S,fin,cnt){
-  const ids=['choco','kimchi','candle','pet3','sheet','cold','plant','protein'];
+  const ids=['snack-2','beauty-1','snack-7','home-4','drink-7','kitchen-8','snack-3','beauty-6','drink-6','home-2'];
+  ids.forEach(id=>{const item=CATALOG.get(id);if(item)P[id]={id,item,n:item.name,s:item.name,pr:item.price,cat:item.category,tags:item.tags};});
   let i=0,t0=0,tm=0,alive=true,busy=false;const log=[];
   function show(){const p=P[ids[i]];cnt((i+1)+'/'+ids.length);busy=false;
     S.innerHTML=`<div class="rfc">${sv(p,224)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><div class="tb"><i></i></div></div><div class="rx"><button data-r="-1" aria-label="Nope">🥶<span>Nope</span></button><button data-r="0" aria-label="Meh">😐<span>Meh</span></button><button data-r="1" aria-label="Want">😍<span>Want</span></button></div>`;
@@ -511,12 +528,12 @@ start(S,fin,cnt){
     async auto(tok){for(let k=0;k<ids.length&&tok===run;k++){await sleep(60);$$('.rx button',S)[k%4===3?0:2].click();await sleep(280)}}}
 }};
 /* ---------- boot ---------- */
-$('#tabs').innerHTML=Object.entries(G).map(([id,g])=>`<button class="tab" role="tab" data-g="${id}" aria-selected="false"><span>${g.ico}</span>${g.name}</button>`).join('');
+$('#tabs').innerHTML=['rapid','swipe','bracket','price','basket'].map(id=>[id,G[id]]).map(([id,g])=>`<button class="tab" role="tab" data-g="${id}" aria-selected="false"><span>${g.ico}</span>${g.name}</button>`).join('');
 const tw=$('#tw'),tb=$('#tabs'),edge=()=>{tw.classList.toggle('l',tb.scrollLeft>4);tw.classList.toggle('r',tb.scrollLeft+tb.clientWidth<tb.scrollWidth-4)};tb.addEventListener('scroll',edge,{passive:true});addEventListener('resize',edge);setTimeout(edge,0);
 $$('.tab').forEach(t=>t.onclick=()=>{pop(t,1.08);go(t.dataset.g)});
 window.demoPlay=async id=>{id=id&&G[id]?id:cur;go(id);const tok=run;fast=true;await sleep(250);try{await inst.auto(tok)}finally{fast=false}return tok===run};
 window.__games=Object.keys(G);
-go(new URLSearchParams(location.search).get('game')||'price');
+go(new URLSearchParams(location.search).get('game')||'rapid');
 })();
 </script>
 </body>
