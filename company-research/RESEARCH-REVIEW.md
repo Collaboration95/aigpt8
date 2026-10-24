@@ -1,0 +1,19 @@
+**PASS — fresh bounded source review, 2026-10-24 cutoff.**
+
+No material unsupported, stale or misleading claim, or missing requested scope, found in the six checks below. No repair required. This verdict concerns faithful evidence synthesis, not complete event-rule approval.
+
+Read `DEMO-RESEARCH-BRIEF.md`, `VERIFICATION.md`, all four research dossiers (03 is `03-openai-engineering.md`), and `../slides-info/SLIDES-INFO.md`. Reviewed working files at `main`, HEAD `5ba5bbdf2826b578d80ec92738d3ccf0f99a6bf5`; this does not assert they are committed. Brief SHA-256: `ff2eaa42074de00a451fde8d8896d241f73f4ae286ce3faf5c48ac33cdb02071`.
+
+1. **Ethos and authority:** `DEMO-RESEARCH-BRIEF.md:3,9,24,47,53` faithfully separates company principles, analyst recommendations and local event evidence. [Coupang principles](https://www.coupang.jobs/en/how-we-hire/coupang-leadership-principles/) and [OpenAI Charter](https://openai.com/charter/) support the summaries. Attendance remains user-provided; company research adds no judge roster or event rules.
+
+2. **Ranking/privacy disputes:** `DEMO-RESEARCH-BRIEF.md:16–17`; `research/02-coupang-problems.md:7,17,43`. The [SEC note](https://www.sec.gov/Archives/edgar/data/1834584/000183458426000073/R17.htm) separates appeal, corrective-order stay and fine payment. [PIPC](https://www.korea.kr/briefing/policyBriefingView.do?newsId=156766176) distinguishes breach and identifiable off-platform collection findings. [October 8 reporting](https://biz.chosun.com/en/en-society/2026/10/08/GWKMFLFSNVDE7KTIWTJBZICUNI/?outputType=amp) supports October 7 filings, with its AI-translation limitation retained. None establishes final merits adjudication.
+
+3. **Labor findings:** `DEMO-RESEARCH-BRIEF.md:18`; `research/02-coupang-problems.md:23`. The [October 22 ministry release](https://www.korea.kr/news/policyNewsView.do?newsId=148974105) supports inspection findings and enforcement steps, not convictions; the dossier preserves allegations where violations were not found.
+
+4. **Checkout evolution:** `DEMO-RESEARCH-BRIEF.md:37`; `research/03-openai-engineering.md:13`; `research/04-openai-philosophy.md:17`. The [March 24 primary update](https://openai.com/index/powering-product-discovery-in-chatgpt/) supports design limitations and merchant checkout/apps; the [fetched specification](https://developers.openai.com/commerce/specs/checkout) describes approved-partner access. Universal shutdown, universal availability and team access remain unestablished.
+
+5. **Behavior and commercial objectives:** `DEMO-RESEARCH-BRIEF.md:24,28,31`. The [versioned Spec](https://model-spec.openai.com/2026-08-18.html) restricts independent assistant objectives and acknowledges incomplete alignment. The [ad-stack article](https://openai.com/index/building-chatgpt-ad-stack/) is a company separation claim, not an audit. The [sycophancy postmortem](https://openai.com/index/expanding-on-sycophancy/) supports the historical rollout/rollback, not current-behavior conclusions.
+
+6. **Novelty overlap:** `DEMO-RESEARCH-BRIEF.md:35`; `research/01-coupang-ethos.md:17`; `research/04-openai-philosophy.md:19`. [Coupang's scoped announcement](https://news.coupang.com/archives/65494/), [shopping research](https://openai.com/index/chatgpt-shopping-research/) and [interactive UI](https://openai.com/index/gpt-6-for-everyone/) support overlap. They do not establish that no-intent discovery is solved or guarantee local access.
+
+Methods: `rg`, `nl`, Git identity reads, SHA-256 comparison, fresh web opens/finds. One incorrect filename probe was corrected. A concurrent `VERIFICATION.md` addition was reread; the brief and dossiers remained unchanged. No account/product execution, court-docket retrieval or exhaustive source re-audit occurred. Undated documentation and archive/live differences retain version uncertainty. Only this report was written. Next action: parent may use the synthesis with its existing limits.

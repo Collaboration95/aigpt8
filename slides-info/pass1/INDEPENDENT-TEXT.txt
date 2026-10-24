@@ -1,0 +1,103 @@
+INDEPENDENT VISUAL TRANSCRIPTION (Sonnet). Text in [square brackets] is editorial, not slide text.
+
+######## IMG01 (sources/E69C1359-B0CF-40C3-A0EA-8ECB6FDFA275.jpg) ########
+[top-left tag]
+04 / MAIN CHALLENGE
+[title]
+REIMAGINE THE SHOPPING EXPERIENCE
+[orange subtitle]
+AI-FIRST EXPERIENCE
+[boxed quote]
+“ Reimagine and create an AI-first retail experience that shifts
+ecommerce from browsing and searching to AI as the primary
+interface, fundamentally changing how customers discover, evaluate,
+and purchase products. ”
+[three arrow labels, left to right]
+DISCOVER
+EVALUATE
+PURCHASE
+[footer] [unreadable: footer strip text, and tiny page label at bottom right, in this photo]
+
+######## IMG02 (sources/3727AE25-0AD5-4AAC-8670-8FC7DF2747ED.jpg) ########
+[top-left tag]
+05 / POSSIBILITY SPACE
+[title]
+EXAMPLE: WHAT COULD AI-CORE SHOPPING FEEL LIKE?
+[subtitle]
+Start with the customer's context, then let AI orchestrate the journey.
+[column 1, left]
+[icon: square with "!"]
+VOICE
+Strong Intent
+“Find the cheapest, red
+color tone socks that
+matches with my Nike
+Super[obscured by hand; uncertain: remaining characters of shoe model name and any closing quote mark]
+[flow line, partly obscured] [obscured] [uncertain: faint overlapping text above the hand, possibly "CONVE..."] [obscured] DECIDE → BUY
+[column 2, middle]
+[icon: yellow diamond with circle]
+VISION
+Weak Intent
+Using pictures of your
+home, car, outfit, etc.
+Recommend products with
+pictures.
+SEE → MATCH → FIT
+[column 3, right]
+[icon: orange diamond]
+Personalize
+No Intent - Discovery
+Content is cheap. Create a
+premade video or pictures
+of the user and the product
+EXPLORE → UNLOCK → BUY
+[footer, left, very faint] AI GRAND PRIX | REIMAGINE RETAIL
+[page label, bottom right, tiny] [uncertain: 06]
+
+######## IMG03 (sources/A2541977-AE49-4AE3-9484-1A6B9C8A5EA2.jpg) ########
+[top-left tag]
+04 / MAIN CHALLENGE
+[title]
+REIMAGINE THE SHOPPING EXPERIENCE
+[orange subtitle]
+AI-FIRST EXPERIENCE
+[boxed quote]
+“ Reimagine and create an AI-first retail experience that shifts
+ecommerce from browsing and searching to AI as the primary
+interface, fundamentally changing how customers discover, evaluate,
+and purchase products. ”
+[three arrow labels, left to right]
+DISCOVER
+EVALUATE
+PURCHASE
+[footer, partly hidden] [uncertain: "...PRIX | REIMAGINE RETAIL"; left part blocked by the speaker]
+[page label, bottom right, tiny] [unreadable]
+
+######## IMG04 (sources/0E82C878-EBE3-4348-A8A1-196B79650E72_1_201_a.jpg) ########
+[top-left tag]
+YOUR TURN
+[title]
+BUILD THE EXPERIENCE
+CUSTOMERS WILL ASK FOR
+[body]
+Not a feature added to ecommerce.
+A new way to shop, designed around AI.
+[three arrow labels with questions, top to bottom]
+HUMAN    Is it effortless?
+INTELLIGENT    Does context compound?
+TRUSTED    Can customers stay in control?
+[bottom line]
+GO REIMAGINE “Retail Ecommerce”
+[footer] AI GRAND PRIX | REIMAGINE RETAIL
+[page label, bottom right, tiny] [uncertain: 07]
+[right-side decorative infographic]
+AI-POWERED RETAIL
+PERSONAL, INTELLIGENT, SEAMLESS.
+AI [centre]
+DISCOVER — AI FINDS WHAT YOU'LL LOVE [uncertain: small text, read at low resolution]
+TRY ON — VIRTUALLY SEE IT ON YOU [uncertain: small text]
+CHECKOUT — FASTER, EASIER, ANYWHERE. [uncertain: small text]
+IN STORE — SMARTER SHOPPING IN REAL LIFE [uncertain: small text]
+BEYOND — POST-PURCHASE CARE FOR A LONGER JOURNEY [uncertain: small text]
+[signpost] BETTER SHOPPING TOMORROW [uncertain: small text]
+[bottom strip of three tiny labels beneath BEYOND] [unreadable; uncertain guess: SUPPORT / REWARDS / SUSTAINABILITY]

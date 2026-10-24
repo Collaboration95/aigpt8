@@ -1,0 +1,49 @@
+[S02 | Source: IMG02. Bracketed material is editorial, not slide wording.]
+
+05 / POSSIBILITY
+SPACE
+
+[Faint line near top centre]
+[unreadable]
+
+EXAMPLE: WHAT COULD AI-CORE SHOPPING FEEL LIKE?
+
+Start with the customer's context, then let AI orchestrate the journey.
+
+[Left column]
+!
+VOICE
+Strong Intent
+“Find the cheapest, red
+color tone socks that
+matches with my Nike
+Super[obscured]
+[obscured]
+
+[Left column bottom line]
+[obscured] DECIDE → BUY
+
+[Middle column]
+VISION
+Weak Intent
+Using pictures of your
+home, car, outfit, etc.
+Recommend products with
+pictures.
+
+SEE → MATCH → FIT
+
+[Right column]
+Personalize
+No Intent - Discovery
+Content is cheap. Create a
+premade video or pictures
+of the user and the product
+
+EXPLORE → UNLOCK → BUY
+
+[Slide footer, left]
+AI GRAND PRIX | REIMAGINE RETAIL
+
+[Slide footer, right]
+06

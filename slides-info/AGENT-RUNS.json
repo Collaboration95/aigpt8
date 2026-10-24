@@ -1,0 +1,69 @@
+{
+  "jobs": [
+    {
+      "key": "slides-sol-a",
+      "taskId": "node:delegated-task:command%3Amcp%3A9b3b9b66-d228-4e7d-bf81-0173fecf3349%3Adelegate-task%3Ateam8-slides-sol-a-20261024-v1",
+      "providerInstanceId": "codex",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "high"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "key": "slides-sol-b",
+      "taskId": "node:delegated-task:command%3Amcp%3A9b3b9b66-d228-4e7d-bf81-0173fecf3349%3Adelegate-task%3Ateam8-slides-sol-b-20261024-v1",
+      "providerInstanceId": "codex",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "high"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "key": "slides-sonnet",
+      "taskId": "node:delegated-task:command%3Amcp%3A9b3b9b66-d228-4e7d-bf81-0173fecf3349%3Adelegate-task%3Ateam8-slides-sonnet-p1-20261024-v1",
+      "providerInstanceId": "claudeAgent",
+      "model": "claude-sonnet-5-5",
+      "options": [
+        {
+          "id": "effort",
+          "value": "medium"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "key": "slides-extract",
+      "taskId": "node:delegated-task:command%3Amcp%3A9b3b9b66-d228-4e7d-bf81-0173fecf3349%3Adelegate-task%3Ateam8-slides-p2-extract-20261024-v1",
+      "providerInstanceId": "codex",
+      "model": "gpt-6.1-sol",
+      "options": [
+        {
+          "id": "reasoningEffort",
+          "value": "high"
+        },
+        {
+          "id": "serviceTier",
+          "value": "priority"
+        }
+      ],
+      "status": "completed"
+    }
+  ],
+  "sequence": "Three first-pass visual transcription tasks completed; parent reconciled three text-only slides; fresh SOL Fast task then performed second-pass information extraction."
+}

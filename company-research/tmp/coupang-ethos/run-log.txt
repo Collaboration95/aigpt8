@@ -1,0 +1,36 @@
+Research run — 2026-10-24; cutoff 2026-10-24; assigned child research only.
+
+Scope: research/01-coupang-ethos.md and tmp/coupang-ethos/. Parent is sole integrator.
+
+Read-only commands:
+- rg -n "aisgp|Grand Prix|UNKNOWN" /Users/speedpowermac/.codex/memories/MEMORY.md
+  Result: lightweight context match; current local brief supersedes older preparation unknowns.
+- cat Readme.md .local-prep/START-HERE.md team8/company-research/README.md team8/briefing/DECISION-BRIEF.md team8/slides-info/SLIDES-INFO.md
+  Result: all files read; challenge and evidence boundaries confirmed.
+- cat /Users/speedpowermac/.codex/plugins/cache/openai-curated-remote/write-like-me/0.1.1/skills/write-like-me/SKILL.md
+  Result: inspected optional style guidance; no private connector retrieval or style matching applied. Explicit research contract determines format.
+- rg --files -g AGENTS.md -g 01-coupang-ethos.md team8
+  Result: exit 1, no matching nested instructions or existing assigned output.
+
+Live research commands (web__run):
+- search_query for official leadership principles, event cohosts, corporate AI/search, SEC business model, engineering articles, and AI comparison announcements.
+- open on all four supplied official seed URLs and the event URL.
+- open/click official Careers search account, engineering index, both full engineering articles, Korean Newsroom release, corporate-hosted FY2025 annual-report PDF and SEC filing index.
+- find/open annual-report sections for business, segment reporting, revenue model and signing date; SEC index independently verified filing date 2026-02-26.
+- Medium versions independently opened before locating official Careers mirrors; LLM article dates differ by version (Medium 2024-10-14, Careers 2024-10-15). Note uses the Careers date and URL.
+Result: nine substantive source records plus SEC date-verification index. No future-published facts used. Other search results not used as evidence.
+
+Failures/limits:
+- Official event direct open yields only title/login; cohosts observed in search-indexed official listing. No verified judge roster.
+- Dynamic SEC-filings landing page did not expose filings; official SEC accession index and corporate annual PDF provided an alternative.
+- No private accounts, GitHub, cloud operations, implementation, image edits, delegation or messages to others.
+- No independently measured product outcome or live Coupang rollout test; company claims remain attributed.
+
+Mutation: apply_patch created only the assigned research note and this owned temporary log.
+Final verification:
+- Python standard-library inspection: 1,380 words, eight numbered findings, five analyst-generated questions, ten external URLs (nine source records plus SEC verification), all three relative local citations resolve.
+- Confirmed no internal web reference IDs or GitHub URLs in the output.
+- web__run find on official Careers ML-platform article confirmed staged rollout, training/prediction skew checks, and future-tense drift monitoring wording.
+- Manual claim/source review retained company attribution, historical status and category/geographic limits. No empirical uplift statistics or throughput metrics copied.
+Result: completed assigned note; no outstanding source blocker for bounded claims.
+Next action: parent integrates and rechecks Korean rollout wording before using deployment-coverage or customer-outcome claims. Event attendance remains user-provided.

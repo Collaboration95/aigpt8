@@ -1,0 +1,30 @@
+{
+  "input_count": 12,
+  "all_unchanged": true,
+  "inputs_unchanged": {
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/README.md": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/SOURCE-MANIFEST.json": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/pass2/TEXT-RECONCILIATION.md": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/text-slides/S01-main-challenge.txt": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/text-slides/S02-possibility-space.txt": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/text-slides/S03-your-turn.txt": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/sources/E69C1359-B0CF-40C3-A0EA-8ECB6FDFA275.jpg": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/sources/3727AE25-0AD5-4AAC-8670-8FC7DF2747ED.jpg": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/sources/A2541977-AE49-4AE3-9484-1A6B9C8A5EA2.jpg": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/slides-info/sources/0E82C878-EBE3-4348-A8A1-196B79650E72_1_201_a.jpg": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/briefing/DECISION-BRIEF.md": true,
+    "/Users/speedpowermac/Documents/projects/CODE_MAIN/personal/aisgp/team8/briefing/transcript-indexed.md": true
+  },
+  "outputs": {
+    "SLIDES-INFO.md": {
+      "words_visible": 620,
+      "words_whitespace": 620,
+      "broken_local_links": []
+    },
+    "pass2/EXTRACTION-CHECK.md": {
+      "words_visible": 338,
+      "words_whitespace": 338,
+      "broken_local_links": []
+    }
+  }
+}

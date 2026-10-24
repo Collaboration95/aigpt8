@@ -1,0 +1,3 @@
+# Downloaded third-party full-page/full-article caches; retain locally.
+company-research/tmp/openai-philosophy/raw/*.html
+company-research/tmp/openai-philosophy/text/
