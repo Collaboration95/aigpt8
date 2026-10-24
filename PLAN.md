@@ -35,3 +35,9 @@ The team has bought in. We are now building the real app: a mobile-only web app 
 - LLM provider (DeepSeek vs organiser credit). Permitted tools are UNKNOWN.
 - Whether to push `JUDGE-SIGNALS.md` to the public repo (currently kept local).
 - The demo run-of-show will be written later (draft: `AHA-DIRECTION.md`, written for v3).
+
+## Decisions (25 Oct, backend)
+- Primitives are LLM TOOL CALLS chosen by the type of decision the user faces (ask_choice, ask_a_or_b, compare_products, show_usual, bundle, ship_it, note_inference…). The frontend has a pre-built template per tool and renders it from the arguments. The LLM never writes UI code; the arguments (question, options, product IDs, preselects plus their reason, layout variant, theme) carry the customisation.
+- Provider-agnostic OpenAI-compatible tools API: an OpenAI or DeepSeek V4 Flash key in `app/.env` (`LLM_BASE_URL`, `LLM_API_KEY`, `LLM_MODEL`). `LLM_FAST=1` turns on the "ultrafast" mode for the demo.
+- A real small preference model (logistic regression; synthetic platform prior, plus Guru's personal model updated live by game events) with before/after predictions on the dashboard.
+- Plans: `plans/backend-llm.md`, `plans/ml-preferences.md`, `plans/2h-build.md`.
