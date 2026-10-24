@@ -7,19 +7,19 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;background:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;color:#111}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;min-height:44px}
-.app{position:relative;width:100%;height:100dvh;display:flex;flex-direction:column;background:#fff;overflow:hidden;padding-top:env(safe-area-inset-top)}
-.top{display:flex;align-items:center;justify-content:space-between;padding:6px 16px;height:52px;flex:none;position:relative}
-.logo{font-weight:900;font-size:21px;letter-spacing:-.5px;color:#f6a800}.logo b{color:#e52528}
+.app{position:relative;width:100%;height:100dvh;display:flex;flex-direction:column;background:#fff;overflow:hidden}
+.top{display:flex;align-items:center;justify-content:space-between;padding:env(safe-area-inset-top) 16px 0;height:calc(52px + env(safe-area-inset-top));flex:none;position:relative}
+.logo{font-weight:900;font-size:22px;line-height:1;letter-spacing:-.5px;color:#f6a800;display:flex;align-items:center;height:44px}.logo b{color:#e52528}
 .dbg{position:absolute;left:50%;top:4px;transform:translateX(-50%);font:600 9px/1 ui-monospace,monospace;color:#999;pointer-events:none;white-space:nowrap}
 .cart{width:44px;height:44px;display:grid;place-items:center;position:relative}
 .cart i.on{display:block}.cart i{position:absolute;top:5px;right:3px;background:#e52528;color:#fff;font:700 10px/16px sans-serif;min-width:16px;text-align:center;border-radius:8px;font-style:normal;display:none}
-.scroll{position:relative;flex:1;overflow-y:auto;overflow-x:hidden;padding:0 14px 12px;scroll-behavior:auto}
+.scroll{--pad:16px;position:relative;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;padding:0 16px 8px;scroll-behavior:auto}
 .home{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding-bottom:40px;transition:opacity .2s,transform .2s}
 .home.out{opacity:0;transform:translateY(-16px)}
 .mark{width:44px;height:44px;border-radius:14px;background:#e52528;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
 .home h1{font-size:24px;line-height:1.25;font-weight:600;margin:0;max-width:280px;letter-spacing:-.3px}
-.bar{flex:none;padding:6px 12px calc(10px + env(safe-area-inset-bottom));background:#fff}
-.sur{display:inline-flex;align-items:center;padding:0 14px;min-height:44px;border:1px solid #e4e4e7;border-radius:22px;font-size:14px;margin:0 0 6px 4px}
+.bar{flex:none;padding:8px 12px max(10px,env(safe-area-inset-bottom));background:#fff}
+.sur{display:inline-flex;align-items:center;padding:0 14px;min-height:44px;border:1px solid #e4e4e7;border-radius:22px;font-size:14px;margin:0 0 8px 4px}
 .sur[hidden]{display:none}
 .comp{display:flex;align-items:center;gap:4px;border:1px solid #e4e4e7;border-radius:28px;padding:4px 6px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
 .comp button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none;color:#555}
@@ -28,11 +28,19 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;min-he
 .pm-block.pm-frozen .pm-shipit:not(.done){display:none}
 .pm-block.pm-frozen .pm-subscription .nx:empty{display:none}
 .sp{flex:none}
-.provenance{font-size:12px;line-height:1.5;opacity:.75}
-.inference{display:block;max-width:100%;font-size:12px!important;line-height:1.5;text-align:left;padding:8px 10px;border-radius:12px;background:rgba(255,255,255,.65);color:inherit;white-space:normal}
-.thinking-host{padding:16px;margin:12px 0;border-radius:20px;background:#f4f5f7;font-size:13px;line-height:1.6;animation:thinking 1s infinite alternate}
-@keyframes thinking{to{opacity:.6}}
-.track{min-height:44px;display:flex;align-items:center;font-size:14px;font-weight:700;color:#087b69;text-decoration:none;padding:0 12px}
+.ctx{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:-4px}
+.provenance{font-size:12px;line-height:1.4;font-weight:600;opacity:.7;display:flex;align-items:center;gap:6px;padding:0 2px}
+.provenance::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex:none}
+.pm-block .inference.t8-inference{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;max-width:100%;min-height:40px;padding:8px 14px;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);border-radius:20px;background:color-mix(in srgb,var(--fg) 7%,transparent);color:inherit;font-size:13px;font-weight:600;line-height:1.35;font-family:inherit;white-space:normal;text-align:left;}
+.pm-block>.inference.t8-inference{align-self:flex-start}
+.pm-block .inference.t8-inference small{font-size:12px;font-weight:500;opacity:.7;margin-top:4px;line-height:1.4}
+.pm-block .inference.t8-inference>span:first-child::first-letter{color:var(--acc)}
+.thinking-host{margin:12px 0;font-size:13px;line-height:1.6}
+.thinking-host .t8-thinking{margin:0;padding:16px 18px;border:0;border-radius:20px;background:#f5f5f7;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04);font-size:14px;color:#2a2a30}
+.thinking-host .t8-thinking strong{font-size:15px;font-weight:700;letter-spacing:-.2px}
+.thinking-host .t8-memory-step{margin-top:10px;font-size:13px;line-height:1.4;color:#6b6b75}
+.thinking-host .t8-memory-step span{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;background:#e6f6ef;font-size:11px;font-weight:800;vertical-align:1px}
+.track{min-height:48px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;text-decoration:none;padding:0 16px;border-radius:24px}
 .cart{color:inherit;text-decoration:none}
 /* board */
 .board .stage{display:flex;gap:28px;justify-content:center;align-items:flex-start;padding:24px;min-height:100vh;background:#eceef2}
@@ -169,7 +177,7 @@ const sp=document.createElement('div');sp.className='sp';
 function fit(){if(!lastBub)return;if(sc.lastChild!==sp)sc.appendChild(sp);const h=sp.offsetHeight;sp.style.height=Math.max(0,sc.clientHeight-(sc.scrollHeight-h-lastBub.offsetTop)+6)+'px'}
 const ro=new ResizeObserver(()=>fit());
 function settle(){requestAnimationFrame(()=>{fit();if(lastBub)sc.scrollTo({top:Math.max(0,lastBub.offsetTop-6),behavior:'auto'})})}
-function bubble(t){const b=P.UserBubble({text:t});sc.insertBefore(b,sp.parentNode===sc?sp:null);lastBub=b;settle()}
+function bubble(t,anchor){const b=P.UserBubble({text:t});sc.insertBefore(b,sp.parentNode===sc?sp:null);lastBub=anchor||b;settle()}
 function mount(blk){sc.insertBefore(blk,sp.parentNode===sc?sp:null);ro.disconnect();ro.observe(blk);settle()}
 function freezeAll(){sc.querySelectorAll('.pm-block').forEach(b=>b.freeze&&b.freeze())}
 async function think(first=false){
@@ -192,8 +200,9 @@ function inferred(label,because){
  return chip;
 }
 function provenance(blk){
- const p=document.createElement('div');p.className='provenance';p.textContent='Your previous purchase · 6 weeks ago';blk.add(p);
- blk.add(inferred('Mint · your usual flavour','From your past toothpaste orders'));
+ const row=document.createElement('div');row.className='ctx';
+ const p=document.createElement('div');p.className='provenance';p.textContent='Your previous purchase · 6 weeks ago';row.append(p);
+ row.append(inferred('Mint · your usual flavour','From your past toothpaste orders'));blk.add(row);
 }
 async function turn(label,fn){if(locked)return;locked=true;freezeAll();bubble(label);try{await think();fn()}finally{locked=false}}
 
@@ -268,8 +277,8 @@ function brands(){
 }
 function receipt(snap,order){
  const blk=P.Block({layout:'plain',theme:'plain'});
- const rc=P.Receipt({items:snap.items,total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onAnswer:(v,l)=>bubble(l),onUndo:f=>{if(window.Orders&&order){if(f&&Orders.cancel)Orders.cancel(order.id);else if(!f&&Orders.restore)Orders.restore(order.id);else {const orders=Orders.list().filter(o=>o.id!==order.id);if(!f)orders.unshift(order);localStorage.setItem('t8-orders',JSON.stringify(orders));dispatchEvent(new Event('t8-orders'))}}setCart(0)}});
- blk.add(rc);if(order){const link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+order.id,textContent:'Track order →'});link.classList.add('track');link.addEventListener('click',()=>bubble('Track order'));blk.add(link)}setCart(cartN+snap.items.length);live=null;mount(blk);
+ const rc=P.Receipt({items:snap.items,total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onAnswer:(v,l)=>bubble(l,blk),onUndo:f=>{if(window.Orders&&order){if(f&&Orders.cancel)Orders.cancel(order.id);else if(!f&&Orders.restore)Orders.restore(order.id);else {const orders=Orders.list().filter(o=>o.id!==order.id);if(!f)orders.unshift(order);localStorage.setItem('t8-orders',JSON.stringify(orders));dispatchEvent(new Event('t8-orders'))}}setCart(0)}});
+ blk.add(rc);if(order){const link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+order.id,textContent:'Track order →'});link.classList.add('track');link.addEventListener('click',()=>bubble('Track order',blk));blk.add(link)}setCart(cartN+snap.items.length);live=null;mount(blk);
 }
 
 /* ---------- turns ---------- */
