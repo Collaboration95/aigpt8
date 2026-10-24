@@ -13,7 +13,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 .logo{font-weight:900;font-size:22px;line-height:1;letter-spacing:-1px;color:#e52528}.logo span{color:#f6a800}
 #orders{width:44px;height:44px;margin-right:-8px;display:grid;place-items:center;position:relative}
 #home{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 24px;text-align:center;min-height:0}
-.mark{width:44px;height:44px;border-radius:14px;background:#e52528;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
+.mark{width:56px;height:56px;border-radius:14px;display:block}
 h1{font-size:24px;font-weight:600;line-height:1.25;margin-top:18px;max-width:280px;letter-spacing:-.3px}
 #chips{flex:none;display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 8px}#coinpill{display:flex;align-items:center;gap:4px;margin-left:auto;margin-right:4px}#toprt{display:flex;align-items:center}
 .surp{min-height:44px;padding:0 12px;border:1px solid #ddd;border-radius:22px;font-size:13px;background:#fff;white-space:nowrap}
@@ -26,7 +26,7 @@ h1{font-size:24px;font-weight:600;line-height:1.25;margin-top:18px;max-width:280
 <div id="app">
  <div id="top"><div class="logo">click<span>.</span></div>
   <div id="toprt"><span id="coinpill"></span><a id="orders" href="/orders.html" aria-label="Orders"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg></a></div></div>
- <div id="home"><div class="mark">C</div><h1>Hey Guru, what are you planning to buy?</h1><p class="tagline" lang="ko">척하면 척 <span lang="en">· gets you before you finish</span></p></div>
+ <div id="home"><img class="mark" src="/icons/click.svg" alt="Click"><h1>Hey Guru, what are you planning to buy?</h1><p class="tagline" lang="ko">척하면 척 <span lang="en">· gets you before you finish</span></p></div>
  <div id="chips"><button class="surp" id="tp">Reorder toothpaste</button><button class="surp" id="net">Mosquito net</button><button class="surp" id="surp">Surprise me</button></div>
  <div id="comp"><form id="f" autocomplete="off"><input id="in" placeholder="Ask anything" enterkeyhint="send">
   <button id="send" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></form></div>

@@ -47,6 +47,7 @@ async function moduleHandlers() {
 
 // --- big screens: show the page inside an iPhone frame (390x844, scaled to fit) ---
 // Runs first in <head>; writes the frame, then swallows the rest of the page so its scripts don't run twice.
+const ICONS = '<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">';
 const NO_FRAME = /\/(dashboard|primitives)\.html$/;
 const FRAME = `<script>(()=>{if(screen.width<=700||innerWidth<=700||top!==self||/[?&]frame=1/.test(location.search))return;
 const u=new URL(location.href);u.searchParams.set('frame','1');
@@ -110,7 +111,7 @@ async function handle(req, res) {
   res.writeHead(200, { 'content-type': TYPES[ext] || 'application/octet-stream', 'cache-control': 'no-store' });
   if (ext === '.html') {
     let html = fs.readFileSync(f, 'utf8').replace('</body>', RELOAD + '</body>');
-    if (!NO_FRAME.test(f)) html = html.replace(/<head[^>]*>/i, m => m + FRAME);
+    html = html.replace(/<head[^>]*>/i, m => m + ICONS + (NO_FRAME.test(f) ? '' : FRAME));
     return res.end(html);
   }
   fs.createReadStream(f).on('error', () => res.destroy()).pipe(res);
