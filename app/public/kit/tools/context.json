@@ -1,0 +1,495 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "thinking_steps",
+      "description": "Use while preparing a shopping turn to show brief checks of known context. Only mention context actually available, not fabricated hidden reasoning. Resolves in 800\u20131500ms.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 5
+          },
+          "duration": {
+            "type": "integer",
+            "minimum": 800,
+            "maximum": 1500,
+            "description": "Animation duration in milliseconds; defaults to 1100."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "checklist",
+              "terminal",
+              "orbit",
+              "ring",
+              "scanner",
+              "toasts"
+            ],
+            "description": "Optional visual style; omit to let the frontend choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ],
+            "description": "Optional palette; omit for default light."
+          }
+        },
+        "required": [
+          "steps"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "steps": [
+            "Checking past orders",
+            "King bed \u00b7 Mar demo order",
+            "Baby monitor \u00b7 Aug demo order"
+          ],
+          "duration": 1100
+        },
+        {
+          "steps": [
+            "Checking your usual",
+            "Median \u00b7 Sep demo order"
+          ],
+          "duration": 900
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "note_inference",
+      "description": "Use when applying a single inferred default, such as King bed size from a prior order. Shows its reason and offers Change and/or Forget. These emit change/forget with the fact key.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "Memory key such as bed, baby, room, toothpasteUsual, or a session fact key."
+                },
+                "label": {
+                  "type": "string"
+                },
+                "because": {
+                  "type": "string",
+                  "description": "Concrete source or reason; label demo order history as demo data."
+                },
+                "source_product_id": {
+                  "type": "string",
+                  "description": "Existing catalogue ID of the source purchase, when applicable."
+                }
+              },
+              "required": [
+                "key",
+                "label",
+                "because"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 1,
+            "maxItems": 1
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "badge",
+              "sticky",
+              "banner",
+              "bubble",
+              "chip",
+              "receipt"
+            ],
+            "description": "Optional visual style; omit to let the frontend choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ],
+            "description": "Optional palette; omit for default light."
+          }
+        },
+        "required": [
+          "facts"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "facts": [
+            {
+              "key": "bed",
+              "label": "King bed",
+              "because": "From your Mar bed purchase \u00b7 demo order",
+              "source_product_id": "bed-king"
+            }
+          ]
+        },
+        {
+          "facts": [
+            {
+              "key": "baby",
+              "label": "Baby at home",
+              "because": "Inferred from your Aug baby monitor demo order",
+              "source_product_id": "baby-monitor"
+            }
+          ]
+        },
+        {
+          "facts": [
+            {
+              "key": "toothpasteUsual",
+              "label": "Median, your usual",
+              "because": "From your 13 Sep toothpaste demo order",
+              "source_product_id": "tp-median"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "memory_recap",
+      "description": "Use when two to five known facts affect this shopping turn. Give each fact its source; the customer can forget any fact independently. Purchase-based household facts are inferences, not certainties.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "facts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string",
+                  "description": "Memory key such as bed, baby, room, toothpasteUsual, or a session fact key."
+                },
+                "label": {
+                  "type": "string"
+                },
+                "because": {
+                  "type": "string",
+                  "description": "Concrete source or reason; label demo order history as demo data."
+                },
+                "source_product_id": {
+                  "type": "string",
+                  "description": "Existing catalogue ID of the source purchase, when applicable."
+                }
+              },
+              "required": [
+                "key",
+                "label",
+                "because"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 5
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "profile",
+              "sources",
+              "cloud",
+              "timeline",
+              "home"
+            ],
+            "description": "Optional visual style; omit to let the frontend choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ],
+            "description": "Optional palette; omit for default light."
+          }
+        },
+        "required": [
+          "facts"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "facts": [
+            {
+              "key": "bed",
+              "label": "King bed",
+              "because": "From your Mar bed purchase \u00b7 demo order",
+              "source_product_id": "bed-king"
+            },
+            {
+              "key": "baby",
+              "label": "Baby at home",
+              "because": "Inferred from your Aug baby monitor demo order",
+              "source_product_id": "baby-monitor"
+            },
+            {
+              "key": "room",
+              "label": "Bedroom",
+              "because": "From your blackout curtain demo order",
+              "source_product_id": "bed-curtain"
+            }
+          ]
+        },
+        {
+          "facts": [
+            {
+              "key": "toothpasteUsual",
+              "label": "Median, your usual",
+              "because": "From your 13 Sep toothpaste demo order",
+              "source_product_id": "tp-median"
+            },
+            {
+              "key": "brushEvery",
+              "label": "Replace brush every 3 months",
+              "because": "Demo care reminder, not a past purchase"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "scene_header",
+      "description": "Use once at the start of a turn to set a relevant mood, such as night bedroom, sunny camping, fresh bathroom, cozy snacks, rainy, winter or gift. Decorative only; does not ask a question.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "scene": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 75
+          },
+          "subtitle": {
+            "type": "string",
+            "maxLength": 120
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "illustration",
+              "emoji",
+              "particles",
+              "collage",
+              "poster"
+            ],
+            "description": "Optional visual style; omit to let the frontend choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ],
+            "description": "Optional palette; omit for default light."
+          }
+        },
+        "required": [
+          "scene"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "scene": "night bedroom"
+        },
+        {
+          "scene": "fresh bathroom",
+          "title": "Your everyday refresh"
+        },
+        {
+          "scene": "sunny camping"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "path_progress",
+      "description": "Use during a multi-step clarification journey to orient the customer. stages contains ordered labels; stage is a ZERO-BASED index or an exact label from stages. Decorative, not a navigation control.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2,
+            "maxItems": 8
+          },
+          "stage": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 7
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "Zero-based index, bounded to stages, or an exact stage label."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "trail",
+              "stepper",
+              "map",
+              "breadcrumbs",
+              "battery"
+            ],
+            "description": "Optional visual style; omit to let the frontend choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ],
+            "description": "Optional palette; omit for default light."
+          }
+        },
+        "required": [
+          "stages",
+          "stage"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "stages": [
+            "Weather",
+            "Vibe",
+            "Size",
+            "Done"
+          ],
+          "stage": 2
+        },
+        {
+          "stages": [
+            "Your usual",
+            "Delivery",
+            "Done"
+          ],
+          "stage": "Delivery"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "insight_card",
+      "description": "Use alongside a recommendation to explain supported reasons for its fit. Do not invent medical/safety guarantees, chemical claims, or numeric scores; context-match bars are decorative.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "points": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "maxItems": 6
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 75
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "pros",
+              "accordion",
+              "bars",
+              "verdict",
+              "grid"
+            ],
+            "description": "Optional visual style; omit to let the frontend choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ],
+            "description": "Optional palette; omit for default light."
+          }
+        },
+        "required": [
+          "points"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "title": "Why a King-size net?",
+          "points": [
+            "King bed \u00b7 Mar demo order",
+            "Bedroom \u00b7 curtain demo order",
+            "Baby at home \u00b7 inferred from monitor order"
+          ]
+        },
+        {
+          "title": "Why your usual?",
+          "points": [
+            "Median \u00b7 Sep demo order",
+            "Your saved cadence is 6 weeks"
+          ]
+        }
+      ]
+    }
+  }
+]

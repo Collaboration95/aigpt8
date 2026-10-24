@@ -1,0 +1,494 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "bundle",
+      "description": "Use when the shopper needs to evaluate a set of complementary products, select items, or request individual swaps. All prices come from the catalogue.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Short heading."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "flow": {
+            "type": "string",
+            "description": "Flow provenance, e.g. toothpaste or mosquito."
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string",
+                  "description": "Exact ID from the product catalogue."
+                },
+                "qty": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 99,
+                  "default": 1
+                }
+              },
+              "required": [
+                "product_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "checklist",
+              "basket",
+              "receipt",
+              "flatlay",
+              "swipe"
+            ],
+            "description": "Optional visual treatment; omit to let the bandit choose."
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "title": "Your oral-care kit",
+          "items": [
+            {
+              "product_id": "tp-median",
+              "qty": 1
+            },
+            {
+              "product_id": "tb-soft",
+              "qty": 1
+            }
+          ]
+        },
+        {
+          "title": "Sleep without bites",
+          "items": [
+            {
+              "product_id": "net-king",
+              "qty": 1
+            },
+            {
+              "product_id": "baby-net",
+              "qty": 1
+            }
+          ],
+          "variant": "flatlay"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ship_it",
+      "description": "Use when the shopper is ready to purchase the specified products. One tap creates an order with catalogue prices, a tracking receipt and Undo; no cart or checkout.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Short heading."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "flow": {
+            "type": "string",
+            "description": "Flow provenance, e.g. toothpaste or mosquito."
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string",
+                  "description": "Exact ID from the product catalogue."
+                },
+                "qty": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 99,
+                  "default": 1
+                }
+              },
+              "required": [
+                "product_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "rocket",
+              "slide",
+              "hold",
+              "stamp",
+              "truck"
+            ],
+            "description": "Optional visual treatment; omit to let the bandit choose."
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "title": "Your usual, tomorrow",
+          "items": [
+            {
+              "product_id": "tp-median",
+              "qty": 2
+            }
+          ],
+          "flow": "toothpaste"
+        },
+        {
+          "title": "Bedroom sorted",
+          "items": [
+            {
+              "product_id": "net-king",
+              "qty": 1
+            }
+          ],
+          "variant": "truck",
+          "flow": "mosquito"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "feedback_bar",
+      "description": "Use after recommendations when the shopper may want a cheaper price, other brand, lighter item or bigger pack without typing.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Short heading."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "flow": {
+            "type": "string",
+            "description": "Flow provenance, e.g. toothpaste or mosquito."
+          },
+          "options": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string"
+                },
+                "value": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "label",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "chips",
+              "reactions",
+              "reasons",
+              "tune",
+              "swipe"
+            ],
+            "description": "Optional visual treatment; omit to let the bandit choose."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "title": "Closer to your kind?",
+          "options": [
+            {
+              "label": "Too pricey",
+              "value": "cheaper"
+            },
+            {
+              "label": "Other brand",
+              "value": "other_brand"
+            }
+          ]
+        },
+        {
+          "title": "Fine-tune your net",
+          "variant": "reactions",
+          "options": [
+            {
+              "label": "Lighter",
+              "value": "lighter"
+            },
+            {
+              "label": "Bigger size",
+              "value": "bigger"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "subscribe",
+      "description": "Use for replenishable purchases when choosing a repeat or reminder cadence. Records a cadence preference only; does not create a paid subscription or claim unverified savings.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Short heading."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "flow": {
+            "type": "string",
+            "description": "Flow provenance, e.g. toothpaste or mosquito."
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string",
+                  "description": "Exact ID from the product catalogue."
+                },
+                "qty": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 99,
+                  "default": 1
+                }
+              },
+              "required": [
+                "product_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "cadence": {
+            "type": "integer",
+            "enum": [
+              2,
+              4,
+              6,
+              8
+            ],
+            "default": 4
+          },
+          "because": {
+            "type": "string",
+            "description": "Short reason for suggested interval."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "intervals",
+              "calendar",
+              "dial",
+              "reminder",
+              "annual"
+            ],
+            "description": "Optional visual treatment; omit to let the bandit choose."
+          }
+        },
+        "required": [],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "items": [
+            {
+              "product_id": "tp-median",
+              "qty": 1
+            }
+          ],
+          "cadence": 4,
+          "because": "Your usual toothpaste rhythm"
+        },
+        {
+          "items": [
+            {
+              "product_id": "tb-soft",
+              "qty": 1
+            }
+          ],
+          "cadence": 8,
+          "variant": "reminder",
+          "because": "A fresh brush when you need one"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "deal",
+      "description": "Use to highlight the current catalogue price or an available benefit already established in shopping context. No invented historical prices, discount amounts or countdown deadlines. Selecting an offer never changes catalogue prices.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "Short heading."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "flow": {
+            "type": "string",
+            "description": "Flow provenance, e.g. toothpaste or mosquito."
+          },
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 12,
+            "items": {
+              "type": "object",
+              "properties": {
+                "product_id": {
+                  "type": "string",
+                  "description": "Exact ID from the product catalogue."
+                },
+                "qty": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 99,
+                  "default": 1
+                }
+              },
+              "required": [
+                "product_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "code": {
+            "type": "string",
+            "description": "Optional verified offer identifier; sent to the agent for validation, not a client-side price override."
+          },
+          "because": {
+            "type": "string",
+            "description": "Verified offer explanation; omit unsupported savings claims."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "coupon",
+              "scratch",
+              "graph",
+              "coins",
+              "flash"
+            ],
+            "description": "Optional visual treatment; omit to let the bandit choose."
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "title": "Your everyday pick",
+          "items": [
+            {
+              "product_id": "tp-mint",
+              "qty": 1
+            }
+          ],
+          "variant": "coupon"
+        },
+        {
+          "title": "A lighter total",
+          "items": [
+            {
+              "product_id": "net-single",
+              "qty": 1
+            }
+          ],
+          "variant": "scratch",
+          "because": "Current catalogue price"
+        }
+      ]
+    }
+  }
+]

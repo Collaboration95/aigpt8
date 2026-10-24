@@ -1,0 +1,1140 @@
+[
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_choice",
+      "description": "Use when the shopper must choose ONE direction among several distinct needs, contexts or styles. Prefer a known preselect with a truthful because. Use pick_variant for SKU attributes and ask_a_or_b for exactly two contrasting alternatives.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 6
+          },
+          "preselect": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "chips",
+              "cards",
+              "carousel",
+              "radio",
+              "polaroid",
+              "emoji"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "question",
+          "options"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "Which net fits your bed?",
+          "options": [
+            {
+              "label": "Single",
+              "value": "single",
+              "emoji": "🛏️",
+              "description": "One person · compact fit"
+            },
+            {
+              "label": "Double",
+              "value": "double",
+              "emoji": "🛌",
+              "description": "Room for two"
+            },
+            {
+              "label": "Queen",
+              "value": "queen",
+              "emoji": "🌙",
+              "description": "A little extra room"
+            },
+            {
+              "label": "King",
+              "value": "king",
+              "emoji": "👑",
+              "product_id": "bed-net",
+              "description": "Your bed size"
+            }
+          ],
+          "preselect": "king",
+          "because": "your March bed order was King"
+        },
+        {
+          "question": "Camping weather?",
+          "options": [
+            {
+              "label": "Sunny",
+              "value": "sun",
+              "emoji": "☀️"
+            },
+            {
+              "label": "Rainy",
+              "value": "rain",
+              "emoji": "🌧️"
+            },
+            {
+              "label": "Cold",
+              "value": "cold",
+              "emoji": "❄️"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_a_or_b",
+      "description": "Use when the shopper faces exactly TWO contrasting choices or a concrete trade-off, such as canopy versus cot mosquito net. Return one option value, never an array.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "preselect": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "versus",
+              "split",
+              "stack",
+              "tug",
+              "coin"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "question",
+          "options"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "How do you keep mosquitoes out?",
+          "options": [
+            {
+              "label": "Canopy net",
+              "value": "net",
+              "emoji": "🛏️",
+              "product_id": "bed-net"
+            },
+            {
+              "label": "Cot net",
+              "value": "cot",
+              "emoji": "👶",
+              "product_id": "baby-net"
+            }
+          ],
+          "preselect": "net",
+          "because": "you shop for the bedroom"
+        },
+        {
+          "question": "Your toothpaste style?",
+          "options": [
+            {
+              "label": "Fresh mint",
+              "value": "mint",
+              "emoji": "🌿",
+              "product_id": "tp-median"
+            },
+            {
+              "label": "Gentle herbal",
+              "value": "herbal",
+              "emoji": "🍃"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_slider",
+      "description": "Use for a CONTINUOUS preference between two labelled endpoints (mint intensity, warmth, softness), not price or distinct SKUs. min must be below max; positive step must divide the interval. preselect is a number within the interval; output is a number confirmed by the shopper.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 6
+          },
+          "preselect": {
+            "type": "number"
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "classic",
+              "dial",
+              "thermometer",
+              "faces",
+              "gradient"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "min": {
+            "type": "number",
+            "minimum": 0
+          },
+          "max": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "step": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 12
+          }
+        },
+        "required": [
+          "question",
+          "options",
+          "min",
+          "max",
+          "step"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "How strong should the mint be?",
+          "options": [
+            {
+              "label": "Gentle",
+              "value": 0,
+              "emoji": "🌱"
+            },
+            {
+              "label": "Extra fresh",
+              "value": 100,
+              "emoji": "❄️"
+            }
+          ],
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "preselect": 35,
+          "because": "you usually choose mild toothpaste"
+        },
+        {
+          "question": "How warm should your sleep kit be?",
+          "options": [
+            {
+              "label": "Breezy",
+              "value": 0,
+              "emoji": "🍃"
+            },
+            {
+              "label": "Very cosy",
+              "value": 10,
+              "emoji": "🔥"
+            }
+          ],
+          "min": 0,
+          "max": 10,
+          "step": 1,
+          "unit": "warmth"
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_multi",
+      "description": "Use when several independent needs can apply or to check which items the shopper ALREADY HAS. preselect is an array of option values; allow an empty selection. Output is an array, submitted with Done.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 6
+          },
+          "preselect": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 6
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "checklist",
+              "toggles",
+              "tiles",
+              "deck",
+              "basket"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "question",
+          "options"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "What do you already have?",
+          "options": [
+            {
+              "label": "Mosquito net",
+              "value": "net",
+              "emoji": "🛏️",
+              "product_id": "bed-net"
+            },
+            {
+              "label": "Curtains",
+              "value": "curtains",
+              "emoji": "🌙",
+              "product_id": "bed-curtain"
+            },
+            {
+              "label": "Baby monitor",
+              "value": "monitor",
+              "emoji": "👶",
+              "product_id": "baby-monitor"
+            }
+          ],
+          "preselect": [
+            "curtains",
+            "monitor"
+          ],
+          "because": "these appear in your past orders"
+        },
+        {
+          "question": "What matters for the campsite?",
+          "options": [
+            {
+              "label": "Rain cover",
+              "value": "rain",
+              "emoji": "🌧️"
+            },
+            {
+              "label": "Easy carry",
+              "value": "light",
+              "emoji": "🎒"
+            },
+            {
+              "label": "Warm nights",
+              "value": "warm",
+              "emoji": "🔥"
+            },
+            {
+              "label": "Quick setup",
+              "value": "quick",
+              "emoji": "⚡"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "pick_variant",
+      "description": "Use to select ONE concrete product attribute: net size, toothpaste flavour, colour or pack. Provide ordered options for sizes, ruler or stepper. Optional unit_price is KRW per unit, color is a hex colour. Never invent product IDs or prices.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 6
+          },
+          "preselect": {
+            "type": [
+              "string",
+              "number"
+            ]
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "swatches",
+              "sizes",
+              "stepper",
+              "wheel",
+              "ruler"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "question",
+          "options"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "Choose your net size",
+          "options": [
+            {
+              "label": "Single",
+              "value": "single",
+              "emoji": "🛏️",
+              "description": "One person · compact fit"
+            },
+            {
+              "label": "Double",
+              "value": "double",
+              "emoji": "🛌",
+              "description": "Room for two"
+            },
+            {
+              "label": "Queen",
+              "value": "queen",
+              "emoji": "🌙",
+              "description": "A little extra room"
+            },
+            {
+              "label": "King",
+              "value": "king",
+              "emoji": "👑",
+              "product_id": "bed-net",
+              "description": "Your bed size"
+            }
+          ],
+          "preselect": "king",
+          "because": "your March bed purchase was King"
+        },
+        {
+          "question": "Which toothpaste flavour?",
+          "options": [
+            {
+              "label": "Fresh mint",
+              "value": "mint",
+              "emoji": "🌿",
+              "product_id": "tp-median"
+            },
+            {
+              "label": "Gentle herbal",
+              "value": "herbal",
+              "emoji": "🍃"
+            },
+            {
+              "label": "Citrus",
+              "value": "citrus",
+              "emoji": "🍋"
+            },
+            {
+              "label": "Berry",
+              "value": "berry",
+              "emoji": "🍓"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_rank",
+      "description": "Use when recommendations depend on the ORDER of shopping priorities, such as airflow, setup and price. Include distinct option values. preselect, if supplied, is a complete permutation of those values; output is an ordered array of all values.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 6
+          },
+          "preselect": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "number"
+              ]
+            },
+            "uniqueItems": true,
+            "maxItems": 6
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "tap",
+              "arrows",
+              "tiers",
+              "podium",
+              "drag"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          }
+        },
+        "required": [
+          "question",
+          "options"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "What matters most for a net?",
+          "options": [
+            {
+              "label": "Easy setup",
+              "value": "setup",
+              "emoji": "⚡"
+            },
+            {
+              "label": "Airflow",
+              "value": "airflow",
+              "emoji": "🍃"
+            },
+            {
+              "label": "Price",
+              "value": "price",
+              "emoji": "₩"
+            }
+          ],
+          "preselect": [
+            "airflow",
+            "setup",
+            "price"
+          ],
+          "because": "you prefer a cooler bedroom"
+        },
+        {
+          "question": "Your camping priorities?",
+          "options": [
+            {
+              "label": "Lightweight",
+              "value": "weight",
+              "emoji": "🎒"
+            },
+            {
+              "label": "Warmth",
+              "value": "warm",
+              "emoji": "🔥"
+            },
+            {
+              "label": "Value",
+              "value": "value",
+              "emoji": "💰"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "type": "function",
+    "function": {
+      "name": "ask_budget",
+      "description": "Use to establish a comfortable KRW PRICE RANGE before filtering products. min < max, positive step; numeric option values are preset upper limits within bounds. preselect is [lower,upper] within bounds; output is [lower,upper] confirmed by the shopper.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 40
+                },
+                "value": {
+                  "type": [
+                    "string",
+                    "number"
+                  ]
+                },
+                "product_id": {
+                  "type": "string",
+                  "description": "An existing local CATALOG product ID."
+                },
+                "emoji": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "icon": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "description": {
+                  "type": "string",
+                  "maxLength": 100
+                },
+                "color": {
+                  "type": "string",
+                  "pattern": "^#[0-9a-fA-F]{3}([0-9a-fA-F]{3})?$"
+                },
+                "unit_price": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "label"
+              ],
+              "additionalProperties": false
+            },
+            "minItems": 2,
+            "maxItems": 6
+          },
+          "preselect": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          },
+          "because": {
+            "type": "string",
+            "maxLength": 160,
+            "description": "Truthful reason for the inferred preselect; shown until the shopper overrides it."
+          },
+          "variant": {
+            "type": "string",
+            "enum": [
+              "dual",
+              "presets",
+              "coins",
+              "piggy",
+              "envelope"
+            ],
+            "description": "Optional visual override; omit to let the user-specific bandit choose."
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "light",
+              "mint",
+              "grape",
+              "sun",
+              "ocean",
+              "rose",
+              "ink"
+            ]
+          },
+          "min": {
+            "type": "number",
+            "minimum": 0
+          },
+          "max": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "step": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "required": [
+          "question",
+          "options",
+          "min",
+          "max",
+          "step"
+        ],
+        "additionalProperties": false
+      },
+      "x-examples": [
+        {
+          "question": "Your mosquito net budget?",
+          "options": [
+            {
+              "label": "₩10,000",
+              "value": 10000,
+              "emoji": "₩"
+            },
+            {
+              "label": "₩20,000",
+              "value": 20000,
+              "emoji": "₩"
+            },
+            {
+              "label": "₩30,000",
+              "value": 30000,
+              "emoji": "₩"
+            },
+            {
+              "label": "₩50,000",
+              "value": 50000,
+              "emoji": "₩"
+            }
+          ],
+          "min": 0,
+          "max": 50000,
+          "step": 1000,
+          "preselect": [
+            10000,
+            30000
+          ],
+          "because": "your usual home purchases are under ₩30,000"
+        },
+        {
+          "question": "Set your camping budget",
+          "options": [
+            {
+              "label": "₩50,000",
+              "value": 50000,
+              "emoji": "⛺"
+            },
+            {
+              "label": "₩100,000",
+              "value": 100000,
+              "emoji": "⛺"
+            },
+            {
+              "label": "₩150,000",
+              "value": 150000,
+              "emoji": "⛺"
+            },
+            {
+              "label": "₩200,000",
+              "value": 200000,
+              "emoji": "⛺"
+            }
+          ],
+          "min": 0,
+          "max": 200000,
+          "step": 5000
+        }
+      ]
+    }
+  }
+]
