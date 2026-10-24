@@ -849,7 +849,7 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "Public domain",
     "feature_version": "features-v1",
     "price_band": "premium",
@@ -892,7 +892,8 @@
     "image_source": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
     "image_artist": "Azt3cs",
     "image_license_url": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
-    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures."
+    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures.",
+    "image_shared_with": "net-single"
   },
   {
     "id": "net-queen",
@@ -935,7 +936,7 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "Public domain",
     "feature_version": "features-v1",
     "price_band": "premium",
@@ -978,7 +979,8 @@
     "image_source": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
     "image_artist": "Azt3cs",
     "image_license_url": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
-    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures."
+    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures.",
+    "image_shared_with": "net-single"
   },
   {
     "id": "net-king",
@@ -1023,7 +1025,7 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "Public domain",
     "feature_version": "features-v1",
     "price_band": "premium",
@@ -1066,7 +1068,8 @@
     "image_source": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
     "image_artist": "Azt3cs",
     "image_license_url": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
-    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures."
+    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures.",
+    "image_shared_with": "net-single"
   },
   {
     "id": "net-premium",
@@ -1111,7 +1114,7 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "Public domain",
     "feature_version": "features-v1",
     "price_band": "premium",
@@ -1154,7 +1157,8 @@
     "image_source": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
     "image_artist": "Azt3cs",
     "image_license_url": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
-    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures."
+    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures.",
+    "image_shared_with": "net-single"
   },
   {
     "id": "mq-spray",
@@ -1279,10 +1283,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "mid"
+    "price_band": "mid",
+    "image_shared_with": "mq-plugin"
   },
   {
     "id": "mq-patches",
@@ -2455,10 +2460,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "mid"
+    "price_band": "mid",
+    "image_shared_with": "home-1"
   },
   {
     "id": "home-3",
@@ -2499,10 +2505,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "budget"
+    "price_band": "budget",
+    "image_shared_with": "home-1"
   },
   {
     "id": "home-4",
@@ -2543,10 +2550,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "mid"
+    "price_band": "mid",
+    "image_shared_with": "home-1"
   },
   {
     "id": "home-5",
@@ -2631,10 +2639,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "budget"
+    "price_band": "budget",
+    "image_shared_with": "home-5"
   },
   {
     "id": "home-7",
@@ -2675,10 +2684,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "budget"
+    "price_band": "budget",
+    "image_shared_with": "home-5"
   },
   {
     "id": "home-8",
@@ -2719,10 +2729,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 3.0",
     "feature_version": "features-v1",
-    "price_band": "budget"
+    "price_band": "budget",
+    "image_shared_with": "home-5"
   },
   {
     "id": "kitchen-1",
@@ -2940,10 +2951,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 4.0",
     "feature_version": "features-v1",
-    "price_band": "budget"
+    "price_band": "budget",
+    "image_shared_with": "kitchen-2"
   },
   {
     "id": "kitchen-6",
@@ -2988,7 +3000,8 @@
     "feature_version": "features-v1",
     "price_band": "budget",
     "image_source": "Original Team 8 studio placeholder",
-    "image_note": "Original studio placeholder replaces an ambiguous, mismatched or cropped source photo."
+    "image_note": "Original studio placeholder replaces an ambiguous, mismatched or cropped source photo.",
+    "image_shared_with": "kitchen-3"
   },
   {
     "id": "kitchen-7",
@@ -3078,7 +3091,8 @@
     "feature_version": "features-v1",
     "price_band": "premium",
     "image_source": "Original Team 8 studio placeholder",
-    "image_note": "Original studio placeholder replaces an ambiguous, mismatched or cropped source photo."
+    "image_note": "Original studio placeholder replaces an ambiguous, mismatched or cropped source photo.",
+    "image_shared_with": "kitchen-1"
   },
   {
     "id": "bed-king",
@@ -3192,10 +3206,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 4.0",
     "feature_version": "features-v1",
-    "price_band": "premium"
+    "price_band": "premium",
+    "image_shared_with": "bed-curtain"
   },
   {
     "id": "bed-net",
@@ -3234,14 +3249,15 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "Public domain",
     "feature_version": "features-v1",
     "price_band": "mid",
     "image_source": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
     "image_artist": "Azt3cs",
     "image_license_url": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
-    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures."
+    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures.",
+    "image_shared_with": "net-single"
   },
   {
     "id": "baby-monitor",
@@ -3354,14 +3370,15 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "Public domain",
     "feature_version": "features-v1",
     "price_band": "budget",
     "image_source": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
     "image_artist": "Azt3cs",
     "image_license_url": "https://commons.wikimedia.org/wiki/File:Javanbedcanopy.JPG",
-    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures."
+    "image_note": "Representative product-type photograph; brand, size and price are demo fixtures.",
+    "image_shared_with": "net-single"
   },
   {
     "id": "baby-curtain",
@@ -3395,10 +3412,11 @@
     "rating_source": "synthetic-demo",
     "reviews_source": "synthetic-demo",
     "delivery_source": "synthetic-demo",
-    "image_kind": "representative",
+    "image_kind": "studio-placeholder",
     "license": "CC BY-SA 4.0",
     "feature_version": "features-v1",
-    "price_band": "premium"
+    "price_band": "premium",
+    "image_shared_with": "bed-curtain"
   },
   {
     "id": "tp-perioe",
@@ -3642,7 +3660,8 @@
     "price_band": "premium",
     "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 220\" role=\"img\" aria-label=\"Sensodyne Sensitive 75ml x2\"><defs><linearGradient id=\"bg\" x2=\"1\" y2=\"1\"><stop stop-color=\"#fafbfc\"/><stop offset=\"1\" stop-color=\"#ffe39a\" stop-opacity=\".15\"/></linearGradient></defs><rect width=\"200\" height=\"220\" fill=\"url(#bg)\"/><ellipse cx=\"100\" cy=\"181\" rx=\"65\" ry=\"9\" fill=\"#243342\" opacity=\".08\"/><path d=\"M60 28h80l-9 132H69z\" fill=\"#ffe39a\" stroke=\"#35404b\" stroke-width=\"2\" stroke-linejoin=\"round\"/><rect x=\"72\" y=\"160\" width=\"56\" height=\"20\" rx=\"4\" fill=\"#eee\"/><circle cx=\"88\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><circle cx=\"111\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><path d=\"M92 116q8 8 16 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\"/></svg>",
     "image_source": "Original Team 8 studio placeholder",
-    "image_note": "Original studio placeholder replaces an ambiguous, mismatched or cropped source photo."
+    "image_note": "Original studio placeholder replaces an ambiguous, mismatched or cropped source photo.",
+    "image_shared_with": "tp-sensitive"
   },
   {
     "id": "tb-perioe",
@@ -6195,7 +6214,8 @@
     "license": "CC0-1.0",
     "feature_version": "features-v1",
     "price_band": "mid",
-    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 220\" role=\"img\" aria-label=\"Illiyoon Ceramide Ato Lotion 350ml\"><defs><linearGradient id=\"bg\" x2=\"1\" y2=\"1\"><stop stop-color=\"#fafbfc\"/><stop offset=\"1\" stop-color=\"#ffb8cd\" stop-opacity=\".15\"/></linearGradient></defs><rect width=\"200\" height=\"220\" fill=\"url(#bg)\"/><ellipse cx=\"100\" cy=\"181\" rx=\"65\" ry=\"9\" fill=\"#243342\" opacity=\".08\"/><path d=\"M93 36V24h41v8h-25v9\" fill=\"#37434e\"/><path d=\"M79 42h42l14 18v107q0 13-13 13H78q-13 0-13-13V60z\" fill=\"#ffb8cd\" stroke=\"#35404b\" stroke-width=\"2\" stroke-linejoin=\"round\"/><rect x=\"71\" y=\"84\" width=\"58\" height=\"57\" rx=\"3\" fill=\"#fff\" opacity=\".88\"/><circle cx=\"88\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><circle cx=\"111\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><path d=\"M92 116q8 8 16 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\"/></svg>"
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 220\" role=\"img\" aria-label=\"Illiyoon Ceramide Ato Lotion 350ml\"><defs><linearGradient id=\"bg\" x2=\"1\" y2=\"1\"><stop stop-color=\"#fafbfc\"/><stop offset=\"1\" stop-color=\"#ffb8cd\" stop-opacity=\".15\"/></linearGradient></defs><rect width=\"200\" height=\"220\" fill=\"url(#bg)\"/><ellipse cx=\"100\" cy=\"181\" rx=\"65\" ry=\"9\" fill=\"#243342\" opacity=\".08\"/><path d=\"M93 36V24h41v8h-25v9\" fill=\"#37434e\"/><path d=\"M79 42h42l14 18v107q0 13-13 13H78q-13 0-13-13V60z\" fill=\"#ffb8cd\" stroke=\"#35404b\" stroke-width=\"2\" stroke-linejoin=\"round\"/><rect x=\"71\" y=\"84\" width=\"58\" height=\"57\" rx=\"3\" fill=\"#fff\" opacity=\".88\"/><circle cx=\"88\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><circle cx=\"111\" cy=\"105\" r=\"3\" fill=\"#44332e\"/><path d=\"M92 116q8 8 16 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\"/></svg>",
+    "image_shared_with": "hair-illiyoon"
   },
   {
     "id": "skin-atopalm",

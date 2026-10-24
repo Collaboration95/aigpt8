@@ -31,7 +31,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;min-he
 .ctx{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:-4px}
 .provenance{font-size:12px;line-height:1.4;font-weight:600;opacity:.7;display:flex;align-items:center;gap:6px;padding:0 2px}
 .provenance::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex:none}
-.pm-block .inference.t8-inference{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;max-width:100%;min-height:40px;padding:8px 14px;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);border-radius:20px;background:color-mix(in srgb,var(--fg) 7%,transparent);color:inherit;font-size:13px;font-weight:600;line-height:1.35;font-family:inherit;white-space:normal;text-align:left;}
+.pm-block .inference.t8-inference{display:inline-flex;flex-direction:column;align-items:flex-start;justify-content:center;max-width:100%;min-height:44px;padding:8px 14px;border:1px solid color-mix(in srgb,var(--fg) 12%,transparent);border-radius:20px;background:color-mix(in srgb,var(--fg) 7%,transparent);color:inherit;font-size:13px;font-weight:600;line-height:1.35;font-family:inherit;white-space:normal;text-align:left;}
 .pm-block>.inference.t8-inference{align-self:flex-start}
 .pm-block .inference.t8-inference small{font-size:12px;font-weight:500;opacity:.7;margin-top:4px;line-height:1.4}
 .pm-block .inference.t8-inference>span:first-child::first-letter{color:var(--acc)}
@@ -63,10 +63,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;min-he
   <div class="home" id="home"><div class="mark">C</div>
   <h1>Hey Guru, what are you planning to buy?</h1></div>
  </div>
- <div class="bar"><button class="sur" id="sur">Surprise me</button>
-  <form class="comp" id="f"><button type="button" aria-label="Add"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
-  <input id="in" placeholder="Ask anything" autocomplete="off" enterkeyhint="send">
-  <button type="button" aria-label="Mic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></button>
+ <div class="bar"><button class="sur" id="sur">Reorder toothpaste</button>
+  <form class="comp" id="f" style="padding-left:16px"><input id="in" placeholder="Ask anything" autocomplete="off" enterkeyhint="send">
   <button class="send" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button></form></div>
 </div></div>
 <script src="/catalog.js"></script>
@@ -170,7 +168,7 @@ function enrichSpec(spec){
 }
 [...plan.entry,...plan.asks.flatMap(a=>a.parts)].forEach(enrichSpec); window.SEED=SEED; window.plan=plan;
 if(QS.get('debug')==='1'){const d=$('#dbg');d.hidden=false;d.textContent='#'+plan.id+' · '+plan.theme+' · '+plan.layout+' · '+plan.entry.map(e=>e.p).join('+')}
-let S={cad:6}, live=null, locked=false, started=false, cartN=0, nStage=0, lastBub=null;
+let S={cad:0}, live=null, locked=false, started=false, cartN=0, nStage=0, lastBub=null;
 function setCart(n){if(window.Orders)n=Orders.count();cartN=Math.max(0,n);const b=$('#badge');if(cartN)b.textContent=cartN;b.classList.toggle('on',cartN>0)}
 setCart(0);if(window.Orders&&Orders.onChange)Orders.onChange(()=>setCart(0));
 const sp=document.createElement('div');sp.className='sp';
@@ -255,10 +253,10 @@ function shipBlock(kind){
  }
  if(kind==='repeat')parts.trail=P.PathTrail({steps:['Today',dateIn(S.cad),dateIn(S.cad*2)],at:0});
  if(!S.brush&&!S.noAdd&&(kind==='usual'||kind==='pick'))parts.addon=P.MultiTick({label:'Add?',instant:true,options:[{v:'brush',l:'Toothbrush',n:'+'+won(BRUSH.p)}],onAnswer:()=>turn('Add toothbrush',()=>{S.brush=BRUSH;shipBlock('bundle')})});
- if((kind==='usual'||kind==='pick'||kind==='bundle'))parts.cad=P.Subscription({label:'Repeat?',value:S.cad||6,options:[4,6,8],onAnswer:(w)=>turn('Every '+w+'w',()=>{S.cad=w;shipBlock('repeat')})});
+ if((kind==='usual'||kind==='pick'||kind==='bundle'))parts.cad=P.Subscription({label:'Repeat? (optional)',value:S.cad||0,options:[{v:0,l:'One time'},{v:4,l:'4w'},{v:6,l:'6w'},{v:8,l:'8w'}],onAnswer:(w)=>turn(w?'Every '+w+'w':'One time',()=>{S.cad=w;shipBlock(w?'repeat':'pick')})});
  parts.ship=shipEl(blk);
  if(kind!=='repeat')parts.fb=P.FeedbackBar({options:['Too pricey','Other brand'],onAnswer:(v,l)=>turn(l,()=>v==='Too pricey'?pricey():brands())});
- parts.memory=inferred('Repeat every '+S.cad+'w'+(S.cad===6?' · from your order history':''),S.cad===6?'From your toothpaste order history':'Your selected schedule');
+ parts.memory=S.cad?inferred('Repeat every '+S.cad+'w','Your selected schedule. Cancel anytime in Orders.'):inferred('Usually every 6w · from your order history','You bought this about every 6 weeks. One-time order unless you pick a repeat above.');
  const order=['display','memory','ship','note','trail',...plan.ship.order,'fb'];
  order.forEach(k=>parts[k]&&blk.add(parts[k]));
  live={kind:'ship',demo:()=>parts.ship.pick()};mount(blk);
@@ -276,21 +274,31 @@ function brands(){
  blk.add(el);live={kind:'ask',demo:()=>el.pick(0)};mount(blk);
 }
 function receipt(snap,order){
- const blk=P.Block({layout:'plain',theme:'plain'});
- const rc=P.Receipt({items:snap.items,total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onAnswer:(v,l)=>bubble(l,blk),onUndo:f=>{if(window.Orders&&order){if(f&&Orders.cancel)Orders.cancel(order.id);else if(!f&&Orders.restore)Orders.restore(order.id);else {const orders=Orders.list().filter(o=>o.id!==order.id);if(!f)orders.unshift(order);localStorage.setItem('t8-orders',JSON.stringify(orders));dispatchEvent(new Event('t8-orders'))}}setCart(0)}});
- blk.add(rc);if(order){const link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+order.id,textContent:'Track order →'});link.classList.add('track');link.addEventListener('click',()=>bubble('Track order',blk));blk.add(link)}setCart(cartN+snap.items.length);live=null;mount(blk);
+ const blk=P.Block({layout:'plain',theme:'plain'});let link=null;
+ const rc=P.Receipt({items:snap.items,total:snap.total,note:S.cad?'↻'+S.cad+'w':'',onAnswer:(v,l)=>bubble(l,blk),onUndo:f=>{if(link)link.hidden=f;if(window.Orders&&order){if(f&&Orders.cancel)Orders.cancel(order.id);else if(!f&&Orders.restore)Orders.restore(order.id);else {const orders=Orders.list().filter(o=>o.id!==order.id);if(!f)orders.unshift(order);localStorage.setItem('t8-orders',JSON.stringify(orders));dispatchEvent(new Event('t8-orders'))}}setCart(0)}});
+ blk.add(rc);if(order){link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+order.id,textContent:'Track order →'});link.classList.add('track');link.dataset.orderLink=order.id;link.addEventListener('click',()=>bubble('Track order',blk));blk.add(link)}setCart(cartN+snap.items.length);live=null;mount(blk);
 }
 
 /* ---------- turns ---------- */
+function refine(t){
+ const l=t.toLowerCase();
+ if(/sensitiv|gentle/.test(l))return()=>{S.sens='gentle';S.alt=null;S.mode=undefined;shipBlock('pick')};
+ if(/whiten|white/.test(l))return()=>{S.sens='white';S.alt=null;S.mode=undefined;shipBlock('pick')};
+ if(/cheap|pricey|expensive|budget/.test(l))return()=>pricey();
+ const f=Object.keys(FL).find(k=>l.includes(k)||(k==='berry'&&/kid/.test(l)));
+ if(f)return()=>{S.flavour=f;S.alt=null;S.mode=undefined;shipBlock('pick')};
+ return null;
+}
+function note(text){const d=document.createElement('div');d.className='pm-note';d.style.cssText='font-size:14px;line-height:1.45;color:#444;background:#f5f5f7;border-radius:16px;padding:12px 14px;margin:8px 0;max-width:300px';d.textContent=text;mount(d)}
 function run(t){
- t=(t||'').trim()||'toothpaste';$('#sur').hidden=true;
- if(started){return}
- started=true;locked=true;const home=$('#home');
+ t=(t||'').trim()||'toothpaste';
+ if(started){const fn=refine(t);if(fn)return turn(t,fn);if(locked)return;bubble(t);return note('Noted. I can switch flavour, whitening/sensitive, or find a cheaper one. Try “sensitive” or “cheaper”.')}
+ $('#sur').hidden=true;started=true;locked=true;const home=$('#home');
  const go=async()=>{bubble(t);await think(true);specBlock('entry',plan.entry,plan.title);locked=false};
  if(home){home.classList.add('out');setTimeout(()=>{home.remove();go()},200)}else go();
 }
-$('#f').onsubmit=e=>{e.preventDefault();const v=$('#in').value;$('#in').value='';run(v)};
-$('#sur').onclick=()=>run('toothpaste');
+$('#f').onsubmit=e=>{e.preventDefault();if(locked&&started)return;const v=$('#in').value;$('#in').value='';run(v)};
+$('#sur').onclick=()=>run('reorder my toothpaste');
 
 /* ---------- demo hooks ---------- */
 const adv=()=>{if(!started)return run('toothpaste');if(live&&!locked)live.demo()};

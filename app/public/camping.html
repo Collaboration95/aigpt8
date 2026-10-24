@@ -305,7 +305,7 @@ body.path #comp button{opacity:.55}
 .stk .tg.c{background:#ffe45e}
 #feed .bub{margin-bottom:6px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.vs.picked .opt.lose{opacity:.25;transform:scale(.8)}}
-</style></head>
+</style><style>.ico{overflow:hidden;background:#fff!important}.kw .ico .pimg,.kw .ico img,.kw .ico svg{width:100%;height:100%;object-fit:contain;filter:none}.th span{overflow:hidden;background:#fff}.th .pimg,.th img,.th svg{width:100%;height:100%;object-fit:cover;filter:none}.pre{font-size:13px;font-weight:700;margin:2px 0 8px;opacity:.85}.cr.rec{outline:3px solid var(--acc);outline-offset:-3px}.srcl{margin:2px 0 10px}.srcb{min-height:44px;padding:0 4px;font-size:13px;font-weight:700;text-align:left;color:inherit;opacity:.85}.srcs{font-size:13px;line-height:1.45;padding:2px 4px 6px}.srcs p{margin:0 0 8px}.srcc{display:flex;gap:8px;flex-wrap:wrap}.bub{}</style></head>
 <body>
 <div id="stage">
 <div id="steps"><h3>Steps (arrow keys)</h3>
@@ -394,19 +394,19 @@ function shipKit(blk){
  if(!blk||blk.dataset.shipped||blk.classList.contains('frozen')||!blk._t())return;
  const box=blk.querySelector('[data-box]');if(!box)return;
  const ic=blk._ic(),tt=blk._t();
- blk.dataset.shipped=1;blk.classList.add('shipped');
+ blk.dataset.shipped=1;blk.classList.add('shipped');bubble('Ship it',true);
  const order=window.Orders?Orders.add({items:blk._items(),total:tt,flow:'camping'}):{id:'T8-'+Date.now()};blk._order=order;setCart(true);
  box.innerHTML=`<div class="zoom">${ROCKET}<b>ZOOM!</b></div>`;
  setTimeout(()=>{
   if(!blk.dataset.shipped||!box.querySelector('.zoom'))return;
-  box.innerHTML=`<div class="rcpt"><div class="th">${ic.slice(0,3).map(k=>`<span><svg viewBox="0 0 38 38">${I[k]}</svg></span>`).join('')}</div><div class="m"><b>${won(tt)}</b><small>Rocket · tomorrow</small></div><button class="undo" data-undo>Undo</button></div><div class="trk"></div>`;
+  box.innerHTML=`<div class="rcpt"><div class="th">${ic.slice(0,3).map(k=>`<span data-pid="${k}">${pimg(k)}</span>`).join('')}</div><div class="m"><b>${won(tt)}</b><small>Rocket · tomorrow</small></div><button class="undo" data-undo>Undo</button></div><div class="trk"></div>`;
   if(window.AI)box.querySelector('.trk').append(AI.trackLink(order));
   box.querySelector('[data-undo]').disabled=blk.classList.contains('frozen');
  },800);
 }
 function cancelOrder(o){if(!o)return;if(window.Orders?.remove)Orders.remove(o.id);else if(window.Orders?.cancel)Orders.cancel(o.id);else{const a=JSON.parse(localStorage.getItem('t8-orders')||'[]');localStorage.setItem('t8-orders',JSON.stringify(a.filter(x=>x.id!==o.id)));window.dispatchEvent(new Event('t8-orders'))}setCart(true)}
 function undoKit(blk){
- if(!blk.dataset.shipped)return;
+ if(!blk.dataset.shipped)return;bubble('Undo order',true);
  cancelOrder(blk._order);blk._order=null;
  delete blk.dataset.shipped;blk.classList.remove('shipped');
  blk.querySelector('[data-box]').innerHTML=shipBtn(blk._t());updShip(blk);
@@ -420,22 +420,22 @@ const zz=c=>`<svg class="zz ${c}" viewBox="0 0 64 14"><polyline points="2,12 12,
 const avs=n=>`<svg viewBox="0 0 30 22" aria-hidden="true">${[...Array(n)].map((_,i)=>`<circle cx="${n===1?15:n===2?9+i*12:6+i*9}" cy="11" r="${n===3?4.5:6}" fill="#ffd9b0" stroke="#111" stroke-width="2"/>`).join('')}</svg>`;
 
 /* ---------- flow ---------- */
-const STN=[['A','Weather'],['B','Vibe'],['C','Style'],['D','Crew'],['E','Look'],['🎁','Kit']];
-const TITLES=['Weather?','Your vibe?','Which style?',"Who's coming?",'Your look?'];
-const KEYS=['si','vibe','style','crew','look'];
+const STN=[['A','Vibe'],['B','Crew'],['🎁','Kit']],KIT=STN.length-1;
+const TITLES=['Your vibe?',"Who's coming?"];
+const KEYS=['vibe','crew'];
 const LAB={chill:'Chill',wild:'Wild',dome:'Dome',tunnel:'Tunnel',solo:'Solo',duo:'Duo',squad:'Squad',minimal:'Minimal',retro:'Retro pop'};
 const ans={};let step=-1,busy=false,blocks=[],kits=[],lastU=null,lastEl=null;
-const now=seasonNow(),theme=()=>vars(SEAS[ans.si!=null?ans.si:now]);
+const now=seasonNow(),theme=()=>vars(SEAS[ans.si!=null?ans.si:now]);ans.si=now;ans.crew=null;ans.style='dome';ans.look='minimal';const CAT=window.CATALOG;
 const confetti=[...Array(8)].map((_,i)=>`<em class="cf" style="--a:${i*45}deg;--c:${['#ffe45e','#ff5d9e','#5cc8ff','#7cf29a'][i%4]}"></em>`).join('');
-const trail=(cur,win)=>`<div class="trail" aria-hidden="true">${STN.map((s,i)=>{const w=win&&i===5,d=i<cur;return `${i?`<b class="tl${i<=cur?' on':''}"></b>`:''}<span class="tp${d?' done':''}${i===cur&&!win?' cur':''}${w?' win':''}"><i>${d?'✓':s[0]}</i>${w?confetti:''}</span>`}).join('')}</div>`;
+const trail=(cur,win)=>`<div class="trail" aria-hidden="true">${STN.map((s,i)=>{const w=win&&i===KIT,d=i<cur;return `${i?`<b class="tl${i<=cur?' on':''}"></b>`:''}<span class="tp${d?' done':''}${i===cur&&!win?' cur':''}${w?' win':''}"><i>${d?'✓':s[0]}</i>${w?confetti:''}</span>`}).join('')}</div>`;
 
 function place(el){let sp=$('#sp');if(sp)sp.remove();feed.appendChild(el);sp=document.createElement('div');sp.id='sp';feed.appendChild(sp);lastEl=el;respace()}
 function respace(){const sp=$('#sp');if(!sp||!lastEl)return;const t=Math.max(0,(lastU||lastEl).offsetTop-4);sp.style.height=Math.max(0,t+feed.clientHeight-(lastEl.offsetTop+lastEl.offsetHeight+18))+'px'}
-function bubble(text){
- const u=document.createElement('div');u.className='bub';u.textContent=text;lastU=u;place(u);
+function bubble(text,keep){
+ const u=document.createElement('div');u.className='bub';u.textContent=text;if(keep){const sp=$('#sp');if(sp)sp.remove();feed.appendChild(u);return}lastU=u;place(u);
  requestAnimationFrame(()=>{respace();feed.scrollTo({top:Math.max(0,u.offsetTop-4),behavior:'smooth'})});
 }
-function freeze(b){b.classList.add('frozen');b.querySelectorAll('button').forEach(x=>x.disabled=true)}
+function freeze(b){b.classList.add('frozen');b.querySelectorAll('button:not(.srcb)').forEach(x=>x.disabled=true)}
 function add(el){place(el);blocks.push(el);requestAnimationFrame(respace)}
 
 /* path map */
@@ -478,7 +478,7 @@ const hill=(c,y)=>`<path d="M0 ${y}Q40 ${y-30} 80 ${y-6}T160 ${y-14}V150H0Z" fil
 const SVG_CHILL='<svg viewBox="0 0 160 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="vc1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe8ff"/><stop offset="1" stop-color="#ffe9c9"/></linearGradient></defs><rect width="160" height="128" fill="url(#vc1)"/><circle cx="122" cy="30" r="15" fill="#ffd23f"/><ellipse cx="38" cy="26" rx="20" ry="7" fill="#fff"/><ellipse cx="54" cy="21" rx="12" ry="6" fill="#fff"/><path d="M0 76Q40 50 80 70T160 62V128H0Z" fill="#7bd36b"/><path d="M0 92H160V128H0Z" fill="#5cc8ff"/><path d="M14 100q10-5 20 0t20 0M84 112q10-5 20 0t20 0" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/><rect x="22" y="48" width="6" height="46" rx="3" fill="#5b3a29"/><rect x="92" y="48" width="6" height="46" rx="3" fill="#5b3a29"/><circle cx="25" cy="42" r="14" fill="#3aa65a"/><circle cx="95" cy="42" r="14" fill="#3aa65a"/><path d="M26 62Q60 94 94 62" stroke="#ff8a4c" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M26 62Q60 94 94 62" stroke="#111" stroke-width="1.8" fill="none" stroke-dasharray="3 5"/></svg>';
 const SVG_WILD='<svg viewBox="0 0 160 128" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><defs><linearGradient id="vc2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6aa8ff"/><stop offset="1" stop-color="#d9ecff"/></linearGradient></defs><rect width="160" height="128" fill="url(#vc2)"/><path d="M-5 100L38 40L60 68L96 16L165 100Z" fill="#8ea0b8" stroke="#111" stroke-width="3" stroke-linejoin="round"/><path d="M96 16L80 40L96 34L110 44ZM38 40L28 55L38 50L48 57Z" fill="#fff" stroke="#111" stroke-width="2.2" stroke-linejoin="round"/><path d="M0 100Q50 84 100 98T160 92V128H0Z" fill="#2f9e44"/>'+pine(30,112,.55,'#1f6b3c')+pine(60,116,.45,'#2b7a4b')+pine(128,112,.6,'#1f6b3c')+'<path d="M112 28l8-5 6 5" stroke="#111" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
 function qVibe(){
- return mkQ(1,`<div class="vs"><button class="opt vc" data-a="vibe" data-v="chill" aria-pressed="false">${SVG_CHILL}<span class="cap"><b>Chill</b><small>Lakeside</small></span></button><button class="opt vc" data-a="vibe" data-v="wild" aria-pressed="false">${SVG_WILD}<span class="cap"><b>Wild</b><small>Mountain</small></span></button><span class="vsb">VS</span></div>`);
+ return mkQ(0,`<div class="vs"><button class="opt vc" data-a="vibe" data-v="chill" aria-pressed="false">${SVG_CHILL}<span class="cap"><b>Chill</b><small>Lakeside</small></span></button><button class="opt vc" data-a="vibe" data-v="wild" aria-pressed="false">${SVG_WILD}<span class="cap"><b>Wild</b><small>Mountain</small></span></button><span class="vsb">VS</span></div>`);
 }
 const DOME='<svg viewBox="0 0 120 84" aria-hidden="true"><path d="M0 74H120" stroke="#111" stroke-width="3"/><path d="M14 74Q60 -10 106 74Z" fill="#ff7a3d" stroke="#111" stroke-width="3.5" stroke-linejoin="round"/><path d="M60 10Q38 40 36 74M60 10Q82 40 84 74" stroke="#111" stroke-width="2.2" fill="none"/><path d="M48 74Q60 44 72 74Z" fill="#3b2a20" stroke="#111" stroke-width="2.5"/></svg>';
 const TUNNEL='<svg viewBox="0 0 120 84" aria-hidden="true"><path d="M0 74H120" stroke="#111" stroke-width="3"/><path d="M8 74C8 40 26 30 60 30C94 30 112 40 112 74Z" fill="#2f9e8f" stroke="#111" stroke-width="3.5" stroke-linejoin="round"/><path d="M34 33Q30 54 32 74M60 30V74M86 33Q90 54 88 74" stroke="#111" stroke-width="2.2" fill="none"/><path d="M100 74Q104 52 94 44" stroke="#111" stroke-width="2.2" fill="none"/><path d="M42 74Q50 52 62 74Z" fill="#3b2a20" stroke="#111" stroke-width="2.5"/></svg>';
@@ -490,7 +490,7 @@ function qStyle(){
 const ppl=n=>{const xs={1:[50],2:[34,66],4:[16,39,62,85]}[n],sc=n===4?.9:1.05;return `<svg viewBox="0 0 100 58" aria-hidden="true">${xs.map((x,i)=>`<g transform="translate(${x} 54) scale(${sc})"><rect x="-8" y="-24" width="16" height="22" rx="7" fill="${PCOL[i]}" stroke="#111" stroke-width="2.5"/><circle cy="-33" r="10" fill="#ffd9b0" stroke="#111" stroke-width="2.5"/><circle cx="-3.5" cy="-34" r="1.7" fill="#111"/><circle cx="3.5" cy="-34" r="1.7" fill="#111"/><path d="M-3-29Q0-26 3-29" stroke="#111" stroke-width="1.6" fill="none"/></g>`).join('')}</svg>`};
 const PCOL=['#ff6b6b','#5cc8ff','#ffd23f','#7cf29a'];
 function qCrew(){
- return mkQ(3,`<div class="cw">${[['solo',1],['duo',2],['squad',4]].map(([k,n])=>`<button class="opt cr" data-a="crew" data-v="${k}" aria-pressed="false">${ppl(n)}<b>${LAB[k]}</b></button>`).join('')}</div>`);
+ return mkQ(1,`<div class="pre">✦ Duo preselected · from your King bed order (Mar)</div><div class="cw">${[['solo',1],['duo',2],['squad',4]].map(([k,n])=>`<button class="opt cr${k==='duo'?' rec':''}" data-a="crew" data-v="${k}" aria-pressed="false">${ppl(n)}<b>${LAB[k]}${k==='duo'?' ✦':''}</b></button>`).join('')}</div>`);
 }
 const PAL={minimal:['#c9b48a','#8a9a6b','#b86b4b','#4a4a4a','#a7a08f'],retro:['#ff5d9e','#ff9f1c','#2ec4b6','#8e5bd9','#7bd62f']};
 const PRE={minimal:['Sand','Olive','Clay','Stone','Oat'],retro:['Pop','Mango','Teal','Berry','Lime']};
@@ -498,7 +498,7 @@ function qLook(){
  const c=(k,bg,ic)=>`<button class="opt mb" style="--mbg:${bg}" data-a="look" data-v="${k}" aria-pressed="false"><div class="sw">${PAL[k].slice(0,4).map(x=>`<i style="background:${x}"></i>`).join('')}</div><div class="tiles">${ic.map((n,i)=>`<span style="background:${PAL[k][(i+1)%4]}"><svg viewBox="0 0 38 38">${I[n]}</svg></span>`).join('')}</div><b>${LAB[k]}</b></button>`;
  return mkQ(4,`<div class="vs">${c('minimal','#f3ece0',['tent','chair','lantern'])}${c('retro','#fff0fa',['tent','chair','lantern'])}</div>`);
 }
-const BUILD=[qWeather,qVibe,qStyle,qCrew,qLook];
+const BUILD=[qVibe,qCrew];
 function showQ(i){
  step=i;const el=BUILD[i]();add(el);if(el._init)requestAnimationFrame(el._init);busy=false;
 }
@@ -509,61 +509,71 @@ function answer(i,v,typed){
  const label=b._mark?b._mark(v):markBtn(b,v);
  ans[KEYS[i]]=v;freeze(b);
  setTimeout(()=>bubble(typed||label),200);
- setTimeout(()=>i<4?showQ(i+1):showKit(),580);
+ setTimeout(()=>i<1?showQ(i+1):showKit(),580);
  return true;
 }
 
-/* ---------- kit ---------- */
-const GEAR={spring:['tarp',[['Rain Tarp',34900],['Poncho Set',19900]]],sunny:['cooler',[['Cooler Box',39900],['Cool Bag',24900]]],autumn:['blanket',[['Fleece Blanket',27900],['Wool Blanket',39900]]],winter:['heater',[['Gas Heater',59000],['Heat Pad',34900]]]};
-const TEMP={spring:0,sunny:5,autumn:-5,winter:-15},BAGP={spring:59000,sunny:39000,autumn:69000,winter:109000};
-const NOUN={tent:'tent',bag:'bag',gear:'gear',vibe:'pack',light:'lantern',lights:'lights'};
+/* ---------- kit (real catalogue products) ---------- */
+const cat=id=>CAT&&CAT.get(id);
+const pimg=(id,cls='')=>CAT&&cat(id)?CAT.imgHTML(cat(id),cls):'';
 const rnd=p=>Math.round(p/100)*100;
 function build(m){
- const S=SEAS[ans.si].k,ni={solo:0,duo:1,squad:2}[ans.crew],sq=ni===2,t=TEMP[S],bp=BAGP[S]*[1,1.8,3.4][ni],wild=ans.vibe==='wild';
+ const S=SEAS[ans.si].k,ni={solo:0,duo:1,squad:2}[ans.crew||'duo'],ppl_=[1,2,4][ni],cold=S==='autumn'||S==='winter',wild=ans.vibe==='wild';
  const D=[
-  ['tent','tent',[['Dome Tent',89000],['Tunnel Tent',129000]],ans.style==='dome'?0:1,sq?2:1],
-  ['bag','bag',[[`${['Sleeping Bag','Double Bag','Bag Set'][ni]} ${t}°C`,bp],[`Quilt Bag ${t}°C`,bp*.8]],0,1],
-  ['gear',GEAR[S][0],GEAR[S][1],0,1],
-  ['vibe',wild?'pack':'hammock',wild?[['Trail Pack',79000],['Day Pack',49000]]:[['Hammock + Straps',29900],['Camp Chair',24900,'chair']],0,sq&&!wild?2:1],
-  ['light','lantern',[['LED Lantern',22900],['Headlamp',17900]],0,1]];
- if(m.colour>=2)D.push(['lights','lights',[['Fairy Lights',19900],['LED Strip',14900]],0,1]);
- const lvl=m.colour>=1?'retro':'minimal',out=[];
- D.forEach(([slot,k,v,i0,mult],n)=>{
+  ['tent',['camp-tent'],ni===2?2:1],
+  ['bag',S==='winter'?['camp-bag-winter','camp-bag']:['camp-bag','camp-bag-winter'],ppl_],
+  ['gear',cold?['sleep-blanket','winter-warmer']:['mq-camping-net','kitchen-bottle'],1],
+  ['vibe',wild?['kitchen-stove','kitchen-camp-pot']:['camp-chair','desk-camp'],wild?1:ppl_],
+  ['light',['camp-lantern'],1]];
+ const out=[];
+ D.forEach(([slot,ids,qty])=>{
   const s=m.s[slot]||{};if(s.gone)return;
-  const idx=(i0+(s.swap||0))%2,[nm0,pr0,ic]=v[idx];let nm=nm0,pr=pr0*mult;
-  if(slot==='tent'&&sq)nm+=' ×2';
-  if(s.light){nm='UL '+nm;pr*=1.3}
-  if(s.cheap){pr*=Math.pow(.75,s.cheap);nm+=' Lite'}
-  out.push({slot,k:ic||k,name:PRE[lvl][n%5]+' '+nm,price:rnd(pr),col:PAL[lvl][n%5],cheap:s.cheap||0});
+  const list=ids.filter(cat);if(!list.length)return;
+  let idx=(s.swap||0)%list.length;
+  const cheapest=list.reduce((b,id,i)=>cat(id).price<cat(list[b]).price?i:b,0);
+  if(s.cheap&&cat(list[cheapest]).price<cat(list[idx]).price)idx=cheapest;
+  const pr=cat(list[idx]),canCheap=list.some(id=>cat(id).price<pr.price);
+  out.push({slot,id:pr.id,k:pr.id,product:pr,name:pr.name,qty,unit:pr.price,price:pr.price*qty,cheap:s.cheap||0,canCheap,canSwap:list.length>1});
  });
  return out;
 }
 function makeKit(m,prev,label,v){
  const items=build(m);let gone=[];
  if(prev){
-  items.forEach(it=>{const p=prev.items.find(x=>x.slot===it.slot);if(!p)it.st='new';else if(p.price!==it.price){it.st='chg';it.old=p.price}else if(p.name!==it.name)it.st='chg';else it.st='same'});
+  items.forEach(it=>{const p=prev.items.find(x=>x.slot===it.slot);if(!p)it.st='new';else if(p.price!==it.price){it.st='chg';it.old=p.price}else if(p.id!==it.id)it.st='chg';else it.st='same'});
   gone=prev.items.filter(p=>!items.some(x=>x.slot===p.slot));
  }else items.forEach(i=>i.st='same');
  const total=items.reduce((t,i)=>t+i.price,0);
  return {v,items,gone,total,delta:prev?total-prev.total:0,label,mods:m};
 }
+const qtyTxt=it=>it.qty>1?` <small>×${it.qty}</small>`:'';
+function srcLine(){
+ const el=document.createElement('div');el.className='srcl';
+ const crewTxt=ans.crew==='duo'||!ans.crew?'Duo · from your King bed order (Mar)':LAB[ans.crew]+' · your pick';
+ el.innerHTML=`<button class="srcb" type="button" aria-expanded="false">✦ ${SEAS[ans.si].n} · ${LAB[ans.crew||'duo']} · from your past order <span>▾</span></button><div class="srcs" hidden><p>${SEAS[ans.si].n}: from today's date.<br>${crewTxt}. Demo history, not a real account.</p><div class="srcc">${['solo','duo','squad'].map(c=>`<button class="qc${c===(ans.crew||'duo')?' sel':''}" type="button" data-crew="${c}">${LAB[c]}</button>`).join('')}</div></div>`;
+ const b=el.querySelector('.srcb'),sh=el.querySelector('.srcs');b.onclick=()=>{sh.hidden=!sh.hidden;b.setAttribute('aria-expanded',String(!sh.hidden))};
+ return el;
+}
 function kitBlock(kit){
  const m=kit.mods;
- const rows=kit.items.map((it,n)=>`<div class="stk ${it.st}" data-slot="${it.slot}" style="--i:${n};--r:${[-.8,.6,-.4][n%3]}deg"><div class="ico" style="background:${it.col}"><svg viewBox="0 0 38 38">${I[it.k]}</svg></div><div class="meta"><div class="nm">${it.name}</div><div><span class="pt">${won(it.price)}</span>${it.old?`<s class="op">${won(it.old)}</s>`:''}</div></div><button class="nt" data-nt aria-expanded="false">Not this</button><div class="acts"><button class="ab" data-act="swap">Swap</button><button class="ab" data-act="cheaper"${it.cheap>=2?' disabled':''}>Cheaper</button><button class="ab" data-act="remove">Remove</button></div>${it.st==='new'?'<span class="tg n">+new</span>':''}</div>`).join('');
- const gone=kit.gone.map((it,n)=>`<div class="stk gone" style="--i:${kit.items.length+n};--r:1deg"><div class="ico" style="background:${it.col}"><svg viewBox="0 0 38 38">${I[it.k]}</svg></div><div class="meta"><div class="nm"><s>${it.name}</s></div><div><s class="op" style="margin:0">${won(it.price)}</s></div></div><span class="tg g">−removed</span></div>`).join('');
+ const rows=kit.items.map((it,n)=>`<div class="stk ${it.st}" data-slot="${it.slot}" style="--i:${n};--r:${[-.8,.6,-.4][n%3]}deg"><div class="ico" data-pid="${it.id}">${pimg(it.id)}</div><div class="meta"><div class="nm">${it.name}${qtyTxt(it)}</div><div><span class="pt">${won(it.price)}</span>${it.old?`<s class="op">${won(it.old)}</s>`:''}</div></div><button class="nt" data-nt aria-expanded="false">Not this</button><div class="acts">${it.canSwap?'<button class="ab" data-act="swap">Swap</button>':''}<button class="ab" data-act="cheaper"${it.canCheap?'':' disabled'}>Cheaper</button><button class="ab" data-act="remove">Remove</button></div>${it.st==='new'?'<span class="tg n">+new</span>':''}</div>`).join('');
+ const gone=kit.gone.map((it,n)=>`<div class="stk gone" style="--i:${kit.items.length+n};--r:1deg"><div class="ico" data-pid="${it.id}">${pimg(it.id)}</div><div class="meta"><div class="nm"><s>${it.name}</s></div><div><s class="op" style="margin:0">${won(it.price)}</s></div></div><span class="tg g">−removed</span></div>`).join('');
  const d=kit.delta,dl=d?`<span class="dl ${d<0?'dn':'up'}">${d<0?'−':'+'}${won(Math.abs(d))}</span>`:'';
- const fb=[['pricey','Too pricey',0],['heavy','Too heavy',m.heavy],['colour','More colour',m.colour>=2]].map(([k,l,dis])=>`<button class="qc${dis?' sel':''}" data-fb="${k}"${dis?' disabled':''}>${l}</button>`).join('');
- const el=mk(`${trail(5,true)}<div class="kw"><div class="ttl">Kit v${kit.v}${kit.label?` <span class="chip">${kit.label}</span>`:''}</div><div class="rows k">${rows}${gone}</div><div class="sum"><span>Total</span><span><b>${won(kit.total)}</b>${dl}</span></div>${shipBox(kit.total)}<div class="fb">${fb}</div></div>`,theme(),'kit');
- el._t=()=>kit.total;el._items=()=>kit.items.map(i=>({id:'camp-'+i.slot,name:i.name,price:i.price}));el._ic=()=>kit.items.map(i=>i.k);
+ const fb=[['pricey','Too pricey',0],['heavy','Too heavy',m.heavy]].map(([k,l,dis])=>`<button class="qc${dis?' sel':''}" data-fb="${k}"${dis?' disabled':''}>${l}</button>`).join('');
+ const el=mk(`${trail(KIT,true)}<div class="kw"><div class="ttl">Kit v${kit.v}${kit.label?` <span class="chip">${kit.label}</span>`:''}</div><div class="srcmount"></div><div class="rows k">${rows}${gone}</div><div class="sum"><span>Total</span><span><b>${won(kit.total)}</b>${dl}</span></div>${shipBox(kit.total)}<div class="fb">${fb}</div></div>`,theme(),'kit');
+ el.querySelector('.srcmount').append(srcLine());
+ el._t=()=>kit.total;el._items=()=>kit.items.map(i=>({id:i.id,name:i.name+(i.qty>1?' ×'+i.qty:''),price:i.price,img:i.product.img}));el._ic=()=>kit.items.map(i=>i.id);
  if(!kit.items.length)el.querySelector('[data-ship]').disabled=true;
  return el;
 }
+CAT&&CAT.onMode(()=>document.querySelectorAll('[data-pid]').forEach(e=>{e.innerHTML=pimg(e.dataset.pid)}));
 function showKit(){
- step=5;document.body.classList.remove('path');$('#in').placeholder='Ask anything';
- const kit=makeKit({s:{},heavy:0,colour:ans.look==='retro'?1:0},null,null,1);
+ step=KIT;document.body.classList.remove('path');$('#in').placeholder='Ask anything';
+ if(!ans.crew)ans.crew='duo';
+ const kit=makeKit({s:{},heavy:0},null,null,1);
  kits.push(kit);add(kitBlock(kit));busy=false;
 }
-function activeKit(){const b=blocks[blocks.length-1];return step===5&&b&&b.classList.contains('kit')&&!b.classList.contains('frozen')&&!b.dataset.shipped?b:null}
+function activeKit(){const b=blocks[blocks.length-1];return step===KIT&&b&&b.classList.contains('kit')&&!b.classList.contains('frozen')&&!b.dataset.shipped?b:null}
 function feedback(label,fn,pressed){
  const b=activeKit();if(busy||!b)return false;
  const prev=kits[kits.length-1],m=JSON.parse(JSON.stringify(prev.mods));
@@ -576,26 +586,23 @@ function feedback(label,fn,pressed){
 }
 const S_=(m,slot)=>(m.s[slot]=m.s[slot]||{});
 const FB={
- pricey:(m,prev)=>{const it=prev.items.slice().sort((a,b)=>b.price-a.price).slice(0,2);if(!it.length)return false;it.forEach(x=>{const s=S_(m,x.slot);s.cheap=(s.cheap||0)+1})},
- heavy:m=>{if(m.heavy)return false;m.heavy=1;S_(m,'tent').light=1;S_(m,'bag').light=1;S_(m,'gear').gone=1},
- colour:m=>{if(m.colour>=2)return false;m.colour++}
+ pricey:(m,prev)=>{const it=prev.items.filter(x=>x.canCheap).sort((a,b)=>b.price-a.price).slice(0,2);if(!it.length)return false;it.forEach(x=>{const s=S_(m,x.slot);s.cheap=(s.cheap||0)+1})},
+ heavy:m=>{if(m.heavy)return false;m.heavy=1;S_(m,'vibe').gone=1;S_(m,'gear').gone=1}
 };
-const FBL={pricey:'Too pricey',heavy:'Too heavy',colour:'More colour'};
+const FBL={pricey:'Too pricey',heavy:'Too heavy'};
+function setCrew(c,label){feedback(label||LAB[c],()=>{if((ans.crew||'duo')===c)return false;ans.crew=c})}
 function itemAct(row,act,btn){
- const slot=row.dataset.slot,noun=slot==='vibe'?(ans.vibe==='wild'?'pack':'hammock'):NOUN[slot];
+ const slot=row.dataset.slot,noun={tent:'tent',bag:'bag',gear:'gear',vibe:ans.vibe==='wild'?'stove':'chair',light:'lantern'}[slot];
  const L={swap:'Swap',cheaper:'Cheaper',remove:'Remove'}[act]+' '+noun;
  feedback(L,m=>{const s=S_(m,slot);if(act==='swap')s.swap=(s.swap||0)+1;else if(act==='cheaper')s.cheap=(s.cheap||0)+1;else s.gone=1},btn);
 }
 function ship(){const b=activeKit();if(!b||busy||!b._t())return;shipKit(b);const bx=b.querySelector('[data-box]');if(bx)feed.scrollBy({top:bx.getBoundingClientRect().top-feed.getBoundingClientRect().top-feed.clientHeight*.4,behavior:'smooth'})}
 
 /* ---------- input ---------- */
-const DEF=[()=>blocks[blocks.length-1]._cur(),'wild','dome','duo','retro'];
+const DEF=['wild','duo'];
 const RX=[
- [[/spring|rain|blossom/,0],[/summer|sun|hot/,1],[/autumn|fall|leaf/,2],[/winter|snow|cold/,3]],
  [[/chill|lake|calm|relax/,'chill'],[/wild|mountain|advent/,'wild']],
- [[/dome/,'dome'],[/tunnel/,'tunnel']],
- [[/solo|alone|\bone\b|\b1\b/,'solo'],[/duo|two|pair|\b2\b|couple/,'duo'],[/squad|team|group|four|crew|\b4\b/,'squad']],
- [[/minimal|earth|neutral/,'minimal'],[/retro|pop|bright|colou?r/,'retro']]
+ [[/solo|alone|\bone\b|\b1\b/,'solo'],[/duo|two|pair|\b2\b|couple/,'duo'],[/squad|team|group|four|crew|\b4\b/,'squad']]
 ];
 function parse(i,l){
  for(const [r,v] of RX[i])if(r.test(l))return v;
@@ -606,9 +613,10 @@ function run(t){
  t=(t||'').trim();if(!t||busy)return;
  if(step<0){start(t);return}
  const l=t.toLowerCase();
- if(step<5){const v=parse(step,l);if(v!=null)answer(step,v,t);return}
+ if(step<KIT){const v=parse(step,l);if(v!=null)answer(step,v,t);return}
  if(/ship|order|buy|checkout|yes|^ok/.test(l)){ship();return}
- const k=/heavy|light|weight/.test(l)?'heavy':/colou?r|bright|pop/.test(l)?'colour':/pric|cheap|budget|expens|cost|less|save/.test(l)?'pricey':null;
+ const cm=l.match(/\b(solo|duo|squad)\b/);if(cm){setCrew(cm[1],t);return}
+ const k=/heavy|light|weight/.test(l)?'heavy':/pric|cheap|budget|expens|cost|less|save/.test(l)?'pricey':null;
  if(k)feedback(t,FB[k]);
 }
 function start(txt){
@@ -617,9 +625,9 @@ function start(txt){
  setTimeout(()=>{h.remove();bubble(txt)},200);
  setTimeout(async()=>{
   const host=document.createElement('div');host.className='thk';place(host);
-  const steps=['Camping · weekend trip','Season · from today\'s date',window.MEMORY?'Past orders · no camping gear yet':'Picking the shortest path'];
+  const steps=['Camping · weekend trip','Season · from today\'s date',window.MEMORY?'Crew · King bed → two sleepers':'Picking the shortest path'];
   if(window.AI)await AI.thinking(host,{steps,ms:1100});else await new Promise(r=>setTimeout(r,700));
-  host.remove();add(mapBlock());setTimeout(()=>showQ(0),400);
+  host.remove();showQ(0);
  },380);
 }
 const q0=new URLSearchParams(location.search).get('q');
@@ -639,6 +647,7 @@ document.addEventListener('click',e=>{
   return}
  if(d.act){itemAct(t.closest('.stk'),d.act,t);return}
  if(d.fb){feedback(FBL[d.fb],FB[d.fb],t);return}
+ if(d.crew){setCrew(d.crew);return}
  if(d.ship!==undefined){ship();return}
  if(d.undo!==undefined)undoKit(t.closest('.blk'));
 });
@@ -647,11 +656,8 @@ document.addEventListener('click',e=>{
 const cur=()=>blocks[blocks.length-1];
 window.demoSteps=[
  ()=>run('I want to go camping'),
- ()=>answer(0,step===0&&cur()._cur?cur()._cur():now),
- ()=>answer(1,'wild'),
- ()=>answer(2,'dome'),
- ()=>answer(3,'duo'),
- ()=>answer(4,'retro'),
+ ()=>answer(0,'wild'),
+ ()=>answer(1,'duo'),
  ()=>feedback('Too pricey',FB.pricey),
  ()=>ship()
 ];
