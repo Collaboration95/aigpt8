@@ -10,3 +10,5 @@ JUDGE-SIGNALS.md
 !.env.example
 node_modules/
 .DS_Store
+app/data/prefs.json
+app/data/sessions/

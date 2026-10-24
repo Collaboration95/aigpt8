@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Coupang · Mosquito</title>
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;color:#1b1b1f;background:#fff}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+.phone{position:relative;width:100%;height:100dvh;background:#fff;overflow:hidden;display:flex;flex-direction:column}
+.top{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;min-height:52px;z-index:5;background:#fff}
+.logo{font-weight:900;font-size:21px;letter-spacing:-.5px;color:#e4202c}
+.logo i{font-style:normal;color:#ffb400}
+.cart{width:44px;height:44px;display:grid;place-items:center;position:relative}
+.badge{position:absolute;top:2px;right:0;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#e4202c;color:#fff;font-size:11px;font-weight:800;display:none;place-items:center}
+.badge.on{display:grid}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;position:relative}
+.home{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 32px 20px;text-align:center;transition:opacity .2s,transform .2s}
+.home h1{font-size:24px;font-weight:600;letter-spacing:-.3px;line-height:1.25;max-width:280px}
+.mark{width:44px;height:44px;border-radius:14px;background:#e4202c;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
+.started .home{opacity:0;transform:translateY(-24px);pointer-events:none}
+.feed{padding-bottom:6px;display:flex;flex-direction:column;min-height:100%}
+.feed>.night{flex:1 0 auto}
+.dock{padding:6px 12px calc(env(safe-area-inset-bottom) + 12px);background:#fff;z-index:5}
+.sur{display:block;margin:0 0 8px 4px;min-height:44px;padding:0 16px;border-radius:22px;background:#fff;border:1px solid #ddd;font-size:14px;color:#111}
+.started .sur{display:none}
+.comp{display:flex;align-items:center;gap:4px;border:1px solid #e1e1e6;border-radius:28px;padding:4px 4px 4px 4px;background:#fff;box-shadow:0 2px 10px #0000000a}
+.comp button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
+.comp input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:16px;height:44px;background:none}
+.comp .send{background:#1b1b1f;color:#fff}
+.bub{margin:14px 14px 10px auto;width:fit-content;max-width:78%;background:#1b1b1f;color:#fff;padding:9px 14px;border-radius:18px 18px 4px 18px;font-size:15px;animation:pop .3s}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.blk{margin:0 10px 6px;border-radius:26px;overflow:hidden;position:relative}
+.night{background:linear-gradient(180deg,#2a1b6e,#171048 70%,#0f0a33);color:#fff;margin:0 0 6px;border-radius:0;transform-origin:100% 0;animation:grow .45s cubic-bezier(.22,1,.36,1) both}
+@keyframes grow{from{transform:translateY(24px) scale(.92);border-radius:28px}to{transform:none;border-radius:0}}
+.scene{display:block;width:100%;height:auto}
+.pad{padding:0 12px 16px}
+.chips{display:flex;gap:8px;padding:0 12px 12px;flex-wrap:wrap}
+.chip{min-height:44px;padding:0 14px;border-radius:22px;border:1.5px solid #ffffff55;color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;transition:.2s}
+.chip.on{background:#ffd95a;color:#2a1b6e;border-color:#ffd95a}
+.chip svg{flex:none}
+.cards{display:flex;gap:8px;position:relative}
+.card{flex:1;min-width:0;background:#fff;color:#1b1b1f;border-radius:20px;padding:8px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;text-align:center;transition:opacity .3s,filter .3s,box-shadow .3s}
+.card b{font-size:14px}
+.card .pr{font-size:15px;font-weight:800;color:#e4202c}
+.facts{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#3b3b55}
+.fact{display:flex;align-items:center;gap:3px;background:#f0eefc;border-radius:10px;padding:3px 8px;white-space:nowrap}
+.tag{position:absolute;top:-6px;left:50%;transform:translateX(-50%);background:#ff5d73;color:#fff;font-size:10px;font-weight:800;padding:3px 7px;border-radius:9px;white-space:nowrap}
+.best{position:absolute;top:-6px;left:50%;transform:translateX(-50%);background:#35d49a;color:#06382a;font-size:10px;font-weight:800;padding:3px 8px;border-radius:9px;white-space:nowrap}
+.card.dim{opacity:.45;filter:grayscale(.8)}
+.card.sel{box-shadow:0 0 0 3px #ffd95a;opacity:1}
+.card.wig{animation:wig .35s}
+@keyframes wig{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.sun{background:linear-gradient(180deg,#fff3c4,#ffe0e6);padding:16px 12px;animation:pop .5s}
+.sun h2,.mint h2{font-size:19px;letter-spacing:-.3px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.sizes{display:flex;gap:8px;margin-bottom:12px}
+.size{flex:1;min-height:96px;background:#fff;border-radius:18px;border:2.5px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding:8px 4px;font-weight:700;font-size:13px}
+.size.on{border-color:#e4202c;background:#fff7f7}
+.size small{font-weight:600;color:#777;font-size:11px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.big{font-size:26px;font-weight:900;letter-spacing:-.5px}
+.rk{font-size:12px;font-weight:700;color:#0a7a4b}
+.shipbar{margin-top:2px}
+.ship{position:relative;overflow:hidden;width:100%;min-height:62px;border-radius:31px;background:linear-gradient(180deg,#ff4a4f,#e4202c);color:#fff;font-weight:900;font-size:20px;letter-spacing:-.3px;box-shadow:0 8px 18px #e4202c66;display:flex;align-items:center;justify-content:center;animation:pulse 2.2s ease-in-out infinite;transition:transform .15s}
+.ship:active{transform:scale(.96)}
+@keyframes pulse{50%{box-shadow:0 8px 26px #e4202caa}}
+.ship .rk{position:absolute;left:18px;top:50%;margin-top:-12px;width:24px;height:24px;transform:rotate(45deg)}
+.ship .tr{position:absolute;left:0;top:50%;height:6px;margin-top:-3px;width:0;background:linear-gradient(90deg,transparent,#fff);border-radius:3px;opacity:0}
+.ship.fly{animation:none;pointer-events:none}
+.ship.fly .t{opacity:0;transition:opacity .15s}
+.ship.fly .rk{animation:zoom .7s cubic-bezier(.6,0,.9,.5) forwards}
+.ship.fly .tr{animation:tr .7s ease-out forwards}
+@keyframes zoom{0%{left:18px;transform:rotate(45deg)}30%{left:24px;transform:rotate(90deg) scale(1.3)}100%{left:calc(100% + 30px);transform:rotate(90deg) scale(1.3)}}
+@keyframes tr{0%{width:0;opacity:.9}100%{width:100%;opacity:0}}
+.ship.sm{min-height:44px;font-size:14px;margin-top:4px;box-shadow:0 4px 10px #e4202c55}
+.ship.sm .rk{display:none;left:8px;margin-top:-10px;width:20px;height:20px}.ship.sm.fly .rk{display:block}
+.scap{text-align:center;font-size:12px;font-weight:600;color:#6d5a2a;margin-top:6px}.scap:empty,.busy .scap{display:none}
+.rcpt{background:#0b2f29;color:#fff;border-radius:22px;padding:8px 8px 8px 10px;display:flex;align-items:center;gap:10px;animation:pop .4s both}
+.th{width:40px;height:40px;border-radius:13px;background:#fff;display:grid;place-items:center;flex:none}
+.ri{flex:1;min-width:0;display:flex;flex-direction:column}.ri b{font-size:18px;letter-spacing:-.3px}.ri span{font-size:12px;opacity:.8;white-space:nowrap}
+.undo{flex:none;min-height:44px;padding:0 16px;border-radius:22px;background:#ffffff26;font-weight:700;color:#fff}
+.rcpt.sm{flex-direction:column;align-items:stretch;gap:2px;text-align:center;border-radius:16px;padding:8px;margin-top:4px;width:100%}.rcpt.sm .ri b{font-size:16px}.rcpt.sm .ri span{font-size:11px}.rcpt.sm .undo{padding:0 10px}
+.shipped .size{pointer-events:none}
+.frozen .ship,.frozen .undo{pointer-events:none}.frozen .shipbar:not(.done) .ship,.frozen .nc .ship{opacity:.5;animation:none}
+.mint{background:linear-gradient(180deg,#d9fbe9,#cfe9ff);padding:16px 12px;animation:pop .5s}
+.two{display:flex;gap:10px}
+.nc{flex:1;min-width:0;background:#fff;border-radius:20px;padding:10px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;position:relative}
+.nc b{font-size:14px}
+.sh{width:100%}.old{text-decoration:line-through;color:#999;font-size:13px}
+.new{font-size:19px;font-weight:900;color:#e4202c}
+.off{background:#35d49a;color:#06382a;font-size:11px;font-weight:800;border-radius:9px;padding:2px 7px}
+.rk2{font-size:11px;color:#555;font-weight:600}
+.frozen .ctl{pointer-events:none;cursor:default;opacity:.55}
+.frozen .ctl.on,.frozen .ctl.sel{opacity:1}
+.qs{padding:0 12px 12px;display:flex;flex-direction:column;gap:6px}
+.q{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.q>span{font-weight:700;font-size:14px;color:#d9d3ff}
+.seg{display:flex;background:#ffffff1f;border-radius:24px;padding:2px}
+.seg button{min-height:44px;min-width:64px;justify-content:center;padding:0 14px;border-radius:22px;color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;transition:.2s}
+.seg button.on{background:#ffd95a;color:#2a1b6e}
+.seg button.on::before{content:"\2713";font-weight:900}
+.pick{margin-top:2px;background:#e4202c;color:#fff;font-size:12px;font-weight:800;border-radius:14px;padding:5px 14px}
+.card.sel .pick{background:#0a7a4b}
+.chip.lt{margin:12px 0 0;border-color:#e4202c;color:#e4202c;background:#fff}
+.chip.lt.on{background:#e4202c;color:#fff}
+/* board */
+.side{display:none}
+@media (min-width:700px){
+body.board{background:#e9e9ee;overflow:auto}
+body.board .wrap{display:flex;gap:36px;justify-content:center;align-items:center;min-height:100vh}
+body.board .side{display:flex;flex-direction:column;gap:10px;width:240px}
+body.board .side h3{font-size:14px;color:#555}
+body.board .side button{background:#fff;border-radius:12px;padding:12px;text-align:left;font-size:14px;min-height:44px;box-shadow:0 1px 3px #0002}
+body.board .phone{width:390px;height:844px;border-radius:44px;border:10px solid #111;box-shadow:0 20px 60px #0004}
+}
+</style></head><body>
+<div class="wrap">
+<div class="side" id="side"><h3>Steps (arrow keys)</h3>
+<button data-i="0">1. mosquitoes keep biting me at night</button>
+<button data-i="1">2. Tap Net card</button>
+<button data-i="2">3. is there a cheaper one</button></div>
+<div class="phone" id="phone">
+ <div class="top"><div class="logo">coupang<i>.</i></div>
+  <button class="cart" aria-label="Cart" id="cart"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1b1b1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.6 12.2a2 2 0 002 1.6h8.2a2 2 0 002-1.5L21.5 8H6"/></svg><span class="badge" id="badge"></span></button></div>
+ <div class="scroll" id="scroll">
+  <div class="home"><div class="mark">C</div><h1>Hey Guru, what are you planning to buy?</h1></div>
+  <div class="feed" id="feed"></div>
+ </div>
+ <div class="dock">
+  <button class="sur" id="sur">Surprise me</button>
+  <form class="comp" id="form">
+   <button type="button" aria-label="Add"><svg width="22" height="22" viewBox="0 0 24 24" stroke="#555" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+   <input id="inp" placeholder="Ask anything" autocomplete="off" enterkeyhint="send">
+   <button type="button" aria-label="Mic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></button>
+   <button class="send" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  </form></div>
+</div></div>
+<script>
+const $=s=>document.querySelector(s), feed=$('#feed'), scr=$('#scroll'), inp=$('#inp');
+if(new URLSearchParams(location.search).get('board'))document.body.classList.add('board');
+const won=n=>'₩'+n.toLocaleString('en-US');
+const ico={
+ clock:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b3b55" stroke-width="2.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+ nose:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b3b55" stroke-width="2.6" stroke-linecap="round"><path d="M12 3c0 6-4 9-4 13a3 3 0 006 0M8 19h8"/></svg>',
+ baby:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="8"/><circle cx="9" cy="11" r=".6" fill="currentColor"/><circle cx="15" cy="11" r=".6" fill="currentColor"/><path d="M9.5 15c1.5 1 3.500 1 5 0M12 4c1-2 3-2 3-1"/></svg>',
+ sofa:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11V8a2 2 0 012-2h10a2 2 0 012 2v3M3 13a2 2 0 014 0v2h10v-2a2 2 0 014 0v5H3zM6 18v2M18 18v2"/></svg>',
+ bed:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18V7M3 14h18v4M21 14v-2a3 3 0 00-3-3h-7v5"/><circle cx="7" cy="11" r="1.5"/></svg>'};
+const fact=(i,t)=>`<span class="fact">${ico[i]}${t}</span>`;
+const netSvg=(c='#9fd6ff')=>`<svg width="92" height="76" viewBox="0 0 92 76"><path d="M46 2v12" stroke="#bbb" stroke-width="2"/><path d="M8 70C8 36 26 14 46 14s38 22 38 56z" fill="${c}" fill-opacity=".55" stroke="${c}" stroke-width="2"/><g stroke="#fff" stroke-opacity=".8"><path d="M20 70L30 28M34 70L40 18M46 70V14M58 70L52 18M72 70L62 28M12 52h68M16 38h60M26 26h40"/></g><rect x="4" y="68" width="84" height="6" rx="3" fill="#6b5bd6"/></svg>`;
+const plugSvg=`<svg width="92" height="76" viewBox="0 0 92 76"><rect x="14" y="8" width="64" height="48" rx="12" fill="#fff6c8" stroke="#ffd95a" stroke-width="3"/><circle cx="46" cy="32" r="12" fill="#ffd95a"/><circle cx="46" cy="32" r="5" fill="#fff"/><rect x="36" y="56" width="6" height="14" rx="2" fill="#888"/><rect x="50" y="56" width="6" height="14" rx="2" fill="#888"/></svg>`;
+const spraySvg=`<svg width="92" height="76" viewBox="0 0 92 76"><rect x="30" y="22" width="26" height="50" rx="8" fill="#ff8aa1"/><rect x="34" y="8" width="18" height="16" rx="4" fill="#555"/><rect x="26" y="4" width="14" height="6" rx="2" fill="#333"/><rect x="30" y="38" width="26" height="14" fill="#fff" opacity=".7"/><g fill="#ff8aa1" opacity=".6"><circle cx="14" cy="12" r="2"/><circle cx="8" cy="20" r="2.5"/><circle cx="16" cy="26" r="2"/><circle cx="5" cy="9" r="1.5"/></g></svg>`;
+const sceneHead=`<svg class="scene" viewBox="0 0 360 210"><defs><radialGradient id="g"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffd95a"/></radialGradient></defs>
+<g fill="#fff"><circle cx="30" cy="30" r="1.8"/><circle cx="90" cy="18" r="1.4"/><circle cx="140" cy="48" r="1.8"/><circle cx="230" cy="24" r="1.4"/><circle cx="320" cy="60" r="1.8"/><circle cx="60" cy="80" r="1.2"/><circle cx="200" cy="70" r="1.2"/></g>
+<rect x="30" y="50" width="120" height="96" rx="10" fill="#1d1560" stroke="#6b5bd6" stroke-width="5"/><path d="M90 50v96M30 98h120" stroke="#6b5bd6" stroke-width="4"/>
+<g transform="translate(262 62)"><circle r="40" fill="url(#g)"/><circle cx="-14" cy="-6" r="3" fill="#2a1b6e"/><circle cx="14" cy="-6" r="3" fill="#2a1b6e"/><path d="M-8 6q8 8 16 0" fill="none" stroke="#2a1b6e" stroke-width="3" stroke-linecap="round"/><circle cx="-22" cy="6" r="5" fill="#ff9fb4" opacity=".7"/><circle cx="22" cy="6" r="5" fill="#ff9fb4" opacity=".7"/><path d="M-36-22l-10-10M-48-22h-8" stroke="none"/></g>
+<path d="M0 210V160q60-24 120-8t120-4 120 12v50z" fill="#241a73"/>
+`;
+const bedPart=`<rect x="120" y="150" width="230" height="46" rx="12" fill="#6b5bd6"/><rect x="120" y="136" width="48" height="26" rx="12" fill="#fff"/><rect x="176" y="134" width="170" height="30" rx="10" fill="#ff8aa1"/><rect x="108" y="124" width="14" height="76" rx="5" fill="#4a3aa8"/>
+<text x="190" y="150" fill="#fff" font-size="14" font-weight="800" opacity=".9">z z z</text>
+`;
+const sofaPart=`<rect x="110" y="128" width="236" height="62" rx="16" fill="#6b5bd6"/><rect x="100" y="146" width="30" height="50" rx="12" fill="#4a3aa8"/><rect x="326" y="146" width="30" height="50" rx="12" fill="#4a3aa8"/><rect x="136" y="150" width="88" height="40" rx="10" fill="#8b7df0"/><rect x="230" y="150" width="88" height="40" rx="10" fill="#8b7df0"/><rect x="124" y="190" width="10" height="10" rx="3" fill="#333"/><rect x="322" y="190" width="10" height="10" rx="3" fill="#333"/><rect x="250" y="136" width="30" height="26" rx="8" fill="#ff8aa1"/>
+`;
+const mqPart=`<g class="mq"><ellipse cx="82" cy="170" rx="7" ry="4" fill="#111"/><ellipse cx="78" cy="165" rx="6" ry="3" fill="#fff" opacity=".6"/><ellipse cx="86" cy="165" rx="6" ry="3" fill="#fff" opacity=".6"/><path d="M89 171l6 2" stroke="#111" stroke-width="1.5"/><path d="M60 180q10-14 18-8" stroke="#fff" stroke-dasharray="2 4" fill="none" opacity=".5"/></g>
+`;
+const scene=r=>sceneHead+(r==="bed"?bedPart:sofaPart)+mqPart+"</svg>";
+
+
+const P={net:{n:'Net',p:29900,svg:netSvg(),f:[['clock','12h'],['nose','No smell']]},
+ plug:{n:'Plug-in',p:12900,svg:plugSvg,f:[['clock','8h'],['nose','Mild']]},
+ spray:{n:'Spray',p:6900,svg:spraySvg,f:[['clock','4h'],['nose','Strong']]}};
+const SZ=[{k:'Single',p:24900,w:34,d:'1×2m'},{k:'Double',p:29900,w:50,d:'1.5×2m'},{k:'King',p:36900,w:66,d:'2×2m'}];
+let step=0, baby=false, room='bed', cartN=0, size=1, cur=SZ[1].p;
+
+function setCart(n){cartN=Math.max(0,n);const b=$('#badge');if(cartN)b.textContent=cartN;b.classList.toggle('on',cartN>0)}
+const ROCKET='<svg class="rk" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11z"/><circle cx="12" cy="9" r="1.6"/><path d="M8 14l-3 3 2 1M16 14l3 3-2 1M10 19l2 3 2-3"/></svg>';
+// host: element to hold ship UI; o:{total(),cap(),thumb(),sm,blk}
+function mountShip(host,o){
+ const paint=()=>{const t=host.querySelector('.t');if(t)t.textContent='Ship it · '+won(o.total());const c=host.querySelector('.scap');if(c)c.textContent=o.cap?o.cap():''};
+ const draw=()=>{host.className=o.sm?'sh':'shipbar';host.innerHTML='<button class="ship'+(o.sm?' sm':'')+'"><i class="tr"></i>'+ROCKET+'<span class="t"></span></button>'+(o.sm?'':'<div class="scap"></div>');paint();
+  host.querySelector('.ship').onclick=fly};
+ const fly=()=>{const btn=host.querySelector('.ship');if(btn.classList.contains('fly'))return;const total=o.total();host.classList.add('busy');btn.classList.add('fly');if(o.blk)o.blk.classList.add('shipped');
+  setTimeout(()=>{host.classList.remove('busy');host.classList.add('done');setCart(cartN+1);
+   host.innerHTML='<div class="rcpt'+(o.sm?' sm':'')+'">'+(o.sm?'':'<span class="th">'+o.thumb()+'</span>')+'<div class="ri"><b>'+won(total)+'</b><span>Rocket · tomorrow 7am</span></div><button class="undo">Undo</button></div>';
+   reveal(host);
+   host.querySelector('.undo').onclick=()=>{if(host.closest('.frozen'))return;setCart(cartN-1);host.classList.remove('done');if(o.blk)o.blk.classList.remove('shipped');draw()}},720)};
+ host.paint=paint;draw();
+}
+let lastBub=null;const sp=document.createElement('div');sp.style.flex='none';
+function bubble(t){const b=document.createElement('div');b.className='bub';b.textContent=t;feed.appendChild(b);lastBub=b}
+const topOf=el=>el.getBoundingClientRect().top-scr.getBoundingClientRect().top+scr.scrollTop;
+// bottom room so the newest bubble can always sit just under the header
+function fit(){if(!lastBub)return;if(feed.lastChild!==sp)feed.appendChild(sp);const h=sp.offsetHeight;sp.style.height=Math.max(0,scr.clientHeight-(scr.scrollHeight-h-topOf(lastBub))+6)+'px'}
+new ResizeObserver(fit).observe(feed);
+function pin(){setTimeout(()=>{fit();scr.scrollTo({top:Math.max(0,topOf(lastBub)-6),behavior:'smooth'})},60)}
+function reveal(el){const d=el.getBoundingClientRect().bottom-scr.getBoundingClientRect().bottom+12;if(d>0)scr.scrollBy({top:d,behavior:'smooth'})}
+function freeze(){feed.querySelectorAll('.blk').forEach(b=>b.classList.add('frozen'))}
+function add(el){feed.appendChild(el);pin()}
+
+function cardsHTML(){
+ const order=room==='bed'?(baby?['net','plug','spray']:['net','spray','plug']):(baby?['plug','net','spray']:['plug','spray','net']);
+ return order.map(k=>{const d=P[k];
+  const tag=baby&&k==='spray'?'<span class="tag">not for babies</span>':(baby&&k==='net'?'<span class="best">Best pick</span>':'');
+  return `<button class="card ctl ${baby&&k==='spray'?'dim':''}" data-k="${k}">${tag}${d.svg.replace('width="92" height="76"','width="100%" height="64"')}<b>${d.n}</b><span class="pr">${won(d.p)}</span><span class="facts">${d.f.map(x=>fact(...x)).join('')}</span><span class="pick">Pick</span></button>`}).join('')}
+
+function renderCards(blk){
+ const box=blk.querySelector('.cards');
+ const before={};box.querySelectorAll('.card').forEach(c=>before[c.dataset.k]=c.getBoundingClientRect().left);
+ box.innerHTML=cardsHTML();
+ box.querySelectorAll('.card').forEach(c=>{
+  const dx=before[c.dataset.k]-c.getBoundingClientRect().left;
+  if(dx){c.style.transform=`translateX(${dx}px)`;c.style.transition='none';
+   requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.transition='transform .55s cubic-bezier(.2,.9,.3,1.1),opacity .3s,filter .3s';c.style.transform=''}))}
+  c.onclick=()=>{ if(c.dataset.k==='net')go(1); else {c.classList.add('wig');setTimeout(()=>c.classList.remove('wig'),400)} }});
+}
+
+function turn1(){
+ document.body.classList.add('x');$('#phone').classList.add('started');
+ const b=document.createElement('div');b.className='blk night';
+ b.innerHTML=`<div class="sc">${scene('bed')}</div><div class="qs"><div class="q"><span>Where?</span><div class="seg"><button class="ctl on" data-r="bed">Bedroom</button><button class="ctl" data-r="living">Living</button></div></div><div class="q"><span>Baby at home?</span><div class="seg"><button class="ctl on" data-b="0">No</button><button class="ctl" data-b="1">Yes</button></div></div></div><div class="pad"><div class="cards"></div></div>`;
+ feed.appendChild(b);renderCards(b);
+ b.querySelectorAll('[data-r]').forEach(x=>x.onclick=()=>{room=x.dataset.r;b.querySelectorAll('[data-r]').forEach(y=>y.classList.toggle('on',y===x));b.querySelector('.sc').innerHTML=scene(room);renderCards(b)});
+ b.querySelectorAll('[data-b]').forEach(x=>x.onclick=()=>{baby=x.dataset.b==='1';b.querySelectorAll('[data-b]').forEach(y=>y.classList.toggle('on',y===x));renderCards(b)});
+ scr.scrollTo({top:0});
+}
+
+function bedSvg(s,on){const w=s.w;return `<svg width="${w+12}" height="64" viewBox="0 0 ${w+12} 64"><rect x="2" y="2" width="${w+8}" height="60" rx="8" fill="${on?'#ffd0d6':'#e5e0fa'}" stroke="${on?'#e4202c':'#8a7bd8'}" stroke-width="2.5"/><rect x="${w/2-4}" y="8" width="${w/2+8}" height="12" rx="5" fill="#fff"/>${w>40?`<rect x="${w/2+4}" y="8" width="0" height="0"/>`:''}<rect x="6" y="26" width="${w}" height="32" rx="5" fill="${on?'#ff8aa1':'#b8aef0'}"/></svg>`}
+
+function turn2(){
+ const nc=feed.querySelector('.card[data-k=net]');if(nc)nc.classList.add('sel');
+ freeze();
+ const b=document.createElement('div');b.className='blk sun';b.id='detail';
+ b.innerHTML=`<h2>${netSvg().replace('width="92" height="76"','width="52" height="42"')} Net</h2><div class="sizes"></div><div class="shipbar" id="sb"></div><button class="chip lt ctl" id="chp">Cheaper?</button>`;
+ b.querySelector('#chp').onclick=()=>go(2);
+ const sizes=b.querySelector('.sizes'),sb=b.querySelector('#sb');
+ const draw=()=>{sizes.innerHTML=SZ.map((s,i)=>`<button class="size ctl ${i===size?'on':''}" data-i="${i}">${bedSvg(s,i===size)}${s.k}<small>${s.d}</small></button>`).join('');
+  cur=SZ[size].p;if(sb.paint)sb.paint();
+  sizes.querySelectorAll('.size').forEach(x=>x.onclick=()=>{size=+x.dataset.i;draw();const t=sb.querySelector('.ship');if(t)t.animate([{transform:'scale(.96)'},{transform:'scale(1)'}],220)})};
+ mountShip(sb,{blk:b,total:()=>SZ[size].p,cap:()=>SZ[size].k+' · tomorrow 7am',thumb:()=>netSvg().replace('width="92" height="76"','width="32" height="26"')});
+ draw();
+ add(b);
+}
+
+function turn3(){
+ const cp=$('#chp');if(cp)cp.classList.add('on');
+ freeze();
+ const old=cur,list=[{n:'Mini Dome Net',p:Math.round(old*.68/100)*100,f:[['clock','10h'],['nose','No smell']]},{n:'Basic Hang Net',p:Math.round(old*.53/100)*100,f:[['clock','8h'],['nose','No smell']]}];
+ const b=document.createElement('div');b.className='blk mint';
+ b.innerHTML=`<h2>Cheaper nets</h2><div class="two">${list.map((x,i)=>`<div class="nc">${netSvg(i?'#ffb3c1':'#8fe3c0').replace('width="92" height="76"','width="80" height="64"')}<b>${x.n}</b><span class="old">${won(old)}</span><span class="new">${won(x.p)}</span><span class="off">-${Math.round((1-x.p/old)*100)}%</span><span class="facts">${x.f.map(y=>fact(...y)).join('')}</span><div class="sh"></div></div>`).join('')}</div>`;
+ b.querySelectorAll('.nc').forEach((x,i)=>mountShip(x.querySelector('.sh'),{sm:1,total:()=>list[i].p}));
+ add(b);
+}
+
+function go(i,text){
+ if(i!==step)return;
+ const label=text||['mosquitoes keep biting me at night','Net','is there a cheaper one'][i];
+ bubble(label);
+ if(i===0){document.body.classList.add('x');$('#phone').classList.add('started');step=1;setTimeout(()=>{turn1();feed.firstChild.scrollIntoView()},200)}else{[turn1,turn2,turn3][i]();step=i+1}
+ document.querySelectorAll('#side button').forEach(b=>b.style.opacity=+b.dataset.i<step?.5:1);
+}
+$('#form').onsubmit=e=>{e.preventDefault();const t=inp.value.trim();inp.value='';go(step,t||undefined)};
+$('#sur').onclick=()=>go(0);
+document.querySelectorAll('#side button').forEach(b=>b.onclick=()=>{const t=['mosquitoes keep biting me at night','Net','is there a cheaper one'][b.dataset.i];inp.value=t;$('#form').requestSubmit()});
+addEventListener('keydown',e=>{if(e.target===inp&&e.key!=='ArrowRight'&&e.key!=='ArrowDown')return;if(e.key==='ArrowRight'||e.key==='ArrowDown'){const t=['mosquitoes keep biting me at night','Net','is there a cheaper one'][step];if(t){inp.value=t;$('#form').requestSubmit()}}});
+</script></body></html>

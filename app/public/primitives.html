@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Primitives · gallery</title>
+<link rel="icon" href="data:,">
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:#f3f4f7;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;color:#111;overflow-x:hidden}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer;min-height:44px}
+header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);padding:10px 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-bottom:1px solid #e4e4e7}
+header h1{margin:0;font-size:18px;letter-spacing:-.3px;flex:1 1 100%}header h1 b{color:#e52528}
+.th{padding:0 14px;border-radius:22px;background:#fff;border:2px solid #e4e4e7;font-weight:700;font-size:14px}.th.on{background:#111;color:#fff;border-color:#111}
+.gal{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;padding:14px;max-width:430px;margin:0 auto}
+@media(min-width:700px){.gal{max-width:1500px;grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}}
+.tile{min-width:0;background:#fff;border-radius:20px;padding:10px;box-shadow:0 2px 10px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px}
+.tile h2{margin:0;font-size:13px;font-weight:800;display:flex;justify-content:space-between;gap:8px;align-items:baseline}.tile h2 i{font-style:normal;font-weight:600;color:#888;font-size:11px}
+.body{background:var(--bg);color:var(--fg);border-radius:16px;padding:14px;min-width:0;overflow:hidden;flex:1;display:flex;flex-direction:column;gap:12px}
+.sig{font:600 11px/1.3 ui-monospace,Menlo,monospace;color:#555;background:#f3f4f7;border-radius:10px;padding:6px 9px;min-height:28px;overflow-wrap:anywhere}
+.sig b{color:#e52528}
+.wide{grid-column:1/-1}
+</style></head>
+<body>
+<header><h1><b>P</b> primitives · live</h1><span id="themes" style="display:flex;gap:8px;flex-wrap:wrap"></span></header>
+<main class="gal" id="gal"></main>
+<script src="primitives.js"></script>
+<script>
+const gal=document.getElementById('gal');
+const tube=(c,d)=>P.art.tube(c,d), T={m:tube('#19b394','#0b6e5c'),w:tube('#3fa0ff','#1b5fb8'),g:tube('#9a78ff','#5a3cc4'),c:tube('#454b5c','#1b1e29'),b:tube('#ff5c8a','#b21f53')};
+const brush=P.art.brush('#ffb703','#e5500b');
+const tiles=[];
+function tile(name,hint,make,opt={}){
+ const t=document.createElement('section');t.className='tile'+(opt.wide?' wide':'');
+ t.innerHTML=`<h2>${name}<i>${hint}</i></h2><div class="body"></div><div class="sig">signal · <b>—</b></div>`;
+ const body=t.querySelector('.body'),sig=t.querySelector('.sig b');
+ const log=(v,l)=>{sig.textContent=`onAnswer(${JSON.stringify(v)}, "${l}")`};
+ const el=make(log);[].concat(el).forEach(e=>body.appendChild(e));
+ const fz=document.createElement('button');fz.className='th';fz.textContent='freeze';fz.style.cssText='min-height:44px;align-self:flex-start;font-size:12px';
+ fz.onclick=()=>[].concat(el).forEach(e=>e.freeze&&e.freeze());
+ t.appendChild(fz);gal.appendChild(t);tiles.push({name,body});return t;
+}
+const opts4=['Mint','Charcoal','Herbal','Kids berry'];
+// questions & inputs
+tile('ChoiceChips','single',L=>P.ChoiceChips({label:'Flavour?',options:[{l:'Mint',i:'🍃'},{l:'Charcoal',i:'⚫'},{l:'Herbal',i:'🌿'},{l:'Berry',i:'🍓'}],onAnswer:L}));
+tile('MultiTick','many + done',L=>P.MultiTick({label:'Add?',options:[{v:'brush',l:'Toothbrush',n:'+₩3,900'},{v:'floss',l:'Floss',n:'+₩2,100'},{v:'rinse',l:'Mouthwash',n:'+₩4,500'}],onAnswer:L}));
+tile('AorB','two big cards',L=>P.AorB({label:'Again?',options:[{v:'usual',l:'Usual',s:'One tap',art:T.m},{v:'new',l:'Try new',s:'Quick pick',art:P.art.can('#ff9a3c','#c25a0a','✨')}],onAnswer:L}));
+tile('Slider','value + labels',L=>P.Slider({label:'Whitening ↔ Gentle',lo:'Whitening',hi:'Gentle',onAnswer:L}));
+tile('Stepper','− n +',L=>P.Stepper({label:'How many?',value:3,min:1,max:12,unit:'packs',onAnswer:L}));
+tile('Segmented','sliding pill',L=>P.Segmented({label:'Focus?',options:[{v:'n',l:'Everyday'},{v:'w',l:'Whitening'},{v:'g',l:'Sensitive'}],onAnswer:L}));
+tile('Carousel','snap + centre',L=>P.Carousel({label:'Flavour?',items:[{v:'mint',l:'Mint',s:'Usual',art:T.m},{v:'char',l:'Charcoal',s:'+₩1,200',art:T.c},{v:'herb',l:'Herbal',s:'+₩700',art:tube('#6cc23a','#357a14')},{v:'berry',l:'Kids berry',s:'+₩400',art:T.b}],onAnswer:L}));
+tile('Swatch','colour / flavour',L=>P.Swatch({label:'Flavour?',options:[{v:'mint',l:'Mint',c:'#19b394',tag:'Usual'},{v:'char',l:'Charcoal',c:'#454b5c'},{v:'herb',l:'Herbal',c:'#6cc23a'},{v:'berry',l:'Kids berry',c:'#ff5c8a'}],onAnswer:L}));
+tile('Toggle','on / off',L=>P.Toggle({label:'Quick check',text:'Sensitive teeth?',sub:'Gentler formula',yes:'Sensitive',no:'Everyday',onAnswer:L}));
+// products
+tile('ProductHero','big + badge',L=>P.ProductHero({name:'Median Toothpaste',price:8900,sub:'120g ×3 · ₩2,967 / tube',badge:'Your usual',art:T.m}));
+tile('ProductRow','tap = answer',L=>[P.ProductRow({name:'Median Toothpaste',price:8900,badge:'Your usual',art:T.m,tap:true,value:'usual',say:'Usual',onAnswer:L}),P.ProductRow({name:'Soft toothbrush ×4',price:3900,art:brush})]);
+tile('ProductGrid','2×2 tiles',L=>P.ProductGrid({label:'Pick one',items:[{v:'u',l:'Usual',price:8900,art:T.m,badge:'Yours'},{v:'w',l:'Whitening',price:10400,art:T.w},{v:'g',l:'Sensitive',price:11200,art:T.g},{v:'c',l:'Charcoal',price:10100,art:T.c}],onAnswer:L}));
+tile('Compare','2–3 + spec chips',L=>P.Compare({label:'Usual vs new',items:[{v:'u',l:'Usual',price:8900,badge:'Yours',specs:['Mint','Everyday'],art:T.m},{v:'n',l:'Whitening',price:10400,specs:['Mint','Brighter'],art:T.w}],onAnswer:L}));
+tile('Bundle','items + total',L=>P.Bundle({items:[{name:'Median Toothpaste',price:8900,sub:'120g ×3',art:T.m},{name:'Soft toothbrush ×4',price:3900,art:brush}],total:12800}));
+// signals
+tile('RatingTap','♥ / ✕',L=>P.RatingTap({label:'Like it?',name:'Median Charcoal',sub:'₩10,100',art:T.c,onAnswer:L}));
+tile('TierList','ranked rows',L=>P.TierList({label:'How much?',options:[{v:'must',l:'Must-have',s:'Ship first',e:'🔥',c:'#ff6b6b'},{v:'nice',l:'Nice to have',e:'✨',c:'#ffd23f'},{v:'skip',l:'Skip',e:'💤',c:'#9aa3b2'}],onAnswer:L}));
+tile('ThisOrThat','VS stack',L=>P.ThisOrThat({label:'Pick one',options:[{v:'w',l:'Whitening',s:'Brighter',art:T.w},{v:'g',l:'Gentle',s:'Sensitive teeth',art:T.g}],onAnswer:L}));
+tile('PathTrail','A → B → C',L=>{const p=P.PathTrail({label:'Delivery',steps:['Packed','Rocket','Door'],at:0});const b=document.createElement('button');b.className='th';b.textContent='next ›';b.onclick=()=>p.set(Math.min(2,p.at+1));return[p,b]});
+tile('ProgressMeter','bar',L=>{const m=P.ProgressMeter({text:'Free Rocket',value:12800,max:19800,fmt:(v,m)=>P.won(v)+' / '+P.won(m)});const b=document.createElement('button');b.className='th';b.textContent='+₩3,000';b.onclick=()=>m.set(Math.min(19800,m.valueNow+3000));return[m,b]});
+// commerce
+tile('ShipIt','swoosh → receipt',L=>P.ShipIt({total:8900,items:[{art:T.m}],onAnswer:L}),{});
+tile('Receipt','row + undo',L=>P.Receipt({items:[{art:T.m},{art:brush}],total:12800,note:'↻6w',onAnswer:L}));
+tile('Subscription','cadence',L=>P.Subscription({label:'Repeat?',options:[4,6,8],onAnswer:L}));
+tile('PriceTag','price + delta',L=>[P.PriceTag({price:8900,was:10400,delta:-1500}),P.PriceTag({price:12800,delta:3900})]);
+tile('DiffList','+ new / − removed',L=>P.DiffList({rows:[{k:'-',l:'Median Whitening',r:'₩10,400'},{k:'+',l:'Median Toothpaste',r:'₩8,900'},{k:'~',l:'Pack size',r:'×3'}]}));
+// feedback
+tile('FeedbackBar','quick reasons',L=>P.FeedbackBar({options:['Too pricey','Other brand','Not now'],onAnswer:L}));
+tile('NotThis','swap / cheaper / remove',L=>P.NotThis({name:'Soft toothbrush ×4',sub:'₩3,900',art:brush,noun:'brush',onAnswer:L}));
+tile('UndoToast','undo + timer',L=>{const w=document.createElement('div');const mk=()=>{w.replaceChildren(P.UndoToast({text:'Removed',action:'Undo',ms:6000,onAnswer:L,onExpire:()=>{}}))};mk();const b=document.createElement('button');b.className='th';b.textContent='again';b.onclick=mk;return[w,b]});
+// layout
+tile('SceneHeader','SVG scene slot',L=>['bubbles','leaves','stars','waves','sun','confetti'].map(s=>P.SceneHeader({scene:s,title:s,height:44})));
+tile('Block','themed container',L=>P.Block({layout:'card',theme:'grape',scene:'stars',title:'Block',anim:false,children:[P.ChoiceChips({options:['One','Two','Three']})]}),{});
+tile('UserBubble','answer echo',L=>P.UserBubble({text:'Try new'}));
+
+// themes (cascade --bg/--fg/--acc/--acc2/--card/--r/--fw via CSS variables)
+const TH=['paper','mint','ink','bubblegum','sunny'], bar=document.getElementById('themes');
+function setTheme(n){P.theme(gal,n);gal.querySelectorAll('.body').forEach(b=>b.style.cssText='');bar.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.t===n))}
+TH.forEach(n=>{const b=document.createElement('button');b.className='th';b.textContent=n[0].toUpperCase()+n.slice(1);b.dataset.t=n;b.onclick=()=>setTheme(n);bar.appendChild(b)});
+setTheme('mint');
+</script></body></html>
