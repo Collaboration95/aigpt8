@@ -11,6 +11,10 @@ const rng = seed => () => {
   t^=t+Math.imul(t^(t>>>7),t|61); return ((t^(t>>>14))>>>0)/4294967296;
 };
 const slug = s => s.toLowerCase().replace(/\s+/g,'-');
+export function catalogueHash(catalogue) {
+  const semantic=[...catalogue].sort((a,b)=>a.id.localeCompare(b.id)).map(({id,price,category,tags,brand})=>({id,price,category,tags:[...tags].sort(),brand}));
+  return createHash('sha256').update(JSON.stringify(semantic)).digest('hex');
+}
 export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00:00:00+08:00')) {
   const items=[...catalogue].sort((a,b)=>a.id.localeCompare(b.id));
   const byId=new Map(items.map(p=>[p.id,p])), seed=20261025;
@@ -22,9 +26,8 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     ...unique(items.map(p=>slug(p.brand))).map(b=>'brand:'+b),
     'hist:category','hist:tags','hist:repeat'];
   const J=new Map(names.map((n,j)=>[n,j])), D=names.length, zero=()=>new Float64Array(D);
-  const semantic=items.map(({id,price,category,tags,brand})=>({id,price,category,tags,brand}));
-  const hash=createHash('sha256').update(JSON.stringify(semantic)).digest('hex');
-  const version=`ml-demo-v1:${hash.slice(0,12)}:${seed}:${asOf}`;
+  const hash=catalogueHash(items);
+  const version=`ml-demo-v2:${hash.slice(0,12)}:${seed}:${asOf}`;
   function history(orders=[]) {
     const h={c:new Map(),t:new Map(),r:new Map()}; let total=0;
     const add=(m,k,v)=>m.set(k,(m.get(k)||0)+v);
@@ -121,6 +124,21 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
       +s.w[J.get('price:log')]*(Math.log(.3)/2.5-Math.log(3)/2.5);
     return category==='snacks'?(tilt>.3?'Price-savvy snacker':'Snack explorer'):category+' explorer';
   }
+  function summary(s) {
+    const refs=(feature,positive)=>s.log.filter(h=>h.learned&&h.deltas.some(d=>d.feature===feature&&(positive?d.delta-(h.regularization?.find(r=>r.feature===feature)?.delta||0)>1e-8:d.delta-(h.regularization?.find(r=>r.feature===feature)?.delta||0)< -1e-8))).map(h=>({event_id:h.event.event_id,seq:h.seq}));
+    const candidates=names.map((feature,j)=>({feature,weight:s.w[j]})).filter(w=>/^(cat:|band:|trait:)/.test(w.feature));
+    const describe=w=>w.feature.replace('cat:','').replace('band:','').replace('trait:','').replace(/^low$/,'low prices').replace(/^mid$/,'mid prices').replace(/^high$/,'high prices');
+    const claims=[];
+    for(const positive of [true,false]) {
+      const ranked=candidates.filter(w=>positive?w.weight>0:w.weight<0).sort((a,b)=>positive?b.weight-a.weight:a.weight-b.weight);
+      // Personal claims require observed supporting gradients; population-only signals are labelled.
+      const supported=ranked.filter(w=>refs(w.feature,positive).length).slice(0,2);
+      for(const w of supported)claims.push({text:(positive?'Leans toward ':'Less inclined toward ')+describe(w),feature:w.feature,weight:w.weight,evidence:refs(w.feature,positive)});
+    }
+    const reactions=s.log.filter(h=>h.learned).length,orders=s.profile==='guru'?GURU.filter(o=>byId.has(o.item_id)):[];
+    const text=(claims.length?claims.map(c=>c.text).join('; '):s.profile==='guru'?'History-informed baseline; awaiting game reactions':'Population model only; no personal history')+`. Based on ${reactions} game reactions + ${orders.length} past orders.`;
+    return {text,claims,orders};
+  }
   function snapshot(s) {
     const baseline=new Map(ranked(s.anchor,s.h).map(p=>[p.item_id,p]));
     const predictions=ranked(s.w,s.h).map(p=>{const b=baseline.get(p.item_id);
@@ -128,9 +146,10 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     return {sid:s.sid,run_id:s.run,seq:s.seq,profile:s.profile,version,target:'buy-intent-proxy',
       weights:names.map((feature,j)=>({feature,before:s.anchor[j],after:s.w[j],delta:s.w[j]-s.anchor[j]})),
       predictions,top:predictions.slice(0,5),segment:segment(s),learned:s.learned,
-      demoOrders:s.profile==='guru'?GURU:[],history:s.log.slice(-30),priceExpectation:s.expectation,priceError:s.guesses?s.error/s.guesses:null};
+      summary:summary(s),catalogueHash:hash,demoOrders:s.profile==='guru'?GURU:[],history:s.log.slice(),priceExpectation:s.expectation,priceError:s.guesses?s.error/s.guesses:null};
   }
   function reset(sid,profile='guru') {
+    profile=profile==='cold'?'new':profile;
     const orders=(profile==='guru'?GURU:[]).filter(o=>byId.has(o.item_id)), h=history(orders), w=globalW.slice();
     for(const o of orders) step(w,encode(byId.get(o.item_id),h),1,globalW,.20,.025,.35);
     const s={sid,profile,h,w,anchor:w.slice(),run:randomUUID(),seq:0,learned:0,
@@ -169,7 +188,30 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     const receipt={event_id:e.event_id,seq:s.seq,before,after:snapshot(s),learned};
     s.payloads.set(e.event_id,fingerprint);s.receipts.set(e.event_id,receipt); return receipt;
   }
-  return {restoreRun:(sid,run)=>{session(sid).run=run;},reset,event,model:sid=>snapshot(session(sid)),global:()=>({
+  function replay(sid,profile,run,events) {
+    reset(sid,profile);session(sid).run=run;
+    for(const e of events)event(e);
+    return snapshot(session(sid));
+  }
+  function contextFor(sid,limit=12) {
+    const s=snapshot(session(sid)), compact=w=>({feature:w.feature,weight:Number(w.after.toFixed(3))});
+    const weights=s.weights.filter(w=>w.feature!=='bias');
+    return {segment:s.segment,summary:s.summary.text,
+      positive:weights.filter(w=>w.after>0).sort((a,b)=>b.after-a.after).slice(0,8).map(compact),
+      negative:weights.filter(w=>w.after<0).sort((a,b)=>a.after-b.after).slice(0,5).map(compact),
+      top:s.predictions.slice(0,Math.max(1,Math.min(12,limit))).map(p=>({id:p.item_id,p:Number(p.p_buy.toFixed(3))})),seq:s.seq,run_id:s.run_id};
+  }
+  function compare(sid) {
+    const original=session(sid);
+    if(original.comparison?.seq===original.seq)return original.comparison.value;
+    const value={};
+    try {for(const profile of ['new','guru']) {
+      const s=replay(sid,profile,original.run,original.log.map(h=>h.event));
+      value[profile]={top:s.top.slice(0,3),segment:s.segment};
+    }} finally {sessions.set(sid,original);}
+    original.comparison={seq:original.seq,value};return value;
+  }
+  return {compare,replay,contextFor,restoreRun:(sid,run)=>{session(sid).run=run;},reset,event,model:sid=>snapshot(session(sid)),global:()=>({
     version,catalogueHash:hash,asOf,seed,synthetic:true,target:'buy-intent-proxy',
     users:2000,trainUsers:1600,testUsers:400,trainRows:train.length,testRows:test.length,
     trainColdRows:train.filter(r=>r.cold).length,testColdRows:test.filter(r=>r.cold).length,
