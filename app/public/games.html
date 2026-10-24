@@ -142,13 +142,97 @@ input[type=range]:disabled{opacity:.7}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media (min-width:700px){body{background:radial-gradient(circle at 50% 0,#fff,#ece4ff)}.page{padding-top:24px}}
 /* White app chrome; the game stays colourful. */
-html,body{background:#fff;color:#202332}body{background:#fff}.page{max-width:430px;padding:8px 12px 28px}.top{height:52px;padding:0 2px}.top .logo{text-decoration:none;font-size:24px}.top b{font-size:13px;color:#737987;flex:1}.cart{width:44px;height:44px;display:grid;place-items:center;color:#252936}.tabs{display:flex;gap:2px;justify-content:space-between;margin:8px 0 12px}.tab,.tab:nth-child(n+4){min-height:44px;border-radius:12px;font-size:11px;box-shadow:none;flex:1;padding:0 3px;background:#f5f6f8;white-space:normal;gap:3px}.tab span{display:none}.tab[aria-selected=true]{background:#252936;transform:none}.card{min-height:620px;border-radius:24px;padding:14px 12px}.head h2{font-size:25px}.product-art{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:18px;overflow:hidden}.product-art img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}.product-art svg{max-width:100%;max-height:100%}.sn{font-size:20px;line-height:1.2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}.pgn{overflow-wrap:anywhere}.dl .dn{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.pgart{border-radius:24px}.pgn{font-size:19px;min-height:46px;display:grid;place-items:center}.pgart .art{width:156px!important;height:156px!important}.stags{flex-wrap:wrap;justify-content:center}.rewards{display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:9px 12px;border-radius:12px;background:#fff6cd;color:#865307}.rewards b{font-size:16px}.lc{font-size:12px;min-height:30px;padding:0 10px}.chips{gap:5px}.taste{padding:12px;border-radius:16px;background:#ffffffdc}.taste-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:10px}.taste-head a{font-size:10px;font-weight:600;color:#6f7581;text-decoration:none;min-height:24px;display:flex;align-items:center}.taste-row{display:grid;grid-template-columns:1fr auto;gap:4px;font-size:10px;margin-top:8px}.taste-row b{font-variant-numeric:tabular-nums;font-weight:600}.taste-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.taste-row i{grid-column:1/-1;height:4px;border-radius:4px;background:#e8edf0;overflow:hidden}.taste-row em{display:block;height:100%;border-radius:4px}.up{color:#078267}.down{color:#cb3e4d}.rh{font-size:10px;margin-top:0}.res{gap:9px}.pk{padding:6px 8px;min-height:60px;border-radius:14px;box-shadow:none}.pk .pn{font-size:12px}.pk .pp{font-size:12px}.pk .tg .badge{font-size:9px;max-width:85px;overflow:hidden;text-overflow:ellipsis}.pk .art{background:white}.ship{min-height:50px;font-size:16px;border-radius:16px;box-shadow:none;margin-top:2px}.again{font-size:12px}.t8-track,.track-fallback{align-self:center}.grid3 .product-art{border-radius:6px}.dl .dn{font-size:14px}.taste-head a{min-height:44px}.taste-head{margin-bottom:0}.top a:focus-visible,button:focus-visible{outline:3px solid #1689ce;outline-offset:2px}
+html,body{background:#fff;color:#202332}
+.page{max-width:430px;padding:0 12px max(16px,env(safe-area-inset-bottom))}
+.top{height:calc(52px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0;margin:0 -12px;gap:10px;align-items:center}
+.top .logo{text-decoration:none;font-size:22px;font-weight:900;line-height:1;letter-spacing:-.04em;color:#e52528;display:flex;align-items:center}
+.top .logo i{color:#f6a800}
+.top b{font-size:13px;font-weight:700;color:#737987;flex:1;line-height:1}
+.cart{width:44px;height:44px;display:grid;place-items:center;color:#252936;margin-right:-10px}
+.tabwrap{position:relative;margin:4px -12px 12px}
+.tabwrap::before,.tabwrap::after{content:"";position:absolute;top:0;bottom:0;width:28px;z-index:2;pointer-events:none;opacity:0;transition:opacity .2s}
+.tabwrap::before{left:0;background:linear-gradient(90deg,#fff 20%,#fff0)}
+.tabwrap::after{right:0;background:linear-gradient(270deg,#fff 20%,#fff0)}
+.tabwrap.l::before,.tabwrap.r::after{opacity:1}
+.tabs{display:flex;gap:8px;overflow-x:auto;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;margin:0;padding:4px 16px}
+.tabs::-webkit-scrollbar{display:none}
+.tab,.tab:nth-child(n+4){flex:none;scroll-snap-align:center;min-height:44px;padding:0 16px;border-radius:22px;background:#f2f3f6;font-size:14px;font-weight:800;box-shadow:none;white-space:nowrap;gap:6px;transform:none;color:#4a5060}
+.tab span{display:inline;font-size:16px}
+.tab[aria-selected=true]{background:#1d1530;color:#fff;transform:none}
+.card{min-height:0;border-radius:24px;padding:16px 14px 18px}
+.head{min-height:36px;margin-bottom:12px}
+.head h2{font-size:25px}
+.stage{flex:none}
+.art.product-art{display:block;background:transparent;border-radius:14px;overflow:hidden;flex:none}
+.product-art .pimg{width:100%;height:100%;border-radius:14px}
+.sn{font-size:20px;line-height:1.2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;padding:0 4px}
+.pgn{font-size:19px;min-height:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-align:center}
+.pgart{background:transparent;padding:0;border-radius:14px;margin-bottom:6px}
+.pgart .art{width:168px!important;height:168px!important}
+.pg{gap:6px}
+.stags{flex-wrap:wrap;justify-content:center;gap:8px}
+/* swipe */
+.deck{height:auto;aspect-ratio:auto;margin:0 0 16px;height:408px}
+.sc{padding:8px 8px 12px;justify-content:flex-start;gap:4px}
+.sc .art{margin:0 0 8px;width:100%!important;height:auto!important;aspect-ratio:1;max-height:268px}
+.sc .art .pimg{height:100%}
+.sc .sn{font-size:19px}
+.stamp{top:22px}
+.rbs{margin-top:0;padding-top:0}
+/* price */
+.rl{margin-bottom:6px}
+.rv{height:44px}
+/* budget */
+.grid3{gap:8px;margin-bottom:14px}
+.bt{padding:6px 6px 8px;min-height:0;gap:4px;border-radius:16px;border-width:2px;align-items:stretch}
+.bt .art{width:100%!important;height:auto!important;aspect-ratio:1}
+.bt .bn{font-size:11px;height:26px;line-height:1.2;padding:0 2px;text-align:left;margin-top:2px}
+.bt .bp{font-size:12px;padding:0 2px;text-align:left}
+.bt[aria-pressed=true]{transform:none;box-shadow:0 0 0 1px #1d1530,0 3px 0 rgba(0,0,0,.07)}
+.bt .ck{top:-6px;right:-4px}
+.mt{padding:0 4px 6px}
+/* bracket */
+.dl{min-height:0;padding:8px 8px 14px;gap:6px;justify-content:flex-start}
+.dl .art{width:100%!important;height:auto!important;aspect-ratio:1}
+.dl .dn{font-size:13px;line-height:1.25;-webkit-line-clamp:2;padding:0 2px;margin-top:2px}
+.dl .sp{font-size:15px}
+.dots{margin:16px 0 0}
+/* rapid */
+.rfc{min-height:0;margin:0 0 14px;padding:12px 12px 16px;justify-content:flex-start}
+.rfc .art{width:224px!important;height:224px!important;margin-bottom:6px}
+.rx{margin-top:0}
+.rx button{min-height:76px}
+/* results */
+.rewards{display:flex;align-items:center;justify-content:space-between;font-size:13px;padding:12px 14px;border-radius:14px;background:#fff6cd;color:#865307}
+.rewards b{font-size:16px}
+.rh{font-size:11px;margin-top:4px}
+.res{gap:10px}
+.chips{gap:8px}
+.lc{font-size:13px;min-height:34px;padding:0 14px}
+.taste{padding:14px;border-radius:16px;background:#ffffffdc}
+.taste-head{display:flex;align-items:center;justify-content:space-between;font-size:13px;font-weight:800}
+.taste-head a{font-size:12px;font-weight:600;color:#6f7581;text-decoration:none;min-height:44px;display:flex;align-items:center}
+.taste-row{display:grid;grid-template-columns:1fr auto;gap:4px 8px;font-size:12px;margin-top:8px}
+.taste-row b{font-variant-numeric:tabular-nums;font-weight:600}
+.taste-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.taste-row i{grid-column:1/-1;height:4px;border-radius:4px;background:#e8edf0;overflow:hidden}
+.taste-row em{display:block;height:100%;border-radius:4px}
+.up{color:#078267}.down{color:#cb3e4d}
+.pk{padding:8px 12px 8px 8px;min-height:72px;border-radius:16px;box-shadow:none;gap:12px}
+.pk .art{width:56px!important;height:56px!important;padding:0;background:transparent}
+.pk .pn{font-size:13px;line-height:1.25;white-space:normal;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.pk .pp{font-size:13px;margin-top:2px}
+.pk .tg .badge{font-size:10px;max-width:92px;overflow:hidden;text-overflow:ellipsis}
+.ship{min-height:54px;font-size:17px;border-radius:16px;box-shadow:none;margin-top:2px}
+.again{font-size:13px}
+.t8-track,.track-fallback{align-self:center;min-height:44px;display:flex;align-items:center}
+a:focus-visible,button:focus-visible{outline:3px solid #1689ce;outline-offset:2px}
 </style>
 </head>
 <body>
 <div class="page">
   <div class="top"><a class="logo" href="/">coupang<i>.</i></a><b>Play & discover</b><a class="cart" href="/orders.html" aria-label="Orders"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2 12h12l2-9H6M9 20h.01M18 20h.01" stroke-linecap="round"/></svg></a></div>
-  <div class="tabs" role="tablist" id="tabs"></div>
+  <div class="tabwrap" id="tw"><div class="tabs" role="tablist" id="tabs"></div></div>
   <div class="card" id="card">
     <div class="head"><h2 id="ttl"></h2><span class="cnt" id="cnt"></span></div>
     <div class="stage" id="stage"></div>
@@ -217,10 +301,10 @@ const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const matches={matcha:/matcha/i,cold:/cold brew|coffee/i,yuja:/yuja|tea/i,spark:/sparkling|water/i,choco:/choco/i,chips:/chips/i,gran:/granola/i,protein:/protein/i,ramen:/ramen|ramyun/i,kimchi:/kimchi/i,tteok:/tteok/i,seaweed:/seaweed/i,sheet:/mask/i,sun:/sun.*stick|sunscreen/i,hand:/hand cream/i,tumbler:/tumbler/i,candle:/candle/i,plant:/plant/i,towel:/towel/i,heat:/heat.*pack/i,pet1:/dog.*treat/i,pet2:/cat.*toy/i,pet3:/pet.*shampoo/i};
 const preferred={matcha:'drinks',cold:'drinks',yuja:'drinks',spark:'drinks',choco:'snacks',chips:'snacks',gran:'snacks',protein:'snacks',ramen:'snacks',kimchi:'snacks',tteok:'snacks',seaweed:'snacks',sheet:'beauty',sun:'beauty',hand:'beauty',tumbler:'home',candle:'home',plant:'home',towel:'home',heat:'home',pet1:'kitchen',pet2:'kitchen',pet3:'kitchen'};
 Object.assign(LB,{refreshing:'Refreshing',cooking:'Home cook',laundry:'Home essentials',care:'Self care',savory:'Savoury snacks',beauty:'Beauty fan',kitchen:'Home cook'});
-function syncCatalog(){const items=window.CATALOG&&CATALOG.items||[];if(!items.length)return;const used=new Set();ALL.forEach(p=>{const pool=items.filter(i=>i.category===preferred[p.id]);const item=pool.find(i=>!used.has(i.id)&&matches[p.id].test(i.name))||pool.find(i=>!used.has(i.id))||items.find(i=>!used.has(i.id)&&i.tags.includes('game'));if(!item)return;used.add(item.id);p.item=item;p.n=(item.name.toLowerCase().includes((item.brand||'').toLowerCase())?'':(item.brand?item.brand+' · ':''))+item.name;p.pr=+item.price;p.cat=item.category;p.tags=[...new Set([...(item.tags||[]).filter(t=>t!=='game'),...({snacks:['snack'],drinks:['refreshing'],beauty:['skin'],home:['home'],kitchen:['cooking']}[item.category]||[])])];p.rare=Boolean(item.tags?.includes('novelty'));});}
+function syncCatalog(){const items=window.CATALOG&&CATALOG.items||[];if(!items.length)return;const used=new Set();ALL.forEach(p=>{const pool=items.filter(i=>i.category===preferred[p.id]);const item=pool.find(i=>!used.has(i.id)&&matches[p.id].test(i.name))||pool.find(i=>!used.has(i.id))||items.find(i=>!used.has(i.id)&&i.tags.includes('game'));if(!item)return;used.add(item.id);p.item=item;p.s=item.name;p.n=(item.name.toLowerCase().includes((item.brand||'').toLowerCase())?'':(item.brand?item.brand+' · ':''))+item.name;p.pr=+item.price;p.cat=item.category;p.tags=[...new Set([...(item.tags||[]).filter(t=>t!=='game'),...({snacks:['snack'],drinks:['refreshing'],beauty:['skin'],home:['home'],kitchen:['cooking']}[item.category]||[])])];p.rare=Boolean(item.tags?.includes('novelty'));});}
 
 syncCatalog();
-function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size}px;height:${size}px">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
+function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size==='full'?'100%':size+'px'};height:${size==='full'?'auto':size+'px'};${size==='full'?'aspect-ratio:1':''}">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
 if(window.CATALOG&&CATALOG.onMode)CATALOG.onMode(()=>{$$('.product-art').forEach(el=>{const p=P[el.dataset.product];el.innerHTML=CATALOG.imgHTML(p.item,'product-photo')})});
 const sid=localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
 let prefState={weights:{},history:[]},startWeights={},pending=Promise.resolve(),signalError=false;
@@ -265,7 +349,7 @@ async function result(prof){
   if(inst&&inst.stop)inst.stop();
   const r=learn(prof.w,prof.ex||[],prof.seen||new Set(),prof.pp);lastRes=r;cnt('');
   stage.innerHTML=`<div class="res"><div class="rewards"><b>+120 coins</b><span>🔥 ${rewards.streak} day streak</span></div><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
-  ${tasteHTML()}<div class="rh">Picked for you</div><div class="pks">${r.picks.map((k,i)=>`<div class="pk" style="animation-delay:${.35+i*.1}s">${sv(k.p,50)}<div class="pi"><div class="pn">${k.p.n}</div><div class="pp">${won(k.p.pr)}</div></div><div class="tg"><span class="badge">${k.why}</span>${k.p.rare?'<span class="badge gem">Hidden gem</span>':''}</div></div>`).join('')}</div>
+  ${tasteHTML()}<div class="rh">Picked for you</div><div class="pks">${r.picks.map((k,i)=>`<div class="pk" style="animation-delay:${.35+i*.1}s">${sv(k.p,50)}<div class="pi"><div class="pn">${k.p.s||k.p.n}</div><div class="pp">${won(k.p.pr)}</div></div><div class="tg"><span class="badge">${k.why}</span>${k.p.rare?'<span class="badge gem">Hidden gem</span>':''}</div></div>`).join('')}</div>
   <button class="ship" id="ship"><span class="s1">Ship it · ${won(r.total)}</span><span class="s2">${CHECK}Order placed</span></button>
   <button class="again" id="again">Play again</button></div>`;
   enter();confetti();
@@ -276,7 +360,7 @@ function go(id){
   if(!G[id])id='price';
   if(inst&&inst.stop)inst.stop();
   run++;cur=id;syncCatalog();startWeights={...prefState.weights};const g=G[id];
-  $$('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.g===id));
+  $$('.tab').forEach(t=>{const on=t.dataset.g===id;t.setAttribute('aria-selected',on);if(on&&t.scrollIntoView)t.scrollIntoView({inline:'center',block:'nearest',behavior:'auto'})});
   card.style.background=g.bg;$('#ttl').textContent=g.name;$('#ttl').style.color=g.ink;cnt('');
   $('#cf').getContext('2d').clearRect(0,0,9999,9999);
   stage.innerHTML='';enter();
@@ -291,7 +375,7 @@ start(S,fin,cnt){
   S.innerHTML='<div class="deck"></div><div class="rbs"><button class="rb no" aria-label="Pass">✕</button><button class="rb yes" aria-label="Love">♥</button></div>';
   const deck=$('.deck',S);cnt('1/'+ids.length);
   const mk=k=>{if(k>=ids.length)return null;const p=P[ids[k]],e=document.createElement('div');e.className='sc';
-    e.innerHTML=`<i class="stamp l">LOVE</i><i class="stamp n">NOPE</i>${sv(p,184)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><span class="stags">${p.tags.slice(0,2).map(t=>`<em>${LB[t]||esc(t)}</em>`).join('')}</span>`;return e};
+    e.innerHTML=`<i class="stamp l">LOVE</i><i class="stamp n">NOPE</i>${sv(p,'full')}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><span class="stags">${[...new Set(p.tags.filter(t=>LB[t]).map(t=>LB[t]))].slice(0,2).map(t=>`<em>${esc(t)}</em>`).join('')}</span>`;return e};
   const put=()=>{fr.style.transform=`translate3d(${px}px,${py}px,0) rotate(${px/18}deg)`;
     $('.stamp.l',fr).style.opacity=clamp(px/90,0,1);$('.stamp.n',fr).style.opacity=clamp(-px/90,0,1);
     if(bk){bk.style.transition='none';bk.style.transform=`scale(${.93+.07*clamp(Math.abs(px)/160,0,1)}) translateY(${16-16*clamp(Math.abs(px)/160,0,1)}px)`}};
@@ -365,7 +449,7 @@ start(S,fin,cnt){
   const ids=['chips','ramen','seaweed','matcha','hand','sheet','plant','towel','sun','candle','pet1','spark'],BUD=30000;
   const sel=new Set();let alive=true;const t0=performance.now();
   S.innerHTML=`<div class="mt"><b id="sum">${won(0)}</b><span id="left">${won(BUD)} left</span></div><div class="meter" id="mt"><div class="mf" id="mf"></div></div>
-  <div class="grid3">${ids.map(id=>{const p=P[id];return`<button class="bt" aria-pressed="false" data-id="${id}">${sv(p,46)}<span class="bn">${p.n}</span><span class="bp">${won(p.pr)}</span><i class="ck">${CHECK}</i></button>`}).join('')}</div>
+  <div class="grid3">${ids.map(id=>{const p=P[id];return`<button class="bt" aria-pressed="false" data-id="${id}">${sv(p,'full')}<span class="bn">${p.s||p.n}</span><span class="bp">${won(p.pr)}</span><i class="ck">${CHECK}</i></button>`}).join('')}</div>
   <button class="cta" id="done" disabled>Done</button>`;
     const sum=()=>[...sel].reduce((a,id)=>a+P[id].pr,0);
   function upd(){const s=sum();$('#sum').textContent=won(s);$('#left').textContent=won(BUD-s)+' left';$('#mf').style.width=s/BUD*100+'%';$('#done').disabled=sel.size<2}
@@ -387,7 +471,7 @@ start(S,fin,cnt){
   const start=['matcha','ramen','candle','sun','pet2','choco','tumbler','plant'],NAMES=['Quarter','Semi','Final'];
   let rounds=[start.slice()],r=0,m=0,step=0,alive=true,lock=false;const nxt=[],semis=[],qlose=[];let champ,finalist;
   function show(){const cr=rounds[r],a=P[cr[m*2]],b=P[cr[m*2+1]];lock=false;cnt((step+1)+'/7');
-    const side=p=>`<button class="dl" data-id="${p.id}">${sv(p,104)}<b class="dn">${p.n}</b><span class="sp">${won(p.pr)}</span></button>`;
+    const side=p=>`<button class="dl" data-id="${p.id}">${sv(p,'full')}<b class="dn">${p.s||p.n}</b><span class="sp">${won(p.pr)}</span></button>`;
     S.innerHTML=`<div class="rnd">${NAMES[r]}</div><div class="duel">${side(a)}${side(b)}<i class="vs">VS</i></div><div class="dots">${Array.from({length:7},(_,k)=>`<i class="${k<step?'on':''}"></i>`).join('')}</div>`;
     enter();$$('.dl',S).forEach(bn=>bn.onclick=()=>choose(bn))}
   function choose(bn){if(lock)return;lock=true;emit(P[bn.dataset.id],.35,'Bracket winner');const cr=rounds[r],w=bn.dataset.id,l=cr[m*2]===w?cr[m*2+1]:cr[m*2];
@@ -409,7 +493,7 @@ start(S,fin,cnt){
   const ids=['choco','kimchi','candle','pet3','sheet','cold','plant','protein'];
   let i=0,t0=0,tm=0,alive=true,busy=false;const log=[];
   function show(){const p=P[ids[i]];cnt((i+1)+'/'+ids.length);busy=false;
-    S.innerHTML=`<div class="rfc">${sv(p,168)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><div class="tb"><i></i></div></div><div class="rx"><button data-r="-1" aria-label="Nope">🥶<span>Nope</span></button><button data-r="0" aria-label="Meh">😐<span>Meh</span></button><button data-r="1" aria-label="Want">😍<span>Want</span></button></div>`;
+    S.innerHTML=`<div class="rfc">${sv(p,224)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><div class="tb"><i></i></div></div><div class="rx"><button data-r="-1" aria-label="Nope">🥶<span>Nope</span></button><button data-r="0" aria-label="Meh">😐<span>Meh</span></button><button data-r="1" aria-label="Want">😍<span>Want</span></button></div>`;
     enter();t0=performance.now();clearTimeout(tm);tm=setTimeout(()=>react(0,true),2600);
     $$('.rx button',S).forEach(b=>b.onclick=()=>react(+b.dataset.r,false))}
   function react(v,to){if(busy||!alive)return;busy=true;clearTimeout(tm);buzz();emit(P[ids[i]],v>0?.4:v<0?-.3:0,to?'Timed out':v>0?'Want':v<0?'Nope':'Meh',v>0?{'trait:novelty':.1}:{});
@@ -428,6 +512,7 @@ start(S,fin,cnt){
 }};
 /* ---------- boot ---------- */
 $('#tabs').innerHTML=Object.entries(G).map(([id,g])=>`<button class="tab" role="tab" data-g="${id}" aria-selected="false"><span>${g.ico}</span>${g.name}</button>`).join('');
+const tw=$('#tw'),tb=$('#tabs'),edge=()=>{tw.classList.toggle('l',tb.scrollLeft>4);tw.classList.toggle('r',tb.scrollLeft+tb.clientWidth<tb.scrollWidth-4)};tb.addEventListener('scroll',edge,{passive:true});addEventListener('resize',edge);setTimeout(edge,0);
 $$('.tab').forEach(t=>t.onclick=()=>{pop(t,1.08);go(t.dataset.g)});
 window.demoPlay=async id=>{id=id&&G[id]?id:cur;go(id);const tok=run;fast=true;await sleep(250);try{await inst.auto(tok)}finally{fast=false}return tok===run};
 window.__games=Object.keys(G);

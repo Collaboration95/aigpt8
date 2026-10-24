@@ -9,15 +9,15 @@
 html,body{height:100%;background:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:#1a1a1a}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 #app{height:100dvh;display:flex;flex-direction:column}
-#top{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 16px 8px}
-.logo{font-weight:900;font-size:22px;letter-spacing:-1px;color:#e52528}.logo span{color:#f6a800}
-#orders{width:44px;height:44px;display:grid;place-items:center;position:relative}
-#home{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center}
+#top{flex:none;display:flex;align-items:center;justify-content:space-between;height:calc(52px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0}
+.logo{font-weight:900;font-size:22px;line-height:1;letter-spacing:-1px;color:#e52528}.logo span{color:#f6a800}
+#orders{width:44px;height:44px;margin-right:-8px;display:grid;place-items:center;position:relative}
+#home{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px 24px;text-align:center;min-height:0}
 .mark{width:44px;height:44px;border-radius:14px;background:#e52528;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
 h1{font-size:24px;font-weight:600;line-height:1.25;margin-top:18px;max-width:280px;letter-spacing:-.3px}
-#chips{display:flex;padding:0 16px 8px}
+#chips{flex:none;display:flex;gap:8px;padding:0 14px 8px}
 .surp{min-height:44px;padding:0 16px;border:1px solid #ddd;border-radius:22px;font-size:14px;background:#fff}
-#comp{padding:8px 12px calc(env(safe-area-inset-bottom) + 10px)}
+#comp{flex:none;padding:8px 12px max(10px,env(safe-area-inset-bottom))}
 #comp form{display:flex;align-items:center;gap:4px;border:1px solid #ddd;border-radius:28px;padding:4px 6px 4px 16px;min-height:52px;box-shadow:0 2px 10px #0001}
 #comp input{flex:1;min-width:0;border:0;outline:0;font-size:16px;background:none;height:44px}
 #send{width:44px;height:44px;border-radius:22px;background:#111;display:grid;place-items:center;flex:none}

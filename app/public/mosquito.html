@@ -4,65 +4,89 @@
 <title>Coupang · Mosquito</title>
 <style>
 *{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
-html,body{height:100%;overflow:hidden;font-family:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;color:#1b1b1f;background:#fff}
+html,body{height:100%;overflow:hidden;font-family:-apple-system,"SF Pro Text","Helvetica Neue",Arial,sans-serif;color:#1b1b1f;background:#fff;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+button:disabled{cursor:default}
 .phone{position:relative;width:100%;height:100dvh;background:#fff;overflow:hidden;display:flex;flex-direction:column}
-.top{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 10px) 16px 8px;min-height:52px;z-index:5;background:#fff}
-.logo{font-weight:900;font-size:21px;letter-spacing:-.5px;color:#e4202c}
-.logo i{font-style:normal;color:#ffb400}
-.cart{width:44px;height:44px;display:grid;place-items:center;position:relative}
-.badge{position:absolute;top:2px;right:0;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#e4202c;color:#fff;font-size:11px;font-weight:800;display:none;place-items:center}
+.top{flex:none;display:flex;align-items:center;justify-content:space-between;height:calc(52px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0;z-index:5;background:#fff}
+.logo{font-weight:900;font-size:22px;line-height:1;letter-spacing:-.6px;color:#e52528}
+.logo i{font-style:normal;color:#f6a800}
+.cart{width:44px;height:44px;margin-right:-9px;display:grid;place-items:center;position:relative;flex:none}
+.badge{position:absolute;top:3px;right:1px;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:#e52528;color:#fff;font-size:11px;font-weight:800;display:none;place-items:center}
 .badge.on{display:grid}
-.scroll{flex:1;overflow-y:auto;overflow-x:hidden;scroll-behavior:smooth;position:relative}
-.home{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:0 32px 20px;text-align:center;transition:opacity .2s,transform .2s}
+.scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scroll-behavior:smooth;position:relative}
+.home{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:0 32px 24px;text-align:center;transition:opacity .2s,transform .2s}
 .home h1{font-size:24px;font-weight:600;letter-spacing:-.3px;line-height:1.25;max-width:280px}
-.mark{width:44px;height:44px;border-radius:14px;background:#e4202c;display:grid;place-items:center;color:#fff;font-weight:900;font-size:22px}
+.mark{width:48px;height:48px;border-radius:16px;background:#e52528;display:grid;place-items:center;color:#fff;font-weight:900;font-size:24px}
 .started .home{opacity:0;transform:translateY(-24px);pointer-events:none}
-.feed{padding-bottom:6px;display:flex;flex-direction:column;min-height:100%}
-.feed>.night{flex:1 0 auto}
-.dock{padding:6px 12px calc(env(safe-area-inset-bottom) + 12px);background:#fff;z-index:5}
-.sur{display:block;margin:0 0 8px 4px;min-height:44px;padding:0 16px;border-radius:22px;background:#fff;border:1px solid #ddd;font-size:14px;color:#111}
-.started .sur{display:none}
-.comp{display:flex;align-items:center;gap:4px;border:1px solid #e1e1e6;border-radius:28px;padding:4px 4px 4px 4px;background:#fff;box-shadow:0 2px 10px #0000000a}
+.started .dock{display:none}
+.feed{display:flex;flex-direction:column;padding:0 0 max(16px,env(safe-area-inset-bottom));min-height:100%}
+.dock{flex:none;padding:8px 12px max(10px,env(safe-area-inset-bottom));background:#fff;z-index:5}
+.sur{display:block;margin:0 0 8px 4px;min-height:44px;padding:0 16px;border-radius:22px;background:#fff;border:1px solid #e1e1e6;font-size:14px;color:#111}
+.comp{display:flex;align-items:center;gap:4px;border:1px solid #e1e1e6;border-radius:28px;padding:4px;background:#fff;box-shadow:0 2px 10px #0000000a}
 .comp button{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;flex:none}
 .comp input{flex:1;min-width:0;border:0;outline:0;font:inherit;font-size:16px;height:44px;background:none}
 .comp .send{background:#1b1b1f;color:#fff}
-.bub{margin:14px 14px 10px auto;width:fit-content;max-width:78%;background:#1b1b1f;color:#fff;padding:9px 14px;border-radius:18px 18px 4px 18px;font-size:15px;animation:pop .3s}
+.bub{margin:16px 16px 16px auto;width:fit-content;max-width:80%;background:#1b1b1f;color:#fff;padding:10px 16px;border-radius:20px 20px 6px 20px;font-size:15px;line-height:1.35;animation:pop .3s}
 @keyframes pop{from{opacity:0;transform:translateY(8px)}}
-.blk{margin:0 10px 6px;border-radius:26px;overflow:hidden;position:relative}
-.night{background:linear-gradient(180deg,#2a1b6e,#171048 70%,#0f0a33);color:#fff;margin:0 0 6px;border-radius:0;transform-origin:100% 0;animation:grow .45s cubic-bezier(.22,1,.36,1) both}
-@keyframes grow{from{transform:translateY(24px) scale(.92);border-radius:28px}to{transform:none;border-radius:0}}
-.scene{display:block;width:100%;height:auto}
-.pad{padding:0 12px 16px}
-.chips{display:flex;gap:8px;padding:0 12px 12px;flex-wrap:wrap}
-.chip{min-height:44px;padding:0 14px;border-radius:22px;border:1.5px solid #ffffff55;color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;transition:.2s}
-.chip.on{background:#ffd95a;color:#2a1b6e;border-color:#ffd95a}
-.chip svg{flex:none}
-.cards{display:flex;gap:8px;position:relative}
-.card{flex:1;min-width:0;background:#fff;color:#1b1b1f;border-radius:20px;padding:8px 6px 10px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;text-align:center;transition:opacity .3s,filter .3s,box-shadow .3s}
-.card b{font-size:14px}
-.card .pr{font-size:15px;font-weight:800;color:#e4202c}
-.facts{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:13px;font-weight:700;color:#3b3b55}
-.fact{display:flex;align-items:center;gap:3px;background:#f0eefc;border-radius:10px;padding:3px 8px;white-space:nowrap}
-.tag{position:absolute;top:-6px;left:50%;transform:translateX(-50%);background:#ff5d73;color:#fff;font-size:10px;font-weight:800;padding:3px 7px;border-radius:9px;white-space:nowrap}
-.best{position:absolute;top:-6px;left:50%;transform:translateX(-50%);background:#35d49a;color:#06382a;font-size:10px;font-weight:800;padding:3px 8px;border-radius:9px;white-space:nowrap}
-.card.dim{opacity:.45;filter:grayscale(.8)}
+.blk{margin:0 12px 16px;border-radius:24px;overflow:hidden;position:relative}
+.thinking-host{margin:0 12px 16px}
+.thinking-host .t8-thinking{margin:0;padding:16px;border-radius:20px;border:1px solid #e9e6fb;background:linear-gradient(180deg,#faf9ff,#f3f1ff);color:#3b3b55;font-size:14px;line-height:1.4;box-shadow:0 4px 16px #2a1b6e12}
+.thinking-host .t8-thinking strong{font-size:15px;font-weight:700;color:#2a1b6e}
+.thinking-host .t8-memory-step{margin-top:8px;color:#55556f}
+.thinking-host .t8-memory-step span{display:inline-block;width:16px;margin-right:8px;font-weight:800}
+.night{background:linear-gradient(180deg,#2a1b6e,#171048 70%,#0f0a33);color:#fff;animation:grow .45s cubic-bezier(.22,1,.36,1) both;transform-origin:100% 0}
+@keyframes grow{from{transform:translateY(24px) scale(.94)}to{transform:none}}
+.scene{display:block;width:100%;height:auto;max-height:152px;margin-bottom:8px;-webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+.qs{padding:0 16px 8px;display:flex;flex-direction:column;gap:16px}
+.q{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:44px}
+.q>span{font-weight:700;font-size:15px;color:#e1dcff}
+.seg{display:flex;background:#ffffff1f;border-radius:22px;padding:2px;flex:none}
+.seg button{min-height:40px;min-width:72px;justify-content:center;padding:0 16px;border-radius:20px;color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;transition:.2s}
+.seg button.on{background:#ffd95a;color:#2a1b6e}
+.seg button.on::before{content:"\2713";font-weight:900}
+.provenance:empty{display:none}
+.provenance{margin-top:4px}
+.provenance .t8-inference{display:inline-flex;flex-direction:column;align-items:flex-start;min-height:0;padding:4px 10px;border-radius:12px;border:0;background:#ffffff1f;color:#d9d3ff;font-size:12px;font-weight:600;line-height:1.4}
+.provenance .t8-inference small{font-size:12px;font-weight:500;margin-top:2px;opacity:.85;line-height:1.4}
+.sun .provenance .t8-inference{background:#fff;color:#95322f;box-shadow:inset 0 0 0 1px #f0d4cc}
+.cards{display:flex;flex-direction:column;gap:8px;padding:8px 12px 12px}
+.card{position:relative;display:grid;grid-template-columns:64px 1fr auto;grid-template-areas:"art info pick" "art meta pick";column-gap:12px;row-gap:2px;align-items:center;width:100%;background:#fff;color:#1b1b1f;border-radius:20px;padding:12px;text-align:left;transition:opacity .3s,box-shadow .3s}
+.card .product{display:contents}
+.card .product-art{grid-area:art}.card .brand{display:none}
+.card .pinfo{grid-area:info;align-self:end}
+.card .meta{grid-area:meta;align-self:start;display:flex;flex-direction:column;gap:2px;min-width:0}
+.card .pick{grid-area:pick}
+.card .pr{font-size:15px;font-weight:800;color:#e52528}
+.safety{font-size:12px;color:#6b6b76;font-weight:500}
+.safety.ok{color:#0a7a4b}.safety.bad{color:#c4162a}
+.best{position:absolute;top:-8px;left:88px;background:#35d49a;color:#06382a;font-size:11px;font-weight:800;padding:2px 8px;border-radius:10px;white-space:nowrap}
 .card.sel{box-shadow:0 0 0 3px #ffd95a;opacity:1}
-.card.wig{animation:wig .35s}
-@keyframes wig{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.sun{background:linear-gradient(180deg,#fff3c4,#ffe0e6);padding:16px 12px;animation:pop .5s}
-.sun h2,.mint h2{font-size:19px;letter-spacing:-.3px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.sizes{display:flex;gap:8px;margin-bottom:12px}
-.size{flex:1;min-height:96px;background:#fff;border-radius:18px;border:2.5px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding:8px 4px;font-weight:700;font-size:13px}
-.size.on{border-color:#e4202c;background:#fff7f7}
-.size small{font-weight:600;color:#777;font-size:11px}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.big{font-size:26px;font-weight:900;letter-spacing:-.5px}
-.rk{font-size:12px;font-weight:700;color:#0a7a4b}
-.shipbar{margin-top:2px}
-.ship{position:relative;overflow:hidden;width:100%;min-height:62px;border-radius:31px;background:linear-gradient(180deg,#ff4a4f,#e4202c);color:#fff;font-weight:900;font-size:20px;letter-spacing:-.3px;box-shadow:0 8px 18px #e4202c66;display:flex;align-items:center;justify-content:center;animation:pulse 2.2s ease-in-out infinite;transition:transform .15s}
-.ship:active{transform:scale(.96)}
-@keyframes pulse{50%{box-shadow:0 8px 26px #e4202caa}}
+.card.bestc{box-shadow:0 0 0 2px #35d49a}
+.pick{min-height:44px;min-width:64px;padding:0 16px;border-radius:22px;background:#e52528;color:#fff;font-size:14px;font-weight:800;display:grid;place-items:center}
+.card.sel .pick{background:#0a7a4b}
+.product{min-width:0}
+.product-art{display:block;width:100%}
+.product-art .pimg{width:100%}
+.pinfo{display:flex;flex-direction:column;gap:2px;min-width:0}
+.brand{display:block;color:#6b6b76;font-size:12px}
+.product-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:15px;font-weight:600;line-height:1.3;overflow-wrap:anywhere}
+.sun,.mint{padding:20px 16px 16px;animation:pop .5s}
+.sun{background:linear-gradient(180deg,#fff3c4,#ffe0e6)}
+.mint{background:linear-gradient(180deg,#d9fbe9,#cfe9ff)}
+.sun h2,.mint h2{font-size:18px;font-weight:800;letter-spacing:-.3px;margin:0 0 12px}
+.detail-product{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.detail-product .product-art{width:72px;flex:none}
+.detail-product .product-name{font-size:17px;font-weight:700}
+.sizes{display:flex;gap:8px}
+.size{flex:1;min-height:104px;background:#fff;border-radius:18px;border:2px solid transparent;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;padding:12px 4px;font-weight:700;font-size:14px}
+.size.on{border-color:#e52528;background:#fff7f7}
+.size small{font-weight:500;color:#6b6b76;font-size:12px}
+.bed-memory{margin-top:12px}
+.shipbar{margin-top:20px}
+.ship{position:relative;overflow:hidden;width:100%;min-height:56px;border-radius:28px;background:linear-gradient(180deg,#ff4a4f,#e52528);color:#fff;font-weight:900;font-size:19px;letter-spacing:-.3px;box-shadow:0 8px 18px #e5252866;display:flex;align-items:center;justify-content:center;animation:pulse 2.2s ease-in-out infinite;transition:transform .15s}
+.ship:active{transform:scale(.97)}
+@keyframes pulse{50%{box-shadow:0 8px 26px #e52528aa}}
 .ship .rk{position:absolute;left:18px;top:50%;margin-top:-12px;width:24px;height:24px;transform:rotate(45deg)}
 .ship .tr{position:absolute;left:0;top:50%;height:6px;margin-top:-3px;width:0;background:linear-gradient(90deg,transparent,#fff);border-radius:3px;opacity:0}
 .ship.fly{animation:none;pointer-events:none}
@@ -71,38 +95,38 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .ship.fly .tr{animation:tr .7s ease-out forwards}
 @keyframes zoom{0%{left:18px;transform:rotate(45deg)}30%{left:24px;transform:rotate(90deg) scale(1.3)}100%{left:calc(100% + 30px);transform:rotate(90deg) scale(1.3)}}
 @keyframes tr{0%{width:0;opacity:.9}100%{width:100%;opacity:0}}
-.ship.sm{min-height:44px;font-size:14px;margin-top:4px;box-shadow:0 4px 10px #e4202c55}
-.ship.sm .rk{display:none;left:8px;margin-top:-10px;width:20px;height:20px}.ship.sm.fly .rk{display:block}
-.scap{text-align:center;font-size:12px;font-weight:600;color:#6d5a2a;margin-top:6px}.scap:empty,.busy .scap{display:none}
-.rcpt{background:#0b2f29;color:#fff;border-radius:22px;padding:8px 8px 8px 10px;display:flex;align-items:center;gap:10px;animation:pop .4s both}
-.th{width:40px;height:40px;border-radius:13px;background:#fff;display:grid;place-items:center;flex:none}
-.ri{flex:1;min-width:0;display:flex;flex-direction:column}.ri b{font-size:18px;letter-spacing:-.3px}.ri span{font-size:12px;opacity:.8;white-space:nowrap}
-.undo{flex:none;min-height:44px;padding:0 16px;border-radius:22px;background:#ffffff26;font-weight:700;color:#fff}
-.rcpt.sm{flex-direction:column;align-items:stretch;gap:2px;text-align:center;border-radius:16px;padding:8px;margin-top:4px;width:100%}.rcpt.sm .ri b{font-size:16px}.rcpt.sm .ri span{font-size:11px}.rcpt.sm .undo{padding:0 10px}
+.scap{text-align:center;font-size:13px;font-weight:600;color:#6d5a2a;margin-top:8px}.scap:empty{display:none}
+.cheaper{display:flex;align-items:center;justify-content:center;width:100%;min-height:48px;margin-top:12px;border-radius:24px;border:1.5px solid #e5252850;background:#ffffffcc;color:#e52528;font-weight:700;font-size:15px}
+.cheaper:active{background:#fff}
+.receipt-block{padding:16px;background:#ecf8f2}
+.rcpt{background:#0b2f29;color:#fff;border-radius:20px;padding:12px 12px 12px 16px;display:flex;align-items:center;gap:12px;animation:pop .4s both}
+.ri{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ri b{font-size:17px;letter-spacing:-.3px}
+.ri span{font-size:13px;opacity:.8;overflow-wrap:anywhere;line-height:1.3}
+.undo{flex:none;min-height:44px;padding:0 20px;border-radius:22px;background:#ffffff26;font-weight:700;color:#fff}
+.tracking{display:contents}
+.acts{display:flex;gap:8px;margin-top:12px}
+.acts>*{flex:1;min-width:0;margin:0}
+.acts .t8-track,.acts .track-fallback{min-height:48px;border-radius:24px;font-size:15px;display:inline-flex;align-items:center;justify-content:center;background:#e52528;color:#fff;font-weight:700;text-decoration:none}
+.undone{padding:16px;background:#f3f4f6}
+.undone h2{font-size:15px;font-weight:700;color:#55556a}
+.two{display:flex;gap:8px}
+.nc{flex:1;min-width:0;background:#fff;border-radius:20px;padding:12px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.nc .product{display:flex;flex-direction:column;gap:8px;width:100%}
+.nc .pinfo{align-items:center;gap:0}
+.nc .product-name{font-size:14px;min-height:36px;-webkit-line-clamp:2}
+.nc .brand{display:none}
+.pxs{display:flex;flex-direction:column;align-items:center;margin:4px 0 8px}
+.old{text-decoration:line-through;color:#8a8a94;font-size:13px}
+.new{font-size:19px;font-weight:900;color:#e52528}
+.nc .sh{width:100%;margin-top:auto}
+.nc .ship{min-height:48px;font-size:14px;animation:none;box-shadow:none}
+.nc .scap{font-size:12px;margin-top:6px}
+.nc .ship .rk{display:none}.nc .ship.fly .rk{display:block}
+.frozen .ctl,.frozen .ship,.frozen .undo{pointer-events:none}
+.frozen .ctl{opacity:.7}.frozen .ctl.on,.frozen .ctl.sel{opacity:1}
+.frozen .shipbar:not(.done) .ship,.frozen .nc .ship{opacity:.5;animation:none}
 .shipped .size{pointer-events:none}
-.frozen .ship,.frozen .undo{pointer-events:none}.frozen .shipbar:not(.done) .ship,.frozen .nc .ship{opacity:.5;animation:none}
-.mint{background:linear-gradient(180deg,#d9fbe9,#cfe9ff);padding:16px 12px;animation:pop .5s}
-.two{display:flex;gap:10px}
-.nc{flex:1;min-width:0;background:#fff;border-radius:20px;padding:10px 8px 12px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;position:relative}
-.nc b{font-size:14px}
-.sh{width:100%}.old{text-decoration:line-through;color:#999;font-size:13px}
-.new{font-size:19px;font-weight:900;color:#e4202c}
-.off{background:#35d49a;color:#06382a;font-size:11px;font-weight:800;border-radius:9px;padding:2px 7px}
-.rk2{font-size:11px;color:#555;font-weight:600}
-.frozen .ctl{pointer-events:none;cursor:default;opacity:.55}
-.frozen .ctl.on,.frozen .ctl.sel{opacity:1}
-.qs{padding:0 12px 12px;display:flex;flex-direction:column;gap:6px}
-.q{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.q>span{font-weight:700;font-size:14px;color:#d9d3ff}
-.seg{display:flex;background:#ffffff1f;border-radius:24px;padding:2px}
-.seg button{min-height:44px;min-width:64px;justify-content:center;padding:0 14px;border-radius:22px;color:#fff;font-weight:600;font-size:14px;display:flex;align-items:center;gap:6px;transition:.2s}
-.seg button.on{background:#ffd95a;color:#2a1b6e}
-.seg button.on::before{content:"\2713";font-weight:900}
-.pick{margin-top:2px;background:#e4202c;color:#fff;font-size:12px;font-weight:800;border-radius:14px;padding:5px 14px}
-.card.sel .pick{background:#0a7a4b}
-.chip.lt{margin:12px 0 0;border-color:#e4202c;color:#e4202c;background:#fff}
-.chip.lt.on{background:#e4202c;color:#fff}
-/* board */
 .side{display:none}
 @media (min-width:700px){
 body.board{background:#e9e9ee;overflow:auto}
@@ -112,8 +136,6 @@ body.board .side h3{font-size:14px;color:#555}
 body.board .side button{background:#fff;border-radius:12px;padding:12px;text-align:left;font-size:14px;min-height:44px;box-shadow:0 1px 3px #0002}
 body.board .phone{width:390px;height:844px;border-radius:44px;border:10px solid #111;box-shadow:0 20px 60px #0004}
 }
-
-button:disabled{cursor:default}.started .dock{display:none}.feed>.night{flex:none}.scene{max-height:170px}.product{width:100%;min-width:0}.product-art{height:94px;display:grid;place-items:center;background:#fff;border-radius:14px;overflow:hidden}.product-art img,.product-img{width:100%;height:100%;max-height:94px;object-fit:contain;padding:6px}.product-art svg{max-width:100%;height:78px}.brand{display:block;color:#777;font-size:10px;margin:6px 0 3px}.product-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px!important;line-height:1.3;min-height:32px;overflow-wrap:anywhere}.safety{font-size:10px;color:#685a74;min-height:25px;display:grid;place-items:center}.pick{min-height:44px;display:grid;place-items:center;padding:4px;font-size:11px;width:100%;border-radius:12px}.card{padding:10px 6px 6px;gap:3px}.card .pr{font-size:13px}.provenance:empty{display:none}.provenance .t8-inference{width:100%;background:#ffffff17;color:inherit;border:1px solid #ffffff30;min-height:44px;font-size:11px;padding:8px 10px}.sun .provenance .t8-inference{background:#fff8;color:#95322f;border:1px solid #e8b9ac}.bed-memory{margin-bottom:12px}.q{flex-wrap:wrap}.detail-product{display:grid;grid-template-columns:84px 1fr;column-gap:12px;text-align:left;margin-bottom:16px}.detail-product .product-art{grid-row:1 / 3;height:84px}.detail-product .brand{align-self:end}.detail-product .product-name{align-self:start;font-size:16px!important}.thinking-host{margin:0 14px}.receipt-block{padding:12px;background:#ecf8f2}.ri span{white-space:normal;overflow-wrap:anywhere}.tracking{margin-top:10px}.receipt-block .cheaper{margin-top:10px}.undone{padding:18px;background:#f3f4f6;font-size:14px}.top .cart{flex:none}.nc .ship{min-height:48px;font-size:13px;animation:none;box-shadow:none}.nc .scap{font-size:10px}.night .pad{padding-top:6px}.frozen .ctl{opacity:.7}.card .best{font-size:9px}.track-fallback{display:inline-flex;min-height:44px;align-items:center;color:#bf2030}.night .card{box-shadow:0 3px 10px #0001}
 </style></head><body>
 <div class="wrap">
 <div class="side" id="side"><h3>Steps (arrow keys)</h3>
@@ -178,8 +200,9 @@ const inferred={room:!!window.MEMORY,baby:!!window.MEMORY,bed:!!window.MEMORY};
 const fallback={net:{id:'net',name:'Canopy Net',brand:'Bedroom',price:29900},plug:{id:'plug',name:'Mosquito Plug-in',brand:'Home',price:12900},spray:{id:'spray',name:'Mosquito Spray',brand:'Home',price:6900}};
 function products(){return window.CATALOG?.byCategory('mosquito')||[]}
 function item(k){const all=products();if(k==='net'){const variant=all.find(x=>x.id==='net-'+SZ[size].k.toLowerCase());if(variant)return variant}return all.find(x=>((x.type||'')+' '+x.id+' '+x.name+' '+(x.tags||[]).join(' ')).toLowerCase().includes(k==='plug'?'plug':k))||fallback[k]}
-function art(d,k,cls='product-img'){if(window.CATALOG&&CATALOG.mode()==='real'&&d.img)return CATALOG.imgHTML(d,cls);return P[k]?.svg||netSvg()}
-function productHTML(d,k){return `<div class="product-art">${art(d,k)}</div><small class="brand">${esc(d.brand||'')}</small><b class="product-name">${esc(d.name)}</b>`}
+const IMG={}; // per-kind photo override, e.g. {net:'/img/products/net-king.jpg'}; all net photos in the catalog are the same shot
+function art(d,k,cls=''){if(window.CATALOG&&(CATALOG.mode()==='fun'||d.img))return CATALOG.imgHTML(IMG[k]&&CATALOG.mode()==='real'?{...d,img:IMG[k]}:d,cls);return `<span class="pimg">${P[k]?.svg||netSvg()}</span>`}
+function productHTML(d,k){return `<span class="product-art">${art(d,k)}</span><span class="pinfo"><small class="brand">${esc(d.brand||'')}</small><b class="product-name">${esc(d.name)}</b></span>`}
 function updateArt(){const distance=scr.scrollHeight-scr.clientHeight-scr.scrollTop;document.querySelectorAll('[data-product]').forEach(el=>{const d=products().find(x=>x.id===el.dataset.product)||item(el.dataset.kind);el.innerHTML=productHTML(d,el.dataset.kind)});requestAnimationFrame(()=>scr.scrollTo({top:scr.scrollHeight-scr.clientHeight-distance,behavior:'instant'}))}
 window.CATALOG?.onMode(updateArt);
 function cart(){const n=window.Orders?Orders.count():JSON.parse(localStorage.getItem('t8-orders')||'[]').length;$('#badge').textContent=n;$('#badge').classList.toggle('on',n>0)}
@@ -191,19 +214,19 @@ function block(cls,html){const b=document.createElement('section');b.className='
 async function thinking(first=false){const c=document.createElement('div');c.className='thinking-host';feed.append(c);bottom();if(window.AI)await AI.thinking(c,{steps:first?['Bedroom · night bites',...(window.MEMORY?['Baby at home · from Aug order','King bed · from Mar order']:[])]:['Updating your picks'],ms:1000});else{c.textContent='✦ Thinking…';await new Promise(r=>setTimeout(r,700))}c.remove()}
 async function turn(label,render,first=false){if(busy)return;busy=true;freeze();bubble(label);bottom();await thinking(first);render();busy=false}
 function provenance(host,key,label){if(!host||!inferred[key]||!window.AI)return;const why=window.MEMORY?.explain(key);host.append(AI.inferred({label,because:why?.because||label}))}
-function picker(){stage='compare';const b=block('night',`<div class="sc">${scene(room)}</div><div class="qs"><div class="q"><span>Where?</span><div class="seg"><button class="ctl ${room==='bed'?'on':''}" data-room="bed">Bedroom</button><button class="ctl ${room==='living'?'on':''}" data-room="living">Living</button></div></div><div class="provenance room-memory"></div><div class="q"><span>Baby at home?</span><div class="seg"><button class="ctl ${!baby?'on':''}" data-baby="0">No</button><button class="ctl ${baby?'on':''}" data-baby="1">Yes</button></div></div><div class="provenance baby-memory"></div></div><div class="pad"><div class="cards"></div></div>`);
-provenance(b.querySelector('.room-memory'),'room','from your bedroom curtain order');provenance(b.querySelector('.baby-memory'),'baby','from your Aug baby monitor order');
+function picker(){stage='compare';const b=block('night',`<div class="sc">${scene(room)}</div><div class="qs"><div class="qg"><div class="q"><span>Where?</span><div class="seg"><button class="ctl ${room==='bed'?'on':''}" data-room="bed">Bedroom</button><button class="ctl ${room==='living'?'on':''}" data-room="living">Living</button></div></div><div class="provenance room-memory"></div></div><div class="qg"><div class="q"><span>Baby at home?</span><div class="seg"><button class="ctl ${!baby?'on':''}" data-baby="0">No</button><button class="ctl ${baby?'on':''}" data-baby="1">Yes</button></div></div><div class="provenance baby-memory"></div></div></div><div class="pad"><div class="cards"></div></div>`);
+provenance(b.querySelector('.room-memory'),'room','Bedroom curtain order');provenance(b.querySelector('.baby-memory'),'baby','Aug baby monitor order');
 const order=baby?['net','plug','spray']:room==='bed'?['net','spray','plug']:['plug','net','spray'];
-b.querySelector('.cards').innerHTML=order.map(k=>{const d=item(k);return `<button class="card ctl" data-k="${k}" aria-label="Pick ${P[k].n}">${baby&&k==='net'?'<span class="best">Best pick</span>':''}<div class="product" data-product="${esc(d.id)}" data-kind="${k}">${productHTML(d,k)}</div><span class="pr">${won(d.price||P[k].p)}</span><span class="safety">${baby&&k==='spray'?'Not baby-safe':k==='net'?'No chemicals':k==='plug'?'Check label':'Strong scent'}</span><span class="pick">Pick ${P[k].n}</span></button>`}).join('');
-b.querySelectorAll('[data-room]').forEach(x=>x.onclick=()=>{room=x.dataset.room;inferred.room=false;turn(x.textContent,picker)});b.querySelectorAll('[data-baby]').forEach(x=>x.onclick=()=>{baby=x.dataset.baby==='1';inferred.baby=false;turn('Baby · '+x.textContent,picker)});b.querySelectorAll('[data-k]').forEach(x=>x.onclick=()=>{selected=x.dataset.k;turn(P[selected].n,details)});}
+b.querySelector('.cards').innerHTML=order.map(k=>{const d=item(k);const bad=baby&&k==='spray';return `<button class="card ctl ${baby&&k==='net'?'bestc':''}" data-k="${k}" aria-label="Pick ${P[k].n}">${baby&&k==='net'?'<span class="best">Best pick</span>':''}<div class="product" data-product="${esc(d.id)}" data-kind="${k}">${productHTML(d,k)}</div><span class="meta"><span class="pr">${won(d.price||P[k].p)}</span><span class="safety ${bad?'bad':k==='net'?'ok':''}">${bad?'Not baby-safe':k==='net'?'No chemicals':k==='plug'?'Check label':'Strong scent'}</span></span><span class="pick">Pick</span></button>`}).join('');
+b.querySelectorAll('[data-room]').forEach(x=>x.onclick=()=>{room=x.dataset.room;inferred.room=false;turn(x.textContent,picker)});b.querySelectorAll('[data-baby]').forEach(x=>x.onclick=()=>{baby=x.dataset.baby==='1';inferred.baby=false;turn('Baby · '+x.textContent,picker)});b.querySelectorAll('[data-k]').forEach(x=>x.onclick=()=>{selected=x.dataset.k;x.classList.add('sel');turn(P[selected].n,details)});}
 function bedSvg(s,on){return `<svg width="${s.w+12}" height="56" viewBox="0 0 ${s.w+12} 64"><rect x="2" y="2" width="${s.w+8}" height="60" rx="8" fill="${on?'#ffd0d6':'#e5e0fa'}"/><rect x="6" y="8" width="${s.w}" height="12" rx="5" fill="#fff"/><rect x="6" y="26" width="${s.w}" height="32" rx="5" fill="${on?'#ff8aa1':'#b8aef0'}"/></svg>`}
 function price(d){if(products().some(x=>x.id===d.id))return Number(d.price);return selected==='net'?Number(d.price||29900)+(size===2?7000:size===0?-5000:0):Number(d.price||P[selected].p)}
-function details(){stage='detail';const d=item(selected),total=price(d);const b=block('sun',`<div class="detail-product product" data-product="${esc(d.id)}" data-kind="${selected}">${productHTML(d,selected)}</div>${selected==='net'?`<h2>Bed size</h2><div class="sizes">${SZ.map((s,i)=>`<button class="size ctl ${i===size?'on':''}" data-size="${i}">${bedSvg(s,i===size)}${s.k}<small>${s.d}</small></button>`).join('')}</div><div class="provenance bed-memory"></div>`:''}<div class="shipbar"></div><button class="chip lt ctl cheaper">Cheaper?</button>`);
-provenance(b.querySelector('.bed-memory'),'bed','King · from your Mar bed frame order');b.querySelectorAll('[data-size]').forEach(x=>x.onclick=()=>{size=+x.dataset.size;inferred.bed=false;turn(SZ[size].k,details)});shipButton(b.querySelector('.shipbar'),d,total);b.querySelector('.cheaper').onclick=()=>turn('Cheaper?',cheaper);}
+function details(){stage='detail';const d=item(selected),total=price(d);const b=block('sun',`<div class="detail-product product" data-product="${esc(d.id)}" data-kind="${selected}">${productHTML(d,selected)}</div>${selected==='net'?`<h2>Bed size</h2><div class="sizes">${SZ.map((s,i)=>`<button class="size ctl ${i===size?'on':''}" data-size="${i}">${bedSvg(s,i===size)}${s.k}<small>${s.d}</small></button>`).join('')}</div><div class="provenance bed-memory"></div>`:''}<div class="shipbar"></div><button class="cheaper ctl">Cheaper?</button>`);
+provenance(b.querySelector('.bed-memory'),'bed','Mar bed frame order');b.querySelectorAll('[data-size]').forEach(x=>x.onclick=()=>{size=+x.dataset.size;inferred.bed=false;turn(SZ[size].k,details)});shipButton(b.querySelector('.shipbar'),d,total);b.querySelector('.cheaper').onclick=()=>turn('Cheaper?',cheaper);}
 function addOrder(d,total){const input={items:[{...d,price:total,name:d.name+(selected==='net'&&!products().some(x=>x.id===d.id)?' · '+SZ[size].k:'')}],total,flow:'mosquito'};if(window.Orders)return Orders.add(input);const o={...input,id:'T8-'+Date.now(),createdAt:Date.now()};const a=JSON.parse(localStorage.getItem('t8-orders')||'[]');localStorage.setItem('t8-orders',JSON.stringify([o,...a]));return o}
 function cancelOrder(o){if(window.Orders?.remove)Orders.remove(o.id);else if(window.Orders?.cancel)Orders.cancel(o.id);else{const a=JSON.parse(localStorage.getItem('t8-orders')||'[]');localStorage.setItem('t8-orders',JSON.stringify(a.filter(x=>x.id!==o.id)));window.dispatchEvent(new Event('t8-orders'))}cart()}
-function shipButton(host,d,total){host.innerHTML=`<button class="ship ctl">Ship it · ${won(total)}</button><div class="scap">Rocket · tomorrow</div>`;host.querySelector('button').onclick=()=>turn('Ship it',()=>{const order=addOrder(d,total);cart();const b=block('receipt-block',`<div class="rcpt"><div class="ri"><b>Ordered · ${won(total)}</b><span>${esc(d.name)}</span></div><button class="undo ctl">Undo</button></div><div class="tracking"></div><button class="chip lt ctl cheaper">Cheaper?</button>`);if(window.AI)b.querySelector('.tracking').append(AI.trackLink(order));else b.querySelector('.tracking').innerHTML='<a href="/orders.html" class="track-fallback">Track order →</a>';b.querySelector('.undo').onclick=()=>turn('Undo',()=>{cancelOrder(order);block('undone','<h2>Order cancelled</h2>');details()});b.querySelector('.cheaper').onclick=()=>turn('Cheaper?',cheaper)})}
-function cheaper(){stage='cheap';const base=item('net'),old=Number(base.price||29900),all=products().filter(d=>/net/i.test(d.id+' '+d.name)&&Number(d.price)<old).sort((a,b)=>a.price-b.price);const list=all.slice(0,2);if(!list.length)list.push({...base,id:'basic-net',name:'Basic Hanging Net',price:15900},{...base,id:'dome-net',name:'Dome Net',price:19900});const b=block('mint',`<h2>Cheaper nets</h2><div class="two">${list.map(d=>`<div class="nc"><div class="product" data-product="${esc(d.id)}" data-kind="net">${productHTML(d,'net')}</div><span class="old">${won(old)}</span><span class="new">${won(d.price)}</span><span class="rk2">No chemicals</span><div class="sh"></div></div>`).join('')}</div>`);b.querySelectorAll('.sh').forEach((host,i)=>shipButton(host,list[i],list[i].price))}
+function shipButton(host,d,total){host.innerHTML=`<button class="ship ctl">Ship it · ${won(total)}</button><div class="scap">Rocket · tomorrow</div>`;host.querySelector('button').onclick=()=>turn('Ship it',()=>{const order=addOrder(d,total);cart();const b=block('receipt-block',`<div class="rcpt"><div class="ri"><b>Ordered · ${won(total)}</b><span>${esc(d.name)}</span></div><button class="undo ctl">Undo</button></div><div class="acts"><span class="tracking"></span><button class="cheaper ctl">Cheaper?</button></div>`);if(window.AI)b.querySelector('.tracking').append(AI.trackLink(order));else b.querySelector('.tracking').innerHTML='<a href="/orders.html" class="track-fallback">Track order →</a>';b.querySelector('.undo').onclick=()=>turn('Undo',()=>{cancelOrder(order);block('undone','<h2>Order cancelled</h2>');details()});b.querySelector('.cheaper').onclick=()=>turn('Cheaper?',cheaper)})}
+function cheaper(){stage='cheap';const base=item('net'),old=Number(base.price||29900),all=products().filter(d=>/net/i.test(d.id+' '+d.name)&&Number(d.price)<old).sort((a,b)=>a.price-b.price);const list=all.slice(0,2);if(!list.length)list.push({...base,id:'basic-net',name:'Basic Hanging Net',price:15900},{...base,id:'dome-net',name:'Dome Net',price:19900});const b=block('mint',`<h2>Cheaper nets</h2><div class="two">${list.map(d=>`<div class="nc"><div class="product" data-product="${esc(d.id)}" data-kind="net">${productHTML(d,'net')}</div><span class="pxs"><span class="old">${won(old)}</span><span class="new">${won(d.price)}</span></span><div class="sh"></div></div>`).join('')}</div>`);b.querySelectorAll('.sh').forEach((host,i)=>shipButton(host,list[i],list[i].price))}
 function start(text){if(stage!=='home')return;$('#phone').classList.add('started');$('#form').hidden=true;$('#sur').hidden=true;turn(text||'mosquitoes keep biting me at night',picker,true)}
 $('#form').onsubmit=e=>{e.preventDefault();start(inp.value.trim());inp.blur()};$('#sur').onclick=()=>start();
 document.querySelectorAll('#side button').forEach(x=>x.onclick=()=>{if(stage==='home')start();else if(stage==='compare'){selected='net';turn('Net',details)}else turn('Cheaper?',cheaper)});

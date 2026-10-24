@@ -15,10 +15,10 @@ body.board #steps{display:flex;flex-direction:column;gap:10px;width:220px}
 body.board #steps h3{font-size:14px;color:#555;margin-bottom:4px}
 body.board #steps button{min-height:44px;background:#fff;border-radius:12px;padding:8px 12px;text-align:left;font-size:14px;box-shadow:0 1px 3px #0002}
 body.board #phone{flex:none;width:410px;height:864px;border-radius:44px;border:10px solid #111;box-shadow:0 20px 60px #0004}
-#top{display:flex;align-items:center;justify-content:space-between;padding:calc(env(safe-area-inset-top) + 8px) 16px 8px;flex:none;background:#fff;z-index:5}
-.logo{font-weight:900;font-size:22px;letter-spacing:-1px;color:#e52528}
+#top{display:flex;align-items:center;justify-content:space-between;height:calc(52px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 16px 0;flex:none;background:#fff;z-index:5}
+.logo{font-weight:900;font-size:22px;line-height:1;letter-spacing:-1px;color:#e52528;display:flex;align-items:center}
 .logo span{color:#f6a800}
-#cartb{position:relative;width:44px;height:44px;display:grid;place-items:center}
+#cartb{position:relative;margin-right:-8px;width:44px;height:44px;display:grid;place-items:center}
 #badge{position:absolute;top:2px;right:0;min-width:20px;height:20px;border-radius:10px;background:#e52528;color:#fff;font-size:12px;font-weight:700;display:grid;place-items:center;padding:0 5px;transform:scale(0);transition:transform .25s}
 #badge.on{transform:scale(1)}
 #badge.bump,#cartb.bump svg{animation:bump .6s}
@@ -196,6 +196,16 @@ body.started .surp{display:none}
 #comp button{width:44px;height:44px;border-radius:22px;display:grid;place-items:center;flex:none}
 #comp input{flex:1;min-width:0;border:0;outline:0;font-size:16px;background:none;height:44px}
 #send{background:#111;color:#fff}
+/* ---------- polish ---------- */
+.thk{margin:6px 16px 16px}.thk .t8-thinking{margin:0}
+.trk{display:flex;justify-content:center;margin-top:12px}
+.blk.shipped .trk{pointer-events:auto}
+#sp{min-height:0}
+.bub{margin:16px 16px 8px}
+.kw .stk{padding:8px 10px 8px 8px;gap:12px}
+.ab{padding:0 4px}
+.fb .qc{min-height:48px}
+.sum{margin:16px 4px 12px}
 /* ---------- v6 turn-based path ---------- */
 .blk{margin:6px 16px 16px;animation:morph .5s cubic-bezier(.2,.8,.2,1)}
 .blk.frozen{opacity:1}
@@ -272,8 +282,8 @@ body.path #comp button{opacity:.55}
 .kw .ttl{margin:12px 2px 10px}
 .kw .rows.k{gap:12px}
 .kw .stk{flex-wrap:wrap;padding:6px 8px 6px 6px}
-.kw .ico{width:44px;height:44px}
-.kw .ico svg{width:30px;height:30px}
+.kw .ico{width:52px;height:52px}
+.kw .ico svg{width:36px;height:36px}
 .kw .nm{font-size:14px}
 .kw .pt{font-size:15px}
 .stk.chg{background:#fffbe0}.kw .sum>span:last-child{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
@@ -309,7 +319,7 @@ body.path #comp button{opacity:.55}
 <button data-step="7">8 · Ship it</button></div>
 <div id="phone">
 <div id="top"><div class="logo">coupang<span>.</span></div>
-<button id="cartb" aria-label="Cart"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg><span id="badge"></span></button></div>
+<a id="cartb" href="/orders.html" aria-label="Orders"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg><span id="badge"></span></a></div>
 <div id="feed">
 <div id="home"><div id="homewrap"><div class="mark">C</div><h1>Hey Guru, what are you planning to buy?</h1></div>
 <div id="chiprow"><button class="surp" data-s="I want to go camping">Go camping</button></div></div>
@@ -321,6 +331,7 @@ body.path #comp button{opacity:.55}
 <button id="send" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
 </form></div>
 </div></div>
+<script src="/catalog.js"></script><script src="/orders.js"></script><script src="/memory.js"></script><script src="/ai.js"></script>
 <script>
 const $=s=>document.querySelector(s);
 const feed=$('#feed'),won=n=>'₩'+n.toLocaleString('en-US');
@@ -375,24 +386,28 @@ const ROCKET='<svg viewBox="0 0 84 34" aria-hidden="true"><path d="M0 8H34M8 17H
 const selChip=(b,q,v)=>b&&b.querySelectorAll(`.qc[data-q="${q}"]`).forEach(c=>{const on=c.dataset.v===v;c.classList.toggle('sel',on);c.setAttribute('aria-pressed',on)});
 const cap=k=>k[0].toUpperCase()+k.slice(1);
 /* ---------- cart badge (items ordered) ---------- */
-let cart=0;
-function setCart(n){cart=n;const b=$('#badge');if(n>0)b.textContent=n;b.classList.toggle('on',n>0);b.classList.remove('bump');$('#cartb').classList.remove('bump');void b.offsetWidth;if(n>0){b.classList.add('bump');$('#cartb').classList.add('bump')}}
+let cart=-1;
+function setCart(bump){const n=window.Orders?Orders.count():0,b=$('#badge');if(n>0)b.textContent=n;b.classList.toggle('on',n>0);if(bump&&n!==cart){b.classList.remove('bump');$('#cartb').classList.remove('bump');void b.offsetWidth;if(n>0){b.classList.add('bump');$('#cartb').classList.add('bump')}}cart=n}
+setCart();window.Orders&&Orders.onChange(()=>setCart(true));
 function updShip(blk){const b=blk.querySelector('[data-ship]');if(!b)return;const t=blk._t();b.querySelector('.st').textContent=won(t);b.disabled=!t||blk.classList.contains('frozen')}
 function shipKit(blk){
  if(!blk||blk.dataset.shipped||blk.classList.contains('frozen')||!blk._t())return;
  const box=blk.querySelector('[data-box]');if(!box)return;
  const ic=blk._ic(),tt=blk._t();
- blk.dataset.shipped=1;blk.classList.add('shipped');blk.dataset.n=ic.length;setCart(cart+ic.length);
+ blk.dataset.shipped=1;blk.classList.add('shipped');
+ const order=window.Orders?Orders.add({items:blk._items(),total:tt,flow:'camping'}):{id:'T8-'+Date.now()};blk._order=order;setCart(true);
  box.innerHTML=`<div class="zoom">${ROCKET}<b>ZOOM!</b></div>`;
  setTimeout(()=>{
   if(!blk.dataset.shipped||!box.querySelector('.zoom'))return;
-  box.innerHTML=`<div class="rcpt"><div class="th">${ic.slice(0,3).map(k=>`<span><svg viewBox="0 0 38 38">${I[k]}</svg></span>`).join('')}</div><div class="m"><b>${won(tt)}</b><small>Rocket · tomorrow</small></div><button class="undo" data-undo>Undo</button></div>`;
+  box.innerHTML=`<div class="rcpt"><div class="th">${ic.slice(0,3).map(k=>`<span><svg viewBox="0 0 38 38">${I[k]}</svg></span>`).join('')}</div><div class="m"><b>${won(tt)}</b><small>Rocket · tomorrow</small></div><button class="undo" data-undo>Undo</button></div><div class="trk"></div>`;
+  if(window.AI)box.querySelector('.trk').append(AI.trackLink(order));
   box.querySelector('[data-undo]').disabled=blk.classList.contains('frozen');
  },800);
 }
+function cancelOrder(o){if(!o)return;if(window.Orders?.remove)Orders.remove(o.id);else if(window.Orders?.cancel)Orders.cancel(o.id);else{const a=JSON.parse(localStorage.getItem('t8-orders')||'[]');localStorage.setItem('t8-orders',JSON.stringify(a.filter(x=>x.id!==o.id)));window.dispatchEvent(new Event('t8-orders'))}setCart(true)}
 function undoKit(blk){
  if(!blk.dataset.shipped)return;
- setCart(Math.max(0,cart-(+blk.dataset.n||0)));
+ cancelOrder(blk._order);blk._order=null;
  delete blk.dataset.shipped;blk.classList.remove('shipped');
  blk.querySelector('[data-box]').innerHTML=shipBtn(blk._t());updShip(blk);
 }
@@ -534,12 +549,12 @@ function makeKit(m,prev,label,v){
 }
 function kitBlock(kit){
  const m=kit.mods;
- const rows=kit.items.map((it,n)=>`<div class="stk ${it.st}" data-slot="${it.slot}" style="--i:${n};--r:${[-2,1.5,-1][n%3]}deg;--ml:${[8,0,5][n%3]}px;--mr:${[0,6,2][n%3]}px"><div class="ico" style="background:${it.col}"><svg viewBox="0 0 38 38">${I[it.k]}</svg></div><div class="meta"><div class="nm">${it.name}</div><div><span class="pt">${won(it.price)}</span>${it.old?`<s class="op">${won(it.old)}</s>`:''}</div></div><button class="nt" data-nt aria-expanded="false">Not this</button><div class="acts"><button class="ab" data-act="swap">Swap</button><button class="ab" data-act="cheaper"${it.cheap>=2?' disabled':''}>Cheaper</button><button class="ab" data-act="remove">Remove</button></div>${it.st==='new'?'<span class="tg n">+new</span>':''}</div>`).join('');
+ const rows=kit.items.map((it,n)=>`<div class="stk ${it.st}" data-slot="${it.slot}" style="--i:${n};--r:${[-.8,.6,-.4][n%3]}deg"><div class="ico" style="background:${it.col}"><svg viewBox="0 0 38 38">${I[it.k]}</svg></div><div class="meta"><div class="nm">${it.name}</div><div><span class="pt">${won(it.price)}</span>${it.old?`<s class="op">${won(it.old)}</s>`:''}</div></div><button class="nt" data-nt aria-expanded="false">Not this</button><div class="acts"><button class="ab" data-act="swap">Swap</button><button class="ab" data-act="cheaper"${it.cheap>=2?' disabled':''}>Cheaper</button><button class="ab" data-act="remove">Remove</button></div>${it.st==='new'?'<span class="tg n">+new</span>':''}</div>`).join('');
  const gone=kit.gone.map((it,n)=>`<div class="stk gone" style="--i:${kit.items.length+n};--r:1deg"><div class="ico" style="background:${it.col}"><svg viewBox="0 0 38 38">${I[it.k]}</svg></div><div class="meta"><div class="nm"><s>${it.name}</s></div><div><s class="op" style="margin:0">${won(it.price)}</s></div></div><span class="tg g">−removed</span></div>`).join('');
  const d=kit.delta,dl=d?`<span class="dl ${d<0?'dn':'up'}">${d<0?'−':'+'}${won(Math.abs(d))}</span>`:'';
  const fb=[['pricey','Too pricey',0],['heavy','Too heavy',m.heavy],['colour','More colour',m.colour>=2]].map(([k,l,dis])=>`<button class="qc${dis?' sel':''}" data-fb="${k}"${dis?' disabled':''}>${l}</button>`).join('');
  const el=mk(`${trail(5,true)}<div class="kw"><div class="ttl">Kit v${kit.v}${kit.label?` <span class="chip">${kit.label}</span>`:''}</div><div class="rows k">${rows}${gone}</div><div class="sum"><span>Total</span><span><b>${won(kit.total)}</b>${dl}</span></div>${shipBox(kit.total)}<div class="fb">${fb}</div></div>`,theme(),'kit');
- el._t=()=>kit.total;el._ic=()=>kit.items.map(i=>i.k);
+ el._t=()=>kit.total;el._items=()=>kit.items.map(i=>({id:'camp-'+i.slot,name:i.name,price:i.price}));el._ic=()=>kit.items.map(i=>i.k);
  if(!kit.items.length)el.querySelector('[data-ship]').disabled=true;
  return el;
 }
@@ -600,9 +615,15 @@ function start(txt){
  step=0;busy=true;
  const h=$('#home');h.classList.add('leave');document.body.classList.add('started','path');$('#in').placeholder='Just tap';
  setTimeout(()=>{h.remove();bubble(txt)},200);
- setTimeout(()=>{const m=mapBlock();add(m)},380);
- setTimeout(()=>showQ(0),780);
+ setTimeout(async()=>{
+  const host=document.createElement('div');host.className='thk';place(host);
+  const steps=['Camping · weekend trip','Season · from today\'s date',window.MEMORY?'Past orders · no camping gear yet':'Picking the shortest path'];
+  if(window.AI)await AI.thinking(host,{steps,ms:1100});else await new Promise(r=>setTimeout(r,700));
+  host.remove();add(mapBlock());setTimeout(()=>showQ(0),400);
+ },380);
 }
+const q0=new URLSearchParams(location.search).get('q');
+if(q0&&q0.trim()){$('#home').style.display='none';setTimeout(()=>start(q0.trim()),0)}
 $('#f').addEventListener('submit',e=>{e.preventDefault();const v=$('#in').value;$('#in').value='';run(v)});
 document.addEventListener('click',e=>{
  const t=e.target.closest('button');if(!t||t.disabled)return;
