@@ -16,7 +16,8 @@ const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '
 const clients = new Set();
 let t;
 fs.watch(PUB, { recursive: true }, () => { clearTimeout(t); t = setTimeout(() => clients.forEach(r => r.write('data: reload\n\n')), 120); });
-const RELOAD = `<script>(()=>{const e=new EventSource('/__reload');e.onmessage=()=>location.reload()})()</script>`;
+// Live reload is opt-in (?dev=1 once, remembered per browser) so demo screens never refresh mid-presentation.
+const RELOAD = `<script>(()=>{const q=new URLSearchParams(location.search).get('dev');if(q!==null)localStorage.setItem('t8-dev',q==='0'?'':'1');if(!localStorage.getItem('t8-dev'))return;const e=new EventSource('/__reload');e.onmessage=()=>location.reload()})()</script>`;
 
 // --- env: app/.env (gitignored) -> process.env, without overriding real env ---
 try {
