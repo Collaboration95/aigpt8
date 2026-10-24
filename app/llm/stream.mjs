@@ -8,3 +8,17 @@ export async function streamCalls(messages,tools,{signal,onCall,onMeta,model}){
  for await(const data of sseData(r.body)){if(data==='[DONE]'){done=true;break;}let chunk;try{chunk=JSON.parse(data);}catch{throw Error('invalid-provider-frame');}if(chunk.error)throw Error('provider-stream-error');onMeta({model:chunk.model,usage:chunk.usage,actualTier:chunk.service_tier});const choice=chunk.choices?.find(c=>c.index===0);if(!choice)continue;if(choice.finish_reason)finish=choice.finish_reason;if(choice.delta?.refusal)throw Error('model-refusal');if(choice.delta?.content?.trim())throw Error('unexpected-prose');for(const d of choice.delta?.tool_calls||[]){if(!Number.isInteger(d.index)||d.index<0||d.index>2)throw Error('too-many-calls');const c=calls.get(d.index)||{index:d.index,id:'',name:'',raw:'',emitted:false};calls.set(d.index,c);if(d.id){if(c.id&&c.id!==d.id)throw Error('changed-call-id');c.id=d.id;}if(c.emitted&&(d.function?.name||d.function?.arguments?.trim()))throw Error('changed-complete-call');c.name+=d.function?.name||'';c.raw+=d.function?.arguments||'';if(c.raw.length>16384)throw Error('arguments-too-large');let args;try{args=JSON.parse(c.raw);}catch{continue;}if(c.id&&c.name&&!c.emitted){c.args=args;onCall(c);c.emitted=true;}}}
  if(!done||finish!=='tool_calls'||!calls.size)throw Error('incomplete-provider-turn');const out=[...calls.values()].sort((a,b)=>a.index-b.index);if(out.some(c=>!c.emitted))throw Error('incomplete-arguments');return out;
 }
+
+// One bounded data-selection round before streamed UI composition.
+export async function lookupCalls(messages, tools, {signal, model} = {}) {
+ const base=(process.env.LLM_BASE_URL||'https://api.openai.com/v1').replace(/\/$/,'');
+ const openai=new URL(base).hostname==='api.openai.com', fast=process.env.LLM_FAST==='1';
+ const body={model:model||process.env.LLM_MODEL,messages,tools,tool_choice:'auto',stream:false,[openai?'max_completion_tokens':'max_tokens']:400};
+ if(openai){body.reasoning_effort='none';body.parallel_tool_calls=true;if(fast)body.service_tier='priority';}
+ if(new URL(base).hostname.includes('deepseek'))body.thinking={type:'disabled'};
+ const r=await fetch(base+'/chat/completions',{method:'POST',signal,headers:{Authorization:'Bearer '+process.env.LLM_API_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});
+ if(!r.ok)throw Error('provider-http-'+r.status);
+ const data=await r.json(), message=data.choices?.[0]?.message;
+ if(!message?.tool_calls?.length)return null;
+ return {role:'assistant',content:null,tool_calls:message.tool_calls};
+}

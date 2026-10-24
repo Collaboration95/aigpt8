@@ -5,10 +5,10 @@
   const input = document.querySelector('#prompt'), send = document.querySelector('#send'), debug = document.querySelector('#debug');
   const sid = localStorage.getItem('t8-sid') || crypto.randomUUID(); localStorage.setItem('t8-sid', sid);
   let busy = false, anchor = null, thinking = null, activeBubble = null, accepted = false, finished = false, currentTurn = null, mockTurn = 0;
-  let originalGoal = params.get('q') || '', calls = new Map(), proof = {}, raw = [];
+  let originalGoal = params.get('q') || '', calls = new Map(), proof = {}, raw = [], lookups = [], lookupNode = null;
   debug.hidden = params.get('debug') !== '1';
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-  function updateProof(data = {}) { proof = {...proof, ...data}; debug.querySelector('pre').textContent = JSON.stringify({...proof, tools:raw.slice(-12)}, null, 2).slice(0, 12000); }
+  function updateProof(data = {}) { proof = {...proof, ...data}; debug.querySelector('pre').textContent = JSON.stringify({...proof, lookups, tools:raw.slice(-12)}, null, 2).slice(0, 12000); }
   function badge() { const n = Orders.list().filter(o=>!o.cancelled&&!o.canceled&&!['cancelled','canceled'].includes(o.status)&&Orders.status(o)!=='Delivered').length; document.querySelector('#badge').hidden = !n; document.querySelector('#badge').textContent = n; }
   Orders.onChange(badge); badge();
   function align() {
@@ -29,6 +29,18 @@
     if (KIT.tools().includes('thinking_steps')) { thinking = KIT.render('thinking_steps', args); thinking.querySelectorAll('.kx-step').forEach(n => n.classList.add('kx-ready')); }
     else { thinking = el('div', 'status-card'); args.steps.forEach(s => thinking.append(el('div', '', s))); }
     thinking.setAttribute('role', 'status'); messages.append(thinking);
+  }
+  function showLookup(data) {
+    lookups.push({name:data.name,args:data.args,summary:data.summary});
+    if (!lookupNode) {
+      clearThinking(); lookupNode = el('div','lookup-steps'); lookupNode.setAttribute('role','status'); messages.append(lookupNode);
+    }
+    const labels={search_orders:'Checked your orders',check_bought_before:'Checked past purchases',get_reorder_pattern:'Checked refill timing',get_preferences:'Checked your preferences'};
+    const row=el('div','lookup-step');row.append(el('span','','✦ '+(labels[data.name]||'Checked')+' → '+data.summary),el('code','',data.name));lookupNode.append(row);updateProof();
+  }
+  function collapseLookups() {
+    if (!lookupNode || lookupNode.classList.contains('lookup-used')) return;
+    lookupNode.className='lookup-used';lookupNode.replaceChildren(el('span','','✦ Used: '),el('code','',[...new Set(lookups.map(l=>l.name))].join(' · ')));lookupNode.removeAttribute('role');
   }
   function freezePrevious() { for (const c of calls.values()) if (c.committed) { c.node.firstElementChild?.freeze?.(); c.node.inert = true; c.frozen = true; } }
   function adapted(e) {
@@ -53,7 +65,7 @@
     return submit({event:{toolCallId:e.toolCallId, value, label:String(label || value).slice(0,200)}});
   }
   function renderTool(e) {
-    clearThinking(); const a = adapted(e), wrapper = el('div','tool');
+    clearThinking(); collapseLookups(); const a = adapted(e), wrapper = el('div','tool');
     wrapper.dataset.call = e.toolCallId; wrapper.dataset.turn = e.turnId || currentTurn; wrapper.dataset.provisional = 'true'; wrapper.inert = true;
     let node;
     try { node = e.name==='play_game'?el('div','game-host'):KIT.tools().includes(e.name) ? KIT.render(e.name,a,{onAnswer:(v,l)=>answer(e,v,l)}) : el('div','status-card','This option is temporarily unavailable.'); }
@@ -104,6 +116,7 @@
     if(type==='meta'){currentTurn=data.turnId;updateProof({source:mock?'mock':data.source,turnId:data.turnId,attempt:data.attempt});}
     if(type==='accepted'){accepted=true;if(activeBubble&&data.label)activeBubble.textContent=data.label;freezePrevious();}
     if(type==='thinking')status(data.steps || ['Matching catalogue']);
+    if(type==='lookup')showLookup(data);
     if(type==='tool')renderTool(data);
     if(type==='reset')reset(data.turnId);
     if(type==='commit'){accepted=true;freezePrevious();for(const id of data.toolCallIds || []){const c=calls.get(id);if(c){c.committed=true;c.node.inert=false;c.node.dataset.provisional='false';}}clearThinking();}
@@ -125,7 +138,7 @@
     if(busy)return;request._key ||= crypto.randomUUID();if(request.text)originalGoal=request.text;busy=true;accepted=false;finished=false;currentTurn=null;activeRequest=request;send.disabled=true;
     const previous=[...calls.values()].filter(c=>c.committed&&!c.frozen);previous.forEach(c=>c.node.inert=true);
     activeBubble=bubble(request.text || request.event.label);input.value='';input.blur();status(['Connecting…']);
-    messages.dataset.busy='true';raw=[];proof={source:mock?'mock':'connecting'};updateProof(); const started=performance.now();
+    messages.dataset.busy='true';raw=[];lookups=[];lookupNode=null;proof={source:mock?'mock':'connecting'};updateProof(); const started=performance.now();
     const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),45000);
     try {
       if(mock) await replay(request);
