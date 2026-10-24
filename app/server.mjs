@@ -21,7 +21,7 @@ const RELOAD = `<script>(()=>{const e=new EventSource('/__reload');e.onmessage=(
 // --- big screens: show the page inside an iPhone frame (390x844, scaled to fit) ---
 // Runs first in <head>; writes the frame, then swallows the rest of the page so its scripts don't run twice.
 const NO_FRAME = /\/(dashboard|primitives)\.html$/;
-const FRAME = `<script>(()=>{if(innerWidth<=700||top!==self||/[?&]frame=1/.test(location.search))return;
+const FRAME = `<script>(()=>{if(screen.width<=700||innerWidth<=700||top!==self||/[?&]frame=1/.test(location.search))return;
 const u=new URL(location.href);u.searchParams.set('frame','1');
 document.write('<style>html,body{margin:0;height:100%;background:#eceef2}body{display:grid;place-items:center;overflow:hidden}'
 +'.ph{box-sizing:border-box;width:410px;height:864px;border-radius:54px;background:#111;padding:10px;box-shadow:0 30px 80px #0004;transform-origin:center}'

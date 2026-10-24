@@ -112,6 +112,8 @@ body.board .side h3{font-size:14px;color:#555}
 body.board .side button{background:#fff;border-radius:12px;padding:12px;text-align:left;font-size:14px;min-height:44px;box-shadow:0 1px 3px #0002}
 body.board .phone{width:390px;height:844px;border-radius:44px;border:10px solid #111;box-shadow:0 20px 60px #0004}
 }
+
+button:disabled{cursor:default}.started .dock{display:none}.feed>.night{flex:none}.scene{max-height:170px}.product{width:100%;min-width:0}.product-art{height:94px;display:grid;place-items:center;background:#fff;border-radius:14px;overflow:hidden}.product-art img,.product-img{width:100%;height:100%;max-height:94px;object-fit:contain;padding:6px}.product-art svg{max-width:100%;height:78px}.brand{display:block;color:#777;font-size:10px;margin:6px 0 3px}.product-name{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:12px!important;line-height:1.3;min-height:32px;overflow-wrap:anywhere}.safety{font-size:10px;color:#685a74;min-height:25px;display:grid;place-items:center}.pick{min-height:44px;display:grid;place-items:center;padding:4px;font-size:11px;width:100%;border-radius:12px}.card{padding:10px 6px 6px;gap:3px}.card .pr{font-size:13px}.provenance:empty{display:none}.provenance .t8-inference{width:100%;background:#ffffff17;color:inherit;border:1px solid #ffffff30;min-height:44px;font-size:11px;padding:8px 10px}.sun .provenance .t8-inference{background:#fff8;color:#95322f;border:1px solid #e8b9ac}.bed-memory{margin-bottom:12px}.q{flex-wrap:wrap}.detail-product{display:grid;grid-template-columns:84px 1fr;column-gap:12px;text-align:left;margin-bottom:16px}.detail-product .product-art{grid-row:1 / 3;height:84px}.detail-product .brand{align-self:end}.detail-product .product-name{align-self:start;font-size:16px!important}.thinking-host{margin:0 14px}.receipt-block{padding:12px;background:#ecf8f2}.ri span{white-space:normal;overflow-wrap:anywhere}.tracking{margin-top:10px}.receipt-block .cheaper{margin-top:10px}.undone{padding:18px;background:#f3f4f6;font-size:14px}.top .cart{flex:none}.nc .ship{min-height:48px;font-size:13px;animation:none;box-shadow:none}.nc .scap{font-size:10px}.night .pad{padding-top:6px}.frozen .ctl{opacity:.7}.card .best{font-size:9px}.track-fallback{display:inline-flex;min-height:44px;align-items:center;color:#bf2030}.night .card{box-shadow:0 3px 10px #0001}
 </style></head><body>
 <div class="wrap">
 <div class="side" id="side"><h3>Steps (arrow keys)</h3>
@@ -134,6 +136,7 @@ body.board .phone{width:390px;height:844px;border-radius:44px;border:10px solid 
    <button class="send" aria-label="Send"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   </form></div>
 </div></div>
+<script src="/catalog.js"></script><script src="/memory.js"></script><script src="/ai.js"></script><script src="/orders.js"></script>
 <script>
 const $=s=>document.querySelector(s), feed=$('#feed'), scr=$('#scroll'), inp=$('#inp');
 if(new URLSearchParams(location.search).get('board'))document.body.classList.add('board');
@@ -168,96 +171,41 @@ const P={net:{n:'Net',p:29900,svg:netSvg(),f:[['clock','12h'],['nose','No smell'
  plug:{n:'Plug-in',p:12900,svg:plugSvg,f:[['clock','8h'],['nose','Mild']]},
  spray:{n:'Spray',p:6900,svg:spraySvg,f:[['clock','4h'],['nose','Strong']]}};
 const SZ=[{k:'Single',p:24900,w:34,d:'1×2m'},{k:'Double',p:29900,w:50,d:'1.5×2m'},{k:'King',p:36900,w:66,d:'2×2m'}];
-let step=0, baby=false, room='bed', cartN=0, size=1, cur=SZ[1].p;
-
-function setCart(n){cartN=Math.max(0,n);const b=$('#badge');if(cartN)b.textContent=cartN;b.classList.toggle('on',cartN>0)}
-const ROCKET='<svg class="rk" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11z"/><circle cx="12" cy="9" r="1.6"/><path d="M8 14l-3 3 2 1M16 14l3 3-2 1M10 19l2 3 2-3"/></svg>';
-// host: element to hold ship UI; o:{total(),cap(),thumb(),sm,blk}
-function mountShip(host,o){
- const paint=()=>{const t=host.querySelector('.t');if(t)t.textContent='Ship it · '+won(o.total());const c=host.querySelector('.scap');if(c)c.textContent=o.cap?o.cap():''};
- const draw=()=>{host.className=o.sm?'sh':'shipbar';host.innerHTML='<button class="ship'+(o.sm?' sm':'')+'"><i class="tr"></i>'+ROCKET+'<span class="t"></span></button>'+(o.sm?'':'<div class="scap"></div>');paint();
-  host.querySelector('.ship').onclick=fly};
- const fly=()=>{const btn=host.querySelector('.ship');if(btn.classList.contains('fly'))return;const total=o.total();host.classList.add('busy');btn.classList.add('fly');if(o.blk)o.blk.classList.add('shipped');
-  setTimeout(()=>{host.classList.remove('busy');host.classList.add('done');setCart(cartN+1);
-   host.innerHTML='<div class="rcpt'+(o.sm?' sm':'')+'">'+(o.sm?'':'<span class="th">'+o.thumb()+'</span>')+'<div class="ri"><b>'+won(total)+'</b><span>Rocket · tomorrow 7am</span></div><button class="undo">Undo</button></div>';
-   reveal(host);
-   host.querySelector('.undo').onclick=()=>{if(host.closest('.frozen'))return;setCart(cartN-1);host.classList.remove('done');if(o.blk)o.blk.classList.remove('shipped');draw()}},720)};
- host.paint=paint;draw();
-}
-let lastBub=null;const sp=document.createElement('div');sp.style.flex='none';
-function bubble(t){const b=document.createElement('div');b.className='bub';b.textContent=t;feed.appendChild(b);lastBub=b}
-const topOf=el=>el.getBoundingClientRect().top-scr.getBoundingClientRect().top+scr.scrollTop;
-// bottom room so the newest bubble can always sit just under the header
-function fit(){if(!lastBub)return;if(feed.lastChild!==sp)feed.appendChild(sp);const h=sp.offsetHeight;sp.style.height=Math.max(0,scr.clientHeight-(scr.scrollHeight-h-topOf(lastBub))+6)+'px'}
-new ResizeObserver(fit).observe(feed);
-function pin(){setTimeout(()=>{fit();scr.scrollTo({top:Math.max(0,topOf(lastBub)-6),behavior:'smooth'})},60)}
-function reveal(el){const d=el.getBoundingClientRect().bottom-scr.getBoundingClientRect().bottom+12;if(d>0)scr.scrollBy({top:d,behavior:'smooth'})}
-function freeze(){feed.querySelectorAll('.blk').forEach(b=>b.classList.add('frozen'))}
-function add(el){feed.appendChild(el);pin()}
-
-function cardsHTML(){
- const order=room==='bed'?(baby?['net','plug','spray']:['net','spray','plug']):(baby?['plug','net','spray']:['plug','spray','net']);
- return order.map(k=>{const d=P[k];
-  const tag=baby&&k==='spray'?'<span class="tag">not for babies</span>':(baby&&k==='net'?'<span class="best">Best pick</span>':'');
-  return `<button class="card ctl ${baby&&k==='spray'?'dim':''}" data-k="${k}">${tag}${d.svg.replace('width="92" height="76"','width="100%" height="64"')}<b>${d.n}</b><span class="pr">${won(d.p)}</span><span class="facts">${d.f.map(x=>fact(...x)).join('')}</span><span class="pick">Pick</span></button>`}).join('')}
-
-function renderCards(blk){
- const box=blk.querySelector('.cards');
- const before={};box.querySelectorAll('.card').forEach(c=>before[c.dataset.k]=c.getBoundingClientRect().left);
- box.innerHTML=cardsHTML();
- box.querySelectorAll('.card').forEach(c=>{
-  const dx=before[c.dataset.k]-c.getBoundingClientRect().left;
-  if(dx){c.style.transform=`translateX(${dx}px)`;c.style.transition='none';
-   requestAnimationFrame(()=>requestAnimationFrame(()=>{c.style.transition='transform .55s cubic-bezier(.2,.9,.3,1.1),opacity .3s,filter .3s';c.style.transform=''}))}
-  c.onclick=()=>{ if(c.dataset.k==='net')go(1); else {c.classList.add('wig');setTimeout(()=>c.classList.remove('wig'),400)} }});
-}
-
-function turn1(){
- document.body.classList.add('x');$('#phone').classList.add('started');
- const b=document.createElement('div');b.className='blk night';
- b.innerHTML=`<div class="sc">${scene('bed')}</div><div class="qs"><div class="q"><span>Where?</span><div class="seg"><button class="ctl on" data-r="bed">Bedroom</button><button class="ctl" data-r="living">Living</button></div></div><div class="q"><span>Baby at home?</span><div class="seg"><button class="ctl on" data-b="0">No</button><button class="ctl" data-b="1">Yes</button></div></div></div><div class="pad"><div class="cards"></div></div>`;
- feed.appendChild(b);renderCards(b);
- b.querySelectorAll('[data-r]').forEach(x=>x.onclick=()=>{room=x.dataset.r;b.querySelectorAll('[data-r]').forEach(y=>y.classList.toggle('on',y===x));b.querySelector('.sc').innerHTML=scene(room);renderCards(b)});
- b.querySelectorAll('[data-b]').forEach(x=>x.onclick=()=>{baby=x.dataset.b==='1';b.querySelectorAll('[data-b]').forEach(y=>y.classList.toggle('on',y===x));renderCards(b)});
- scr.scrollTo({top:0});
-}
-
-function bedSvg(s,on){const w=s.w;return `<svg width="${w+12}" height="64" viewBox="0 0 ${w+12} 64"><rect x="2" y="2" width="${w+8}" height="60" rx="8" fill="${on?'#ffd0d6':'#e5e0fa'}" stroke="${on?'#e4202c':'#8a7bd8'}" stroke-width="2.5"/><rect x="${w/2-4}" y="8" width="${w/2+8}" height="12" rx="5" fill="#fff"/>${w>40?`<rect x="${w/2+4}" y="8" width="0" height="0"/>`:''}<rect x="6" y="26" width="${w}" height="32" rx="5" fill="${on?'#ff8aa1':'#b8aef0'}"/></svg>`}
-
-function turn2(){
- const nc=feed.querySelector('.card[data-k=net]');if(nc)nc.classList.add('sel');
- freeze();
- const b=document.createElement('div');b.className='blk sun';b.id='detail';
- b.innerHTML=`<h2>${netSvg().replace('width="92" height="76"','width="52" height="42"')} Net</h2><div class="sizes"></div><div class="shipbar" id="sb"></div><button class="chip lt ctl" id="chp">Cheaper?</button>`;
- b.querySelector('#chp').onclick=()=>go(2);
- const sizes=b.querySelector('.sizes'),sb=b.querySelector('#sb');
- const draw=()=>{sizes.innerHTML=SZ.map((s,i)=>`<button class="size ctl ${i===size?'on':''}" data-i="${i}">${bedSvg(s,i===size)}${s.k}<small>${s.d}</small></button>`).join('');
-  cur=SZ[size].p;if(sb.paint)sb.paint();
-  sizes.querySelectorAll('.size').forEach(x=>x.onclick=()=>{size=+x.dataset.i;draw();const t=sb.querySelector('.ship');if(t)t.animate([{transform:'scale(.96)'},{transform:'scale(1)'}],220)})};
- mountShip(sb,{blk:b,total:()=>SZ[size].p,cap:()=>SZ[size].k+' · tomorrow 7am',thumb:()=>netSvg().replace('width="92" height="76"','width="32" height="26"')});
- draw();
- add(b);
-}
-
-function turn3(){
- const cp=$('#chp');if(cp)cp.classList.add('on');
- freeze();
- const old=cur,list=[{n:'Mini Dome Net',p:Math.round(old*.68/100)*100,f:[['clock','10h'],['nose','No smell']]},{n:'Basic Hang Net',p:Math.round(old*.53/100)*100,f:[['clock','8h'],['nose','No smell']]}];
- const b=document.createElement('div');b.className='blk mint';
- b.innerHTML=`<h2>Cheaper nets</h2><div class="two">${list.map((x,i)=>`<div class="nc">${netSvg(i?'#ffb3c1':'#8fe3c0').replace('width="92" height="76"','width="80" height="64"')}<b>${x.n}</b><span class="old">${won(old)}</span><span class="new">${won(x.p)}</span><span class="off">-${Math.round((1-x.p/old)*100)}%</span><span class="facts">${x.f.map(y=>fact(...y)).join('')}</span><div class="sh"></div></div>`).join('')}</div>`;
- b.querySelectorAll('.nc').forEach((x,i)=>mountShip(x.querySelector('.sh'),{sm:1,total:()=>list[i].p}));
- add(b);
-}
-
-function go(i,text){
- if(i!==step)return;
- const label=text||['mosquitoes keep biting me at night','Net','is there a cheaper one'][i];
- bubble(label);
- if(i===0){document.body.classList.add('x');$('#phone').classList.add('started');step=1;setTimeout(()=>{turn1();feed.firstChild.scrollIntoView()},200)}else{[turn1,turn2,turn3][i]();step=i+1}
- document.querySelectorAll('#side button').forEach(b=>b.style.opacity=+b.dataset.i<step?.5:1);
-}
-$('#form').onsubmit=e=>{e.preventDefault();const t=inp.value.trim();inp.value='';go(step,t||undefined)};
-$('#sur').onclick=()=>go(0);
-document.querySelectorAll('#side button').forEach(b=>b.onclick=()=>{const t=['mosquitoes keep biting me at night','Net','is there a cheaper one'][b.dataset.i];inp.value=t;$('#form').requestSubmit()});
-addEventListener('keydown',e=>{if(e.target===inp&&e.key!=='ArrowRight'&&e.key!=='ArrowDown')return;if(e.key==='ArrowRight'||e.key==='ArrowDown'){const t=['mosquitoes keep biting me at night','Net','is there a cheaper one'][step];if(t){inp.value=t;$('#form').requestSubmit()}}});
+const esc=t=>String(t??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const facts=window.MEMORY?.facts||{};
+let baby=facts.baby??true, room=(facts.room||'Bedroom')==='Bedroom'?'bed':'living', size=Math.max(0,SZ.findIndex(s=>s.k===(facts.bed||'King'))), selected='net', stage='home',busy=false;
+const inferred={room:!!window.MEMORY,baby:!!window.MEMORY,bed:!!window.MEMORY};
+const fallback={net:{id:'net',name:'Canopy Net',brand:'Bedroom',price:29900},plug:{id:'plug',name:'Mosquito Plug-in',brand:'Home',price:12900},spray:{id:'spray',name:'Mosquito Spray',brand:'Home',price:6900}};
+function products(){return window.CATALOG?.byCategory('mosquito')||[]}
+function item(k){const all=products();if(k==='net'){const variant=all.find(x=>x.id==='net-'+SZ[size].k.toLowerCase());if(variant)return variant}return all.find(x=>((x.type||'')+' '+x.id+' '+x.name+' '+(x.tags||[]).join(' ')).toLowerCase().includes(k==='plug'?'plug':k))||fallback[k]}
+function art(d,k,cls='product-img'){if(window.CATALOG&&CATALOG.mode()==='real'&&d.img)return CATALOG.imgHTML(d,cls);return P[k]?.svg||netSvg()}
+function productHTML(d,k){return `<div class="product-art">${art(d,k)}</div><small class="brand">${esc(d.brand||'')}</small><b class="product-name">${esc(d.name)}</b>`}
+function updateArt(){const distance=scr.scrollHeight-scr.clientHeight-scr.scrollTop;document.querySelectorAll('[data-product]').forEach(el=>{const d=products().find(x=>x.id===el.dataset.product)||item(el.dataset.kind);el.innerHTML=productHTML(d,el.dataset.kind)});requestAnimationFrame(()=>scr.scrollTo({top:scr.scrollHeight-scr.clientHeight-distance,behavior:'instant'}))}
+window.CATALOG?.onMode(updateArt);
+function cart(){const n=window.Orders?Orders.count():JSON.parse(localStorage.getItem('t8-orders')||'[]').length;$('#badge').textContent=n;$('#badge').classList.toggle('on',n>0)}
+$('#cart').onclick=()=>location.href='/orders.html';window.Orders?.onChange(cart);cart();
+const bottom=()=>requestAnimationFrame(()=>scr.scrollTo({top:scr.scrollHeight,behavior:'smooth'}));
+function bubble(t){const b=document.createElement('div');b.className='bub';b.textContent=t;feed.append(b)}
+function freeze(){feed.querySelectorAll('.blk').forEach(b=>{b.classList.add('frozen');b.querySelectorAll('button').forEach(x=>x.disabled=true)})}
+function block(cls,html){const b=document.createElement('section');b.className='blk '+cls;b.innerHTML=html;feed.append(b);bottom();return b}
+async function thinking(first=false){const c=document.createElement('div');c.className='thinking-host';feed.append(c);bottom();if(window.AI)await AI.thinking(c,{steps:first?['Bedroom · night bites',...(window.MEMORY?['Baby at home · from Aug order','King bed · from Mar order']:[])]:['Updating your picks'],ms:1000});else{c.textContent='✦ Thinking…';await new Promise(r=>setTimeout(r,700))}c.remove()}
+async function turn(label,render,first=false){if(busy)return;busy=true;freeze();bubble(label);bottom();await thinking(first);render();busy=false}
+function provenance(host,key,label){if(!host||!inferred[key]||!window.AI)return;const why=window.MEMORY?.explain(key);host.append(AI.inferred({label,because:why?.because||label}))}
+function picker(){stage='compare';const b=block('night',`<div class="sc">${scene(room)}</div><div class="qs"><div class="q"><span>Where?</span><div class="seg"><button class="ctl ${room==='bed'?'on':''}" data-room="bed">Bedroom</button><button class="ctl ${room==='living'?'on':''}" data-room="living">Living</button></div></div><div class="provenance room-memory"></div><div class="q"><span>Baby at home?</span><div class="seg"><button class="ctl ${!baby?'on':''}" data-baby="0">No</button><button class="ctl ${baby?'on':''}" data-baby="1">Yes</button></div></div><div class="provenance baby-memory"></div></div><div class="pad"><div class="cards"></div></div>`);
+provenance(b.querySelector('.room-memory'),'room','from your bedroom curtain order');provenance(b.querySelector('.baby-memory'),'baby','from your Aug baby monitor order');
+const order=baby?['net','plug','spray']:room==='bed'?['net','spray','plug']:['plug','net','spray'];
+b.querySelector('.cards').innerHTML=order.map(k=>{const d=item(k);return `<button class="card ctl" data-k="${k}" aria-label="Pick ${P[k].n}">${baby&&k==='net'?'<span class="best">Best pick</span>':''}<div class="product" data-product="${esc(d.id)}" data-kind="${k}">${productHTML(d,k)}</div><span class="pr">${won(d.price||P[k].p)}</span><span class="safety">${baby&&k==='spray'?'Not baby-safe':k==='net'?'No chemicals':k==='plug'?'Check label':'Strong scent'}</span><span class="pick">Pick ${P[k].n}</span></button>`}).join('');
+b.querySelectorAll('[data-room]').forEach(x=>x.onclick=()=>{room=x.dataset.room;inferred.room=false;turn(x.textContent,picker)});b.querySelectorAll('[data-baby]').forEach(x=>x.onclick=()=>{baby=x.dataset.baby==='1';inferred.baby=false;turn('Baby · '+x.textContent,picker)});b.querySelectorAll('[data-k]').forEach(x=>x.onclick=()=>{selected=x.dataset.k;turn(P[selected].n,details)});}
+function bedSvg(s,on){return `<svg width="${s.w+12}" height="56" viewBox="0 0 ${s.w+12} 64"><rect x="2" y="2" width="${s.w+8}" height="60" rx="8" fill="${on?'#ffd0d6':'#e5e0fa'}"/><rect x="6" y="8" width="${s.w}" height="12" rx="5" fill="#fff"/><rect x="6" y="26" width="${s.w}" height="32" rx="5" fill="${on?'#ff8aa1':'#b8aef0'}"/></svg>`}
+function price(d){if(products().some(x=>x.id===d.id))return Number(d.price);return selected==='net'?Number(d.price||29900)+(size===2?7000:size===0?-5000:0):Number(d.price||P[selected].p)}
+function details(){stage='detail';const d=item(selected),total=price(d);const b=block('sun',`<div class="detail-product product" data-product="${esc(d.id)}" data-kind="${selected}">${productHTML(d,selected)}</div>${selected==='net'?`<h2>Bed size</h2><div class="sizes">${SZ.map((s,i)=>`<button class="size ctl ${i===size?'on':''}" data-size="${i}">${bedSvg(s,i===size)}${s.k}<small>${s.d}</small></button>`).join('')}</div><div class="provenance bed-memory"></div>`:''}<div class="shipbar"></div><button class="chip lt ctl cheaper">Cheaper?</button>`);
+provenance(b.querySelector('.bed-memory'),'bed','King · from your Mar bed frame order');b.querySelectorAll('[data-size]').forEach(x=>x.onclick=()=>{size=+x.dataset.size;inferred.bed=false;turn(SZ[size].k,details)});shipButton(b.querySelector('.shipbar'),d,total);b.querySelector('.cheaper').onclick=()=>turn('Cheaper?',cheaper);}
+function addOrder(d,total){const input={items:[{...d,price:total,name:d.name+(selected==='net'&&!products().some(x=>x.id===d.id)?' · '+SZ[size].k:'')}],total,flow:'mosquito'};if(window.Orders)return Orders.add(input);const o={...input,id:'T8-'+Date.now(),createdAt:Date.now()};const a=JSON.parse(localStorage.getItem('t8-orders')||'[]');localStorage.setItem('t8-orders',JSON.stringify([o,...a]));return o}
+function cancelOrder(o){if(window.Orders?.remove)Orders.remove(o.id);else if(window.Orders?.cancel)Orders.cancel(o.id);else{const a=JSON.parse(localStorage.getItem('t8-orders')||'[]');localStorage.setItem('t8-orders',JSON.stringify(a.filter(x=>x.id!==o.id)));window.dispatchEvent(new Event('t8-orders'))}cart()}
+function shipButton(host,d,total){host.innerHTML=`<button class="ship ctl">Ship it · ${won(total)}</button><div class="scap">Rocket · tomorrow</div>`;host.querySelector('button').onclick=()=>turn('Ship it',()=>{const order=addOrder(d,total);cart();const b=block('receipt-block',`<div class="rcpt"><div class="ri"><b>Ordered · ${won(total)}</b><span>${esc(d.name)}</span></div><button class="undo ctl">Undo</button></div><div class="tracking"></div><button class="chip lt ctl cheaper">Cheaper?</button>`);if(window.AI)b.querySelector('.tracking').append(AI.trackLink(order));else b.querySelector('.tracking').innerHTML='<a href="/orders.html" class="track-fallback">Track order →</a>';b.querySelector('.undo').onclick=()=>turn('Undo',()=>{cancelOrder(order);block('undone','<h2>Order cancelled</h2>');details()});b.querySelector('.cheaper').onclick=()=>turn('Cheaper?',cheaper)})}
+function cheaper(){stage='cheap';const base=item('net'),old=Number(base.price||29900),all=products().filter(d=>/net/i.test(d.id+' '+d.name)&&Number(d.price)<old).sort((a,b)=>a.price-b.price);const list=all.slice(0,2);if(!list.length)list.push({...base,id:'basic-net',name:'Basic Hanging Net',price:15900},{...base,id:'dome-net',name:'Dome Net',price:19900});const b=block('mint',`<h2>Cheaper nets</h2><div class="two">${list.map(d=>`<div class="nc"><div class="product" data-product="${esc(d.id)}" data-kind="net">${productHTML(d,'net')}</div><span class="old">${won(old)}</span><span class="new">${won(d.price)}</span><span class="rk2">No chemicals</span><div class="sh"></div></div>`).join('')}</div>`);b.querySelectorAll('.sh').forEach((host,i)=>shipButton(host,list[i],list[i].price))}
+function start(text){if(stage!=='home')return;$('#phone').classList.add('started');$('#form').hidden=true;$('#sur').hidden=true;turn(text||'mosquitoes keep biting me at night',picker,true)}
+$('#form').onsubmit=e=>{e.preventDefault();start(inp.value.trim());inp.blur()};$('#sur').onclick=()=>start();
+document.querySelectorAll('#side button').forEach(x=>x.onclick=()=>{if(stage==='home')start();else if(stage==='compare'){selected='net';turn('Net',details)}else turn('Cheaper?',cheaper)});
+const query=new URLSearchParams(location.search).get('q');if(query)start(query);
 </script></body></html>

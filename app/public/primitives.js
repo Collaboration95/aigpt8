@@ -10,6 +10,26 @@
   const won = P.won = n => '₩' + Math.round(n).toLocaleString('en-US');
   const O = o => (o && typeof o === 'object') ? Object.assign({}, o, { v: o.v !== undefined ? o.v : o.l }) : { v: o, l: String(o) };
   const attr = v => esc(String(v));
+  // Keep image slots independent of controls so art changes preserve selection/freeze state.
+  const media = new Map(); let mediaId = 0;
+  const imageMarkup = c => {
+    const cat = window.CATALOG;
+    const item = typeof c.product === 'string' ? cat && cat.get(c.product) : c.product;
+    if (item && cat && cat.imgHTML) return cat.imgHTML(item, 'pm-photo');
+    if (c.img) return `<img class="pm-photo" src="${attr(c.img)}" alt="${attr(c.name || c.l || 'Product')}">`;
+    return c.art || '';
+  };
+  const artHTML = c => {
+    if (!c.product && !c.img) return c.art || '';
+    const id = ++mediaId; media.set(String(id), c);
+    return `<span class="pm-media" data-media="${id}">${imageMarkup(c)}</span>`;
+  };
+  const refreshImages = () => document.querySelectorAll('[data-media]').forEach(el => {
+    const c = media.get(el.dataset.media); if (c) el.innerHTML = imageMarkup(c);
+  });
+  window.addEventListener('t8-art', refreshImages);
+  window.addEventListener('storage', e => { if (e.key === 't8-art') refreshImages(); });
+  P.refreshImages = refreshImages;
   const ROCKET = '<svg class="rk" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 3 4 7 4 11l-4 4-4-4c0-4 1-8 4-11z"/><circle cx="12" cy="9" r="1.6"/><path d="M8 14l-3 3 2 1M16 14l3 3-2 1M10 19l2 3 2-3"/></svg>';
   const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 
@@ -59,6 +79,13 @@
 .pm button:active{transform:scale(.95)}
 .pm-lbl{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;opacity:.65}
 .pm-art{display:block;width:100%;height:100%}
+.pm-media{display:block;width:100%;height:100%;overflow:hidden;border-radius:12px;background:#fff;padding:4px}
+.pm-media img,.pm-photo{display:block;width:100%;height:100%;object-fit:contain}
+.pm-media svg{display:block;width:100%;height:100%}
+.pm-swatch .dot:has(.pm-media){background:#fff;overflow:visible}
+.pm-swatch .dot .pm-media{border-radius:50%;overflow:hidden}
+.pm :where(input[type=range]){min-height:44px}
+.pm-productgrid .tl .im,.pm-compare .im{width:76px;height:88px}
 .pm-frozen{pointer-events:none}
 .pm-frozen .pm-o:not(.on){opacity:.38}
 .pm-frozen:not(:has(.on)) .pm-o{opacity:.7}
@@ -123,7 +150,7 @@
 .pm-aorb .cd .im{width:64px;height:76px}.pm-aorb .cd b{font-size:16px;line-height:1.15}.pm-aorb .cd span:not(.im){font-size:12px;opacity:.65}
 .pm-aorb .cd.on{border-color:var(--acc);background:var(--card);box-shadow:0 8px 20px rgba(0,0,0,.22)}.pm-aorb .cd.on b{color:var(--acc)}
 .pm-aorb .cd.b2{background:var(--acc);color:var(--onacc)}.pm-aorb .cd.b2.on{border-color:var(--acc2)}.pm-aorb .cd.b2.on b{color:var(--onacc)}`, (el, c) => {
-    const w = h('div', 'w'); (c.options || []).slice(0, 2).map(O).forEach((o, i) => w.appendChild(btn(o, 'cd' + (i ? ' b2' : ''), `<span class="im">${o.art || ''}</span><b>${esc(o.l)}</b>${o.s ? `<span>${esc(o.s)}</span>` : ''}`)));
+    const w = h('div', 'w'); (c.options || []).slice(0, 2).map(O).forEach((o, i) => w.appendChild(btn(o, 'cd' + (i ? ' b2' : ''), `<span class="im">${artHTML(o)}</span><b>${esc(o.l)}</b>${o.s ? `<span>${esc(o.s)}</span>` : ''}`)));
     el.appendChild(w); selectable(el, c, w);
   });
 
@@ -177,7 +204,7 @@
 .pm-carousel .go{width:100%;border-radius:999px;background:var(--acc);color:var(--onacc);font-size:16px}
 .pm-frozen .pm-carousel .cd.mid,.pm-carousel.pm-frozen .cd.mid{border-color:transparent}.pm-carousel.pm-frozen .cd.on{border-color:var(--acc);opacity:1}`, (el, c) => {
     const opts = (c.items || c.options || []).map(O), tr = h('div', 'tr'), dots = h('div', 'dots');
-    opts.forEach(o => { tr.appendChild(btn(o, 'cd', `<span class="im">${o.art || ''}</span><b>${esc(o.l)}</b>${o.s ? `<span>${esc(o.s)}</span>` : ''}`)); dots.appendChild(h('i')); });
+    opts.forEach(o => { tr.appendChild(btn(o, 'cd', `<span class="im">${artHTML(o)}</span><b>${esc(o.l)}</b>${o.s ? `<span>${esc(o.s)}</span>` : ''}`)); dots.appendChild(h('i')); });
     const go = h('button', 'go', ''); go.type = 'button';
     el.append(tr, dots, go); let mid = 0, raf;
     const detect = () => { const r = tr.getBoundingClientRect(), cx = r.left + r.width / 2; let best = 1e9;
@@ -197,7 +224,7 @@
 .pm-swatch .dot::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:3px solid var(--acc);opacity:0;transform:scale(.8);transition:all .25s}
 .pm-swatch .sw.on .dot{transform:scale(1.08)}.pm-swatch .sw.on .dot::after{opacity:1;transform:none}
 .pm-swatch .sw span{font-size:13px;line-height:1.1;text-align:center}.pm-swatch .sw .tg{position:absolute;top:-4px;right:6%;font-size:10px;padding:2px 7px;border-radius:9px;background:#111;color:#fff;font-weight:800}`, (el, c) => {
-    const w = h('div', 'w'); (c.options || []).map(O).forEach(o => { const b = btn(o, 'sw', `<span class="dot" style="--sc:${esc(o.c)}"></span><span>${esc(o.l)}</span>${o.tag ? `<i class="tg">${esc(o.tag)}</i>` : ''}`); w.appendChild(b); });
+    const w = h('div', 'w'); (c.options || []).map(O).forEach(o => { const b = btn(o, 'sw', `<span class="dot" style="--sc:${esc(o.c)}">${o.product || o.img ? artHTML(o) : ''}</span><span>${esc(o.l)}</span>${o.tag ? `<i class="tg">${esc(o.tag)}</i>` : ''}`); w.appendChild(b); });
     el.appendChild(w); selectable(el, c, w);
   });
 
@@ -220,14 +247,14 @@
 .pm-producthero .im{width:92px;height:116px;flex:none}.pm-producthero .hi{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
 .pm-producthero .im{animation:pm-drop .6s .25s cubic-bezier(.3,1,.5,1) both}
 @keyframes pm-drop{0%{opacity:0;transform:translateY(-36px)}60%{opacity:1;transform:translateY(6px)}80%{transform:translateY(-3px)}100%{transform:none}}`, (el, c) => {
-    el.innerHTML = `<div class="hero"><div class="im">${c.art || ''}</div><div class="hi">${c.badge ? `<span class="pm-badge">${esc(c.badge)}</span>` : ''}<div class="pm-nm">${esc(c.name)}</div><div class="pm-pr">${c.price != null ? won(c.price) : ''}</div>${c.sub ? `<div class="pm-sm">${esc(c.sub)}</div>` : ''}</div></div>`;
+    el.innerHTML = `<div class="hero"><div class="im">${artHTML(c)}</div><div class="hi">${c.badge ? `<span class="pm-badge">${esc(c.badge)}</span>` : ''}<div class="pm-nm">${esc(c.name)}</div><div class="pm-pr">${c.price != null ? won(c.price) : ''}</div>${c.sub ? `<div class="pm-sm">${esc(c.sub)}</div>` : ''}</div></div>`;
   });
 
   reg('ProductRow', `.pm-productrow .row{display:flex;align-items:center;gap:12px;width:100%;padding:8px 12px 8px 8px;border-radius:var(--r);background:var(--card);text-align:left;min-height:68px;border:3px solid transparent;box-shadow:0 4px 12px rgba(0,0,0,.08)}
 .pm-productrow .im{width:48px;height:56px;flex:none}.pm-productrow .t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:flex-start}.pm-productrow .pm-nm{font-size:14px}.pm-productrow .pm-pr{font-size:16px}
 .pm-productrow .go{flex:none;width:34px;height:34px;border-radius:50%;background:var(--acc);color:var(--onacc);display:grid;place-items:center;font-size:18px}
 .pm-productrow .row.on{border-color:var(--acc)}`, (el, c) => {
-    const inner = `<span class="im">${c.art || ''}</span><span class="t">${c.badge ? `<span class="pm-badge">${esc(c.badge)}</span>` : ''}<span class="pm-nm">${esc(c.name)}</span><span class="pm-pr">${c.price != null ? won(c.price) : ''}${c.sub ? ` <span class="pm-sm">${esc(c.sub)}</span>` : ''}</span></span>`;
+    const inner = `<span class="im">${artHTML(c)}</span><span class="t">${c.badge ? `<span class="pm-badge">${esc(c.badge)}</span>` : ''}<span class="pm-nm">${esc(c.name)}</span><span class="pm-pr">${c.price != null ? won(c.price) : ''}${c.sub ? ` <span class="pm-sm">${esc(c.sub)}</span>` : ''}</span></span>`;
     if (c.tap) { const o = O({ v: c.value !== undefined ? c.value : 'row', l: c.say || c.name }); const b = btn(o, 'row', inner + `<span class="go">›</span>`); b.addEventListener('click', () => { if (el.frozen) return; b.classList.add('on'); el.answer(o.v, o.l); }); el.appendChild(b); }
     else el.appendChild(h('div', 'row', inner));
   });
@@ -236,7 +263,7 @@
 .pm-productgrid .tl{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 8px 12px;border-radius:var(--r);background:var(--card);border:3px solid transparent;box-shadow:0 4px 12px rgba(0,0,0,.08);min-width:0;position:relative;min-height:150px}
 .pm-productgrid .tl .im{width:56px;height:68px}.pm-productgrid .tl .pm-nm{text-align:center;font-size:14px}.pm-productgrid .tl .pm-pr{font-size:15px}.pm-productgrid .tl.on{border-color:var(--acc)}
 .pm-productgrid .tl .pm-badge{position:absolute;top:8px;left:8px;font-size:10px;padding:2px 7px}`, (el, c) => {
-    const w = h('div', 'w'); (c.items || c.options || []).map(O).forEach(o => w.appendChild(btn(o, 'tl', `${o.badge ? `<span class="pm-badge">${esc(o.badge)}</span>` : ''}<span class="im">${o.art || ''}</span><span class="pm-nm">${esc(o.l)}</span>${o.price != null ? `<span class="pm-pr">${won(o.price)}</span>` : ''}${o.s ? `<span class="pm-sm">${esc(o.s)}</span>` : ''}`)));
+    const w = h('div', 'w'); (c.items || c.options || []).map(O).forEach(o => w.appendChild(btn(o, 'tl', `${o.badge ? `<span class="pm-badge">${esc(o.badge)}</span>` : ''}<span class="im">${artHTML(o)}</span><span class="pm-nm">${esc(o.l)}</span>${o.price != null ? `<span class="pm-pr">${won(o.price)}</span>` : ''}${o.s ? `<span class="pm-sm">${esc(o.s)}</span>` : ''}`)));
     el.appendChild(w); selectable(el, c, w);
   });
 
@@ -248,7 +275,7 @@
 .pm-compare .col .pm-badge{margin-bottom:2px}`, (el, c) => {
     const w = h('div', 'w'); const items = (c.items || []).map(O); w.style.setProperty('--n', items.length);
     items.forEach(o => { const col = h('div', 'col');
-      col.innerHTML = `${o.badge ? `<span class="pm-badge">${esc(o.badge)}</span>` : ''}<span class="im">${o.art || ''}</span><span class="pm-nm">${esc(o.l)}</span><span class="pm-pr">${o.price != null ? won(o.price) : ''}</span><span class="sp">${(o.specs || []).map(s => `<i>${esc(s)}</i>`).join('')}</span>`;
+      col.innerHTML = `${o.badge ? `<span class="pm-badge">${esc(o.badge)}</span>` : ''}<span class="im">${artHTML(o)}</span><span class="pm-nm">${esc(o.l)}</span><span class="pm-pr">${o.price != null ? won(o.price) : ''}</span><span class="sp">${(o.specs || []).map(s => `<i>${esc(s)}</i>`).join('')}</span>`;
       const b = btn(o, 'go', esc(c.cta || 'Pick')); b.addEventListener('click', () => { if (el.frozen) return; w.querySelectorAll('.col').forEach(x => x.classList.remove('on')); col.classList.add('on'); el.answer(o.v, o.say || o.l); });
       col.appendChild(b); w.appendChild(col); });
     el.appendChild(w);
@@ -259,7 +286,7 @@
 .pm-bundle .im{width:38px;height:46px;flex:none}.pm-bundle .t{flex:1;min-width:0}.pm-bundle .pm-nm{font-size:14px}.pm-bundle .pm-pr{font-size:15px}
 .pm-bundle .tt{display:flex;justify-content:space-between;align-items:baseline;padding:8px 4px 0;font-weight:800}.pm-bundle .tt b{font-size:24px;letter-spacing:-.5px;color:var(--acc)}`, (el, c) => {
     const bx = h('div', 'bx'), tt = h('div', 'tt'); el.append(bx, tt);
-    el.set = (items, total) => { bx.innerHTML = items.map(i => `<div class="it"><span class="im">${i.art || ''}</span><span class="t"><div class="pm-nm">${esc(i.name)}</div>${i.sub ? `<div class="pm-sm">${esc(i.sub)}</div>` : ''}</span><span class="pm-pr">${won(i.price)}</span></div>`).join('');
+    el.set = (items, total) => { bx.innerHTML = items.map(i => `<div class="it"><span class="im">${artHTML(i)}</span><span class="t"><div class="pm-nm">${esc(i.name)}</div>${i.sub ? `<div class="pm-sm">${esc(i.sub)}</div>` : ''}</span><span class="pm-pr">${won(i.price)}</span></div>`).join('');
       tt.innerHTML = `<span>${esc(c.totalLabel || 'Total')}</span><b>${won(total != null ? total : items.reduce((a, i) => a + i.price, 0))}</b>`; };
     el.set(c.items || [], c.total);
   });
@@ -268,7 +295,7 @@
   reg('RatingTap', `.pm-ratingtap .r{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:var(--r);padding:10px 12px}
 .pm-ratingtap .im{width:48px;height:58px;flex:none}.pm-ratingtap .t{flex:1;min-width:0}.pm-ratingtap .b{flex:none;width:52px;height:52px;border-radius:50%;font-size:24px;display:grid;place-items:center;background:rgba(0,0,0,.08);transition:all .3s cubic-bezier(.3,1.6,.5,1)}
 .pm-ratingtap .b.love{color:#e8337a}.pm-ratingtap .b.love.on{background:#e8337a;color:#fff;transform:scale(1.15)}.pm-ratingtap .b.nope.on{background:#111;color:#fff;transform:scale(1.15)}`, (el, c) => {
-    const r = h('div', 'r', `<span class="im">${c.art || ''}</span><span class="t"><div class="pm-nm">${esc(c.name)}</div>${c.sub ? `<div class="pm-sm">${esc(c.sub)}</div>` : ''}</span>`);
+    const r = h('div', 'r', `<span class="im">${artHTML(c)}</span><span class="t"><div class="pm-nm">${esc(c.name)}</div>${c.sub ? `<div class="pm-sm">${esc(c.sub)}</div>` : ''}</span>`);
     const b1 = btn(O({ v: 'nope', l: 'Nope' }), 'b nope', '✕'), b2 = btn(O({ v: 'love', l: 'Love' }), 'b love', '♥'); b1.setAttribute('aria-label', 'Nope'); b2.setAttribute('aria-label', 'Love');
     r.append(b1, b2); el.appendChild(r); selectable(el, c, r);
   });
@@ -286,7 +313,7 @@
 .pm-thisorthat .tt.b2{background:var(--acc);color:var(--onacc)}.pm-thisorthat .im{width:46px;height:54px;flex:none}.pm-thisorthat .t{flex:1;min-width:0;font-size:16px}.pm-thisorthat small{display:block;font-size:12px;opacity:.7;font-weight:600}
 .pm-thisorthat .tt.on{border-color:var(--acc2);transform:scale(1.02)}
 .pm-thisorthat .vs{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--acc2);color:#111;font-size:11px;font-weight:900;display:grid;place-items:center;border:3px solid #fff;pointer-events:none;z-index:2}`, (el, c) => {
-    const w = h('div', 'w'); (c.options || []).slice(0, 2).map(O).forEach((o, i) => w.appendChild(btn(o, 'tt' + (i ? ' b2' : ''), `<span class="im">${o.art || ''}</span><span class="t">${esc(o.l)}${o.s ? `<small>${esc(o.s)}</small>` : ''}</span>`)));
+    const w = h('div', 'w'); (c.options || []).slice(0, 2).map(O).forEach((o, i) => w.appendChild(btn(o, 'tt' + (i ? ' b2' : ''), `<span class="im">${artHTML(o)}</span><span class="t">${esc(o.l)}${o.s ? `<small>${esc(o.s)}</small>` : ''}</span>`)));
     w.appendChild(h('span', 'vs', 'VS')); el.appendChild(w); selectable(el, c, w);
   });
 
@@ -327,7 +354,7 @@
 .pm-receipt .undo{flex:none;padding:0 16px;border-radius:22px;background:rgba(255,255,255,.16);font-weight:700;color:#fff}
 .pm-receipt.undone .ri b{text-decoration:line-through;opacity:.6}.pm-receipt.undone .th{opacity:.5}`;
   const mkReceipt = (c, onUndo) => {
-    const r = h('div', 'pm pm-receipt'); const th = (c.items || []).map(i => `<span class="th">${i.art || ''}</span>`).join('');
+    const r = h('div', 'pm pm-receipt'); const th = (c.items || []).map(i => `<span class="th">${artHTML(i)}</span>`).join('');
     r.innerHTML = `<div class="rc"><div class="ths">${th}</div><div class="ri"><b>${won(c.total)}${c.note ? ' · ' + esc(c.note) : ''}</b><span>${esc(c.eta || 'Rocket · tomorrow 7am')}</span></div><button class="undo" type="button">${esc(c.undo || 'Undo')}</button></div>`;
     r.querySelector('.undo').onclick = () => onUndo && onUndo(r); return r;
   };
@@ -365,7 +392,7 @@
   reg('Subscription', `.pm-subscription .w{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .pm-subscription .w .pm-chip{padding:0 18px}.pm-subscription .nx{margin-top:8px;font-size:12px;font-weight:700;opacity:.7;min-height:16px}`, (el, c) => {
     const w = h('div', 'w'), nx = h('div', 'nx', esc(c.hint || '')); const opts = (c.options || [4, 6, 8]).map(x => typeof x === 'number' ? { v: x, l: x + 'w' } : O(x));
-    opts.forEach(o => w.appendChild(btn(o, 'pm-chip', esc(o.l))));
+    opts.forEach(o => {const b=btn(o, 'pm-chip', esc(o.l));if(o.v===c.value){b.classList.add('on');b.setAttribute('aria-pressed','true')}w.appendChild(b)});
     el.append(w, nx);
     w.querySelectorAll('[data-v]').forEach(b => b.addEventListener('click', () => {
       if (el.frozen) return; w.querySelectorAll('[data-v]').forEach(x => x.classList.remove('on')); b.classList.add('on');
@@ -396,7 +423,7 @@
 
   reg('NotThis', `.pm-notthis .it{display:flex;align-items:center;gap:10px;margin-bottom:8px}.pm-notthis .im{width:38px;height:46px;flex:none}.pm-notthis .t{flex:1;min-width:0}
 .pm-notthis .w{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.pm-notthis .w .pm-chip{justify-content:center;padding:0 6px;font-size:14px}.pm-notthis .w .pm-chip:last-child{color:#d93636}.pm-notthis .w .pm-chip.on{color:var(--onacc)}`, (el, c) => {
-    el.innerHTML = `<div class="it"><span class="im">${c.art || ''}</span><span class="t"><div class="pm-nm">${esc(c.name)}</div>${c.sub ? `<div class="pm-sm">${esc(c.sub)}</div>` : ''}</span></div>`;
+    el.innerHTML = `<div class="it"><span class="im">${artHTML(c)}</span><span class="t"><div class="pm-nm">${esc(c.name)}</div>${c.sub ? `<div class="pm-sm">${esc(c.sub)}</div>` : ''}</span></div>`;
     const w = h('div', 'w'); (c.actions || ['Swap', 'Cheaper', 'Remove']).map(O).forEach(o => { const b = btn(o, 'pm-chip', esc(o.l)); w.appendChild(b); b._o = Object.assign({}, o, { l: o.l + (c.noun ? ' ' + c.noun : '') }); });
     el.appendChild(w); selectable(el, c, w);
   });

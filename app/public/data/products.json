@@ -1,0 +1,1121 @@
+[
+  {
+    "id": "tp-median",
+    "name": "Median Toothpaste 120g x3",
+    "brand": "Median",
+    "price": 8900,
+    "category": "toothpaste",
+    "tags": [
+      "usual",
+      "mint",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-median.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8809585101414",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Median Toothpaste 120g x3\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-whitening",
+    "name": "Signal White Now 75ml",
+    "brand": "Signal",
+    "price": 6900,
+    "category": "toothpaste",
+    "tags": [
+      "whitening",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-whitening.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8710604754231",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Signal White Now 75ml\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-sensitive",
+    "name": "Sensodyne Sensitive 75ml",
+    "brand": "Sensodyne",
+    "price": 7900,
+    "category": "toothpaste",
+    "tags": [
+      "sensitive",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-sensitive.jpg",
+    "source": "https://world.openbeautyfacts.org/product/4088600192079",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Sensodyne Sensitive 75ml\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-herbal",
+    "name": "Dabur Miswak Herbal 100g",
+    "brand": "Dabur",
+    "price": 4900,
+    "category": "toothpaste",
+    "tags": [
+      "herbal",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-herbal.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8901009111631",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Dabur Miswak Herbal 100g\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-charcoal",
+    "name": "Signal Charcoal 75ml",
+    "brand": "Signal",
+    "price": 5900,
+    "category": "toothpaste",
+    "tags": [
+      "charcoal",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-charcoal.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8710522417379",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Signal Charcoal 75ml\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-kids",
+    "name": "Elmex Kids Toothpaste",
+    "brand": "Elmex",
+    "price": 5400,
+    "category": "toothpaste",
+    "tags": [
+      "kids",
+      "family",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-kids.jpg",
+    "source": "https://world.openbeautyfacts.org/product/7610108056446",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Elmex Kids Toothpaste\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-mint",
+    "name": "Colgate Triple Action",
+    "brand": "Colgate",
+    "price": 3900,
+    "category": "toothpaste",
+    "tags": [
+      "mint",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-mint.jpg",
+    "source": "https://world.openbeautyfacts.org/product/6281001112044",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Colgate Triple Action\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-coconut",
+    "name": "Signal Coconut 75ml",
+    "brand": "Signal",
+    "price": 5900,
+    "category": "toothpaste",
+    "tags": [
+      "herbal",
+      "coconut",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-coconut.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8710447328095",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Signal Coconut 75ml\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-fresh",
+    "name": "Coslys Fresh Mint",
+    "brand": "Coslys",
+    "price": 6900,
+    "category": "toothpaste",
+    "tags": [
+      "mint",
+      "herbal",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-fresh.jpg",
+    "source": "https://world.openbeautyfacts.org/product/3538396705102",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Coslys Fresh Mint\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tp-natural",
+    "name": "Himalaya Sparkly White",
+    "brand": "Himalaya",
+    "price": 5500,
+    "category": "toothpaste",
+    "tags": [
+      "herbal",
+      "whitening",
+      "oral-care"
+    ],
+    "img": "/img/products/tp-natural.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8901138825591",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Himalaya Sparkly White\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M48 28h64l-7 105H55z\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"56\" y=\"132\" width=\"48\" height=\"15\" rx=\"4\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M54 48h52\" stroke=\"#fff\" stroke-width=\"12\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-soft",
+    "name": "Signal Soft Toothbrush x4",
+    "brand": "Signal",
+    "price": 6900,
+    "category": "toothbrush",
+    "tags": [
+      "soft",
+      "family",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-soft.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8851932351881",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Signal Soft Toothbrush x4\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#ffe39a\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-bamboo",
+    "name": "Humble Bamboo Toothbrush",
+    "brand": "The Humble Co.",
+    "price": 4500,
+    "category": "toothbrush",
+    "tags": [
+      "eco",
+      "bamboo",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-bamboo.jpg",
+    "source": "https://world.openbeautyfacts.org/product/7350075690105",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Humble Bamboo Toothbrush\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#ffe39a\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-clean",
+    "name": "Colgate Extra Clean 1+1",
+    "brand": "Colgate",
+    "price": 3900,
+    "category": "toothbrush",
+    "tags": [
+      "value",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-clean.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8714789732244",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Colgate Extra Clean 1+1\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#b9e3ff\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-charcoal",
+    "name": "Colgate SlimSoft Charcoal",
+    "brand": "Colgate",
+    "price": 4900,
+    "category": "toothbrush",
+    "tags": [
+      "charcoal",
+      "soft",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-charcoal.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8901314305527",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Colgate SlimSoft Charcoal\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#ffe39a\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-cross",
+    "name": "Oral-B CrissCross",
+    "brand": "Oral-B",
+    "price": 5900,
+    "category": "toothbrush",
+    "tags": [
+      "clean",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-cross.jpg",
+    "source": "https://world.openbeautyfacts.org/product/4987176130051",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Oral-B CrissCross\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#ffe39a\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-family",
+    "name": "Oral-B Family Toothbrush x4",
+    "brand": "Oral-B",
+    "price": 9900,
+    "category": "toothbrush",
+    "tags": [
+      "family",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-family.jpg",
+    "source": "https://world.openbeautyfacts.org/product/4987176239952",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Oral-B Family Toothbrush x4\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#bfe6d4\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-medium",
+    "name": "Colgate Medium Toothbrush",
+    "brand": "Colgate",
+    "price": 2900,
+    "category": "toothbrush",
+    "tags": [
+      "value",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-medium.jpg",
+    "source": "https://world.openbeautyfacts.org/product/4808888201115",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Colgate Medium Toothbrush\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#ffb8cd\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "tb-elmex",
+    "name": "Elmex Intensive Clean",
+    "brand": "Elmex",
+    "price": 6500,
+    "category": "toothbrush",
+    "tags": [
+      "clean",
+      "oral-care"
+    ],
+    "img": "/img/products/tb-elmex.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8718951707122",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Elmex Intensive Clean\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"69\" y=\"49\" width=\"22\" height=\"98\" rx=\"11\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><rect x=\"59\" y=\"15\" width=\"42\" height=\"52\" rx=\"15\" fill=\"#fff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M67 25v28m9-28v28m9-28v28m9-28v28\" stroke=\"#ffe39a\" stroke-width=\"4\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "net-single",
+    "name": "Canopy mosquito net · Single",
+    "brand": "Everyday",
+    "price": 15900,
+    "category": "mosquito",
+    "tags": [
+      "net",
+      "single",
+      "bedroom"
+    ],
+    "img": "/img/products/net-single.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Canopy mosquito net · Single\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M80 18L20 128Q80 151 140 128Z\" fill=\"#b9e3ff\" fill-opacity=\".65\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M80 20v112M80 20L44 136m36-116l36 116M40 93h80M30 113h100\" stroke=\"#fff\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "net-double",
+    "name": "Canopy mosquito net · Double",
+    "brand": "Everyday",
+    "price": 19900,
+    "category": "mosquito",
+    "tags": [
+      "net",
+      "double",
+      "bedroom"
+    ],
+    "img": "/img/products/net-double.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Canopy mosquito net · Double\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M80 18L20 128Q80 151 140 128Z\" fill=\"#cbbdff\" fill-opacity=\".65\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M80 20v112M80 20L44 136m36-116l36 116M40 93h80M30 113h100\" stroke=\"#fff\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "net-queen",
+    "name": "Canopy mosquito net · Queen",
+    "brand": "Everyday",
+    "price": 24900,
+    "category": "mosquito",
+    "tags": [
+      "net",
+      "queen",
+      "bedroom"
+    ],
+    "img": "/img/products/net-queen.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Canopy mosquito net · Queen\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M80 18L20 128Q80 151 140 128Z\" fill=\"#b9e3ff\" fill-opacity=\".65\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M80 20v112M80 20L44 136m36-116l36 116M40 93h80M30 113h100\" stroke=\"#fff\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "net-king",
+    "name": "Canopy mosquito net · King",
+    "brand": "Everyday",
+    "price": 29900,
+    "category": "mosquito",
+    "tags": [
+      "net",
+      "king",
+      "bedroom",
+      "baby"
+    ],
+    "img": "/img/products/net-king.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Canopy mosquito net · King\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M80 18L20 128Q80 151 140 128Z\" fill=\"#cbbdff\" fill-opacity=\".65\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M80 20v112M80 20L44 136m36-116l36 116M40 93h80M30 113h100\" stroke=\"#fff\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "net-premium",
+    "name": "Canopy mosquito net · King deluxe",
+    "brand": "Everyday",
+    "price": 39900,
+    "category": "mosquito",
+    "tags": [
+      "net",
+      "king",
+      "premium",
+      "baby"
+    ],
+    "img": "/img/products/net-premium.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Canopy mosquito net · King deluxe\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><path d=\"M80 18L20 128Q80 151 140 128Z\" fill=\"#b9e3ff\" fill-opacity=\".65\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M80 20v112M80 20L44 136m36-116l36 116M40 93h80M30 113h100\" stroke=\"#fff\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "mq-spray",
+    "name": "Mosquito repellent spray",
+    "brand": "Household",
+    "price": 7900,
+    "category": "mosquito",
+    "tags": [
+      "spray",
+      "outdoors"
+    ],
+    "img": "/img/products/mq-spray.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:SKEETER.JPG",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Mosquito repellent spray\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "mq-plugin",
+    "name": "Electric mosquito vaporizer",
+    "brand": "Household",
+    "price": 12900,
+    "category": "mosquito",
+    "tags": [
+      "plug-in",
+      "vaporizer"
+    ],
+    "img": "/img/products/mq-plugin.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Elektroverdampfer.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Electric mosquito vaporizer\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "mq-refill",
+    "name": "Vaporizer + refill set",
+    "brand": "Household",
+    "price": 16900,
+    "category": "mosquito",
+    "tags": [
+      "plug-in",
+      "refill"
+    ],
+    "img": "/img/products/mq-refill.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Elektroverdampfer.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Vaporizer + refill set\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "mq-patches",
+    "name": "Mosquito repellent patches · 24",
+    "brand": "Household",
+    "price": 5900,
+    "category": "mosquito",
+    "tags": [
+      "patches",
+      "travel"
+    ],
+    "img": "/img/products/mq-patches.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:SKEETER.JPG",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Mosquito repellent patches · 24\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "mq-racket",
+    "name": "Electric mosquito racket",
+    "brand": "Household",
+    "price": 9900,
+    "category": "mosquito",
+    "tags": [
+      "racket",
+      "electric"
+    ],
+    "img": "/img/products/mq-racket.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Elektronische_Fliegenklatsche.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Electric mosquito racket\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-1",
+    "name": "Lotte Choco Pie",
+    "brand": "Lotte",
+    "price": 4980,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-1.jpg",
+    "source": "https://world.openfoodfacts.org/product/8901123001214",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Lotte Choco Pie\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-2",
+    "name": "Pepero almond",
+    "brand": "Lotte",
+    "price": 1500,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-2.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801062267712",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Pepero almond\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-3",
+    "name": "Crunky Pepero",
+    "brand": "Lotte",
+    "price": 1700,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-3.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801062881741",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Crunky Pepero\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-4",
+    "name": "Koala Chocolat",
+    "brand": "Lotte",
+    "price": 2500,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-4.jpg",
+    "source": "https://world.openfoodfacts.org/product/4903333066254",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Koala Chocolat\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-5",
+    "name": "Pepero Original Stick Biscuit & Chocolate",
+    "brand": "Lotte",
+    "price": 1500,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-5.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801062267675",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Pepero Original Stick Biscuit &amp; Chocolate\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-6",
+    "name": "Pepero White Cookie, Chocolate & Biscuit",
+    "brand": "Lotte",
+    "price": 1700,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-6.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801062636358",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Pepero White Cookie, Chocolate &amp; Biscuit\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-7",
+    "name": "Lotte Kokal Corn Snack (sweet & Spicy Flavour)",
+    "brand": "Lotte",
+    "price": 2200,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "savory"
+    ],
+    "img": "/img/products/snack-7.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801062381937",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Lotte Kokal Corn Snack (sweet &amp; Spicy Flavour)\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "snack-8",
+    "name": "Sugar Free Chocolate",
+    "brand": "Lotte",
+    "price": 3500,
+    "category": "snacks",
+    "tags": [
+      "game",
+      "snack",
+      "sweet"
+    ],
+    "img": "/img/products/snack-8.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801062859498",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Sugar Free Chocolate\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-1",
+    "name": "Aloe vera",
+    "brand": "Lotte",
+    "price": 1800,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-1.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056175214",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Aloe vera\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-2",
+    "name": "Aloe vera mango",
+    "brand": "Lotte",
+    "price": 1900,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-2.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056175252",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Aloe vera mango\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-3",
+    "name": "Aloe vera",
+    "brand": "Lotte",
+    "price": 1500,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-3.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056091712",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Aloe vera\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-4",
+    "name": "Aloe Vera Pomegranate, Granatapfel",
+    "brand": "Lotte",
+    "price": 1900,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-4.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056052447",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Aloe Vera Pomegranate, Granatapfel\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-5",
+    "name": "Aloe Vera Grape Flavour",
+    "brand": "Lotte",
+    "price": 1800,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-5.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056039660",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Aloe Vera Grape Flavour\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-6",
+    "name": "Lotte trive lime 500ml",
+    "brand": "Lotte",
+    "price": 1600,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-6.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056055189",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Lotte trive lime 500ml\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-7",
+    "name": "Milkis original milk & yogurt flavor carbonated drink",
+    "brand": "Lotte",
+    "price": 1200,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-7.jpg",
+    "source": "https://world.openfoodfacts.org/product/0809939073549",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Milkis original milk &amp; yogurt flavor carbonated drink\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "drink-8",
+    "name": "Milk carbonated soft drink",
+    "brand": "Lotte",
+    "price": 1500,
+    "category": "drinks",
+    "tags": [
+      "game",
+      "drink",
+      "refreshing"
+    ],
+    "img": "/img/products/drink-8.jpg",
+    "source": "https://world.openfoodfacts.org/product/8801056154011",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Milk carbonated soft drink\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-1",
+    "name": "moisturising cream",
+    "brand": "CeraVe",
+    "price": 18900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-1.jpg",
+    "source": "https://world.openbeautyfacts.org/product/3337875598996",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"moisturising cream\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-2",
+    "name": "Original Pure Petroleum Jelly",
+    "brand": "Vaseline",
+    "price": 4900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-2.jpg",
+    "source": "https://world.openbeautyfacts.org/product/42182634",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Original Pure Petroleum Jelly\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-3",
+    "name": "Nivea Creeme",
+    "brand": "Nivea",
+    "price": 5900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-3.jpg",
+    "source": "https://world.openbeautyfacts.org/product/40058153",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Nivea Creeme\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-4",
+    "name": "Crème mains hydratante concentrée Formule Norvégienne",
+    "brand": "Neutrogena",
+    "price": 6900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-4.jpg",
+    "source": "https://world.openbeautyfacts.org/product/4012273123009",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Crème mains hydratante concentrée Formule Norvégienne\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-5",
+    "name": "Beauty cream bar",
+    "brand": "Dove",
+    "price": 1900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-5.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8720182264664",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Beauty cream bar\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-6",
+    "name": "Dr.Althea 345 Relief Cream 50ml",
+    "brand": "Dr.Althea",
+    "price": 24900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-6.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8809447251394",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Dr.Althea 345 Relief Cream 50ml\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-7",
+    "name": "Vaseline Intensive care hand cream",
+    "brand": "Vaseline",
+    "price": 4900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-7.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8712561485524",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Vaseline Intensive care hand cream\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "beauty-8",
+    "name": "Nourishing body cream",
+    "brand": "Dove",
+    "price": 8900,
+    "category": "beauty",
+    "tags": [
+      "game",
+      "care",
+      "beauty"
+    ],
+    "img": "/img/products/beauty-8.jpg",
+    "source": "https://world.openbeautyfacts.org/product/8886467020124",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Nourishing body cream\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-1",
+    "name": "Liquid laundry detergent 1L",
+    "brand": "Everyday",
+    "price": 5900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Liquid_detergent.JPG",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Liquid laundry detergent 1L\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-2",
+    "name": "Liquid laundry detergent 2L",
+    "brand": "Everyday",
+    "price": 8900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Liquid_detergent.JPG",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Liquid laundry detergent 2L\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-3",
+    "name": "Liquid detergent refill 1L",
+    "brand": "Everyday",
+    "price": 4900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-3.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Liquid_detergent.JPG",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Liquid detergent refill 1L\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-4",
+    "name": "Laundry detergent family 3L",
+    "brand": "Everyday",
+    "price": 12900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-4.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Liquid_detergent.JPG",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Laundry detergent family 3L\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-5",
+    "name": "Laundry clothes pegs · 12",
+    "brand": "Everyday",
+    "price": 2900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-5.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Clothes_pegs.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Laundry clothes pegs · 12\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-6",
+    "name": "Laundry clothes pegs · 24",
+    "brand": "Everyday",
+    "price": 4900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-6.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Clothes_pegs.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Laundry clothes pegs · 24\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-7",
+    "name": "Clothes peg family pack",
+    "brand": "Everyday",
+    "price": 6900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-7.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Clothes_pegs.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Clothes peg family pack\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "home-8",
+    "name": "Laundry clothes pegs · 6",
+    "brand": "Everyday",
+    "price": 1900,
+    "category": "home",
+    "tags": [
+      "game",
+      "home",
+      "laundry"
+    ],
+    "img": "/img/products/home-8.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Clothes_pegs.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Laundry clothes pegs · 6\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-1",
+    "name": "Stainless kitchen utensil set",
+    "brand": "Everyday",
+    "price": 12900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-1.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Kitchen_ware.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Stainless kitchen utensil set\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-2",
+    "name": "Stainless steel cooking spoon",
+    "brand": "Everyday",
+    "price": 4900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-2.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Stainless_steel_spoon.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Stainless steel cooking spoon\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-3",
+    "name": "Wooden cooking spoon",
+    "brand": "Everyday",
+    "price": 3900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-3.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Wooden_spoon.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Wooden cooking spoon\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-4",
+    "name": "Kitchen chopping board",
+    "brand": "Everyday",
+    "price": 7900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-4.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chopping_board.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Kitchen chopping board\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-5",
+    "name": "Stainless steel spoon x4",
+    "brand": "Everyday",
+    "price": 9900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-5.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Stainless_steel_spoon.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Stainless steel spoon x4\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-6",
+    "name": "Wooden spoon set x3",
+    "brand": "Everyday",
+    "price": 8900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-6.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Wooden_spoon.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Wooden spoon set x3\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-7",
+    "name": "Chopping board set x2",
+    "brand": "Everyday",
+    "price": 12900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-7.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Chopping_board.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Chopping board set x2\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "kitchen-8",
+    "name": "Kitchen utensil gift set",
+    "brand": "Everyday",
+    "price": 29900,
+    "category": "kitchen",
+    "tags": [
+      "game",
+      "kitchen",
+      "cooking"
+    ],
+    "img": "/img/products/kitchen-8.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Kitchen_ware.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Kitchen utensil gift set\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><ellipse cx=\"80\" cy=\"85\" rx=\"55\" ry=\"39\" fill=\"#ffe39a\" stroke=\"#44332e\" stroke-width=\"3\"/><path d=\"M125 70l22-15\" stroke=\"#44332e\" stroke-width=\"10\" stroke-linecap=\"round\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "bed-king",
+    "name": "King bed frame",
+    "brand": "Everyday",
+    "price": 289000,
+    "category": "bedding",
+    "tags": [
+      "king",
+      "history"
+    ],
+    "img": "/img/products/bed-king.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Malm_bedframe_from_Ikea,_Brisbane,_Australia.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"King bed frame\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "bed-curtain",
+    "name": "Bedroom blackout curtain",
+    "brand": "Everyday",
+    "price": 29900,
+    "category": "bedding",
+    "tags": [
+      "bedroom",
+      "history"
+    ],
+    "img": "/img/products/bed-curtain.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Total_Blackout_Cassette_Roller_Blind_With_Curtains.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Bedroom blackout curtain\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "bed-curtain-queen",
+    "name": "Blackout curtain pair",
+    "brand": "Everyday",
+    "price": 49900,
+    "category": "bedding",
+    "tags": [
+      "bedroom",
+      "history"
+    ],
+    "img": "/img/products/bed-curtain-queen.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Total_Blackout_Cassette_Roller_Blind_With_Curtains.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Blackout curtain pair\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#b9e3ff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "bed-net",
+    "name": "Bedroom canopy net",
+    "brand": "Everyday",
+    "price": 29900,
+    "category": "bedding",
+    "tags": [
+      "bedroom",
+      "history"
+    ],
+    "img": "/img/products/bed-net.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Bedroom canopy net\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "baby-monitor",
+    "name": "Digital baby monitor",
+    "brand": "Everyday",
+    "price": 79000,
+    "category": "baby",
+    "tags": [
+      "baby",
+      "history"
+    ],
+    "img": "/img/products/baby-monitor.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Digital_wireless_baby_monitor.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Digital baby monitor\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "baby-monitor-video",
+    "name": "Video baby monitor",
+    "brand": "Everyday",
+    "price": 99000,
+    "category": "baby",
+    "tags": [
+      "baby",
+      "history"
+    ],
+    "img": "/img/products/baby-monitor-video.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Digital_wireless_baby_monitor.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Video baby monitor\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#ffb8cd\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "baby-net",
+    "name": "Cot canopy mosquito net",
+    "brand": "Everyday",
+    "price": 19900,
+    "category": "baby",
+    "tags": [
+      "baby",
+      "history"
+    ],
+    "img": "/img/products/baby-net.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Yong_Farmstay_mosquito_net_bed.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Cot canopy mosquito net\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#bfe6d4\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  },
+  {
+    "id": "baby-curtain",
+    "name": "Nursery blackout curtain",
+    "brand": "Everyday",
+    "price": 29900,
+    "category": "baby",
+    "tags": [
+      "baby",
+      "history"
+    ],
+    "img": "/img/products/baby-curtain.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Total_Blackout_Cassette_Roller_Blind_With_Curtains.jpg",
+    "fun": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" role=\"img\" aria-label=\"Nursery blackout curtain\"><ellipse cx=\"80\" cy=\"147\" rx=\"46\" ry=\"7\" fill=\"#44332e\" opacity=\".08\"/><rect x=\"39\" y=\"24\" width=\"82\" height=\"110\" rx=\"23\" fill=\"#cbbdff\" stroke=\"#44332e\" stroke-width=\"3\"/><circle cx=\"69\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><circle cx=\"92\" cy=\"85\" r=\"3.5\" fill=\"#44332e\"/><path d=\"M72 99q9 9 18 0\" fill=\"none\" stroke=\"#44332e\" stroke-width=\"3\" stroke-linecap=\"round\"/><ellipse cx=\"59\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/><ellipse cx=\"103\" cy=\"95\" rx=\"6\" ry=\"3\" fill=\"#ff8fa3\"/></svg>"
+  }
+]

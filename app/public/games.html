@@ -141,11 +141,13 @@ input[type=range]:disabled{opacity:.7}
 .again{min-height:44px;font-weight:800;font-size:15px;color:#5b4a78;align-self:center;padding:0 20px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @media (min-width:700px){body{background:radial-gradient(circle at 50% 0,#fff,#ece4ff)}.page{padding-top:24px}}
+/* White app chrome; the game stays colourful. */
+html,body{background:#fff;color:#202332}body{background:#fff}.page{max-width:430px;padding:8px 12px 28px}.top{height:52px;padding:0 2px}.top .logo{text-decoration:none;font-size:24px}.top b{font-size:13px;color:#737987;flex:1}.cart{width:44px;height:44px;display:grid;place-items:center;color:#252936}.tabs{display:flex;gap:2px;justify-content:space-between;margin:8px 0 12px}.tab,.tab:nth-child(n+4){min-height:44px;border-radius:12px;font-size:11px;box-shadow:none;flex:1;padding:0 3px;background:#f5f6f8;white-space:normal;gap:3px}.tab span{display:none}.tab[aria-selected=true]{background:#252936;transform:none}.card{min-height:620px;border-radius:24px;padding:14px 12px}.head h2{font-size:25px}.product-art{display:flex;align-items:center;justify-content:center;background:#fff;border-radius:18px;overflow:hidden}.product-art img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}.product-art svg{max-width:100%;max-height:100%}.sn{font-size:20px;line-height:1.2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}.pgn{overflow-wrap:anywhere}.dl .dn{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;overflow:hidden}.pgart{border-radius:24px}.pgn{font-size:19px;min-height:46px;display:grid;place-items:center}.pgart .art{width:156px!important;height:156px!important}.stags{flex-wrap:wrap;justify-content:center}.rewards{display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:9px 12px;border-radius:12px;background:#fff6cd;color:#865307}.rewards b{font-size:16px}.lc{font-size:12px;min-height:30px;padding:0 10px}.chips{gap:5px}.taste{padding:12px;border-radius:16px;background:#ffffffdc}.taste-head{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:800;margin-bottom:10px}.taste-head a{font-size:10px;font-weight:600;color:#6f7581;text-decoration:none;min-height:24px;display:flex;align-items:center}.taste-row{display:grid;grid-template-columns:1fr auto;gap:4px;font-size:10px;margin-top:8px}.taste-row b{font-variant-numeric:tabular-nums;font-weight:600}.taste-row>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.taste-row i{grid-column:1/-1;height:4px;border-radius:4px;background:#e8edf0;overflow:hidden}.taste-row em{display:block;height:100%;border-radius:4px}.up{color:#078267}.down{color:#cb3e4d}.rh{font-size:10px;margin-top:0}.res{gap:9px}.pk{padding:6px 8px;min-height:60px;border-radius:14px;box-shadow:none}.pk .pn{font-size:12px}.pk .pp{font-size:12px}.pk .tg .badge{font-size:9px;max-width:85px;overflow:hidden;text-overflow:ellipsis}.pk .art{background:white}.ship{min-height:50px;font-size:16px;border-radius:16px;box-shadow:none;margin-top:2px}.again{font-size:12px}.t8-track,.track-fallback{align-self:center}.grid3 .product-art{border-radius:6px}.dl .dn{font-size:14px}.taste-head a{min-height:44px}.taste-head{margin-bottom:0}.top a:focus-visible,button:focus-visible{outline:3px solid #1689ce;outline-offset:2px}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="top"><span class="logo">coupang<i>.</i></span><b>Games</b></div>
+  <div class="top"><a class="logo" href="/">coupang<i>.</i></a><b>Play & discover</b><a class="cart" href="/orders.html" aria-label="Orders"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2 12h12l2-9H6M9 20h.01M18 20h.01" stroke-linecap="round"/></svg></a></div>
   <div class="tabs" role="tablist" id="tabs"></div>
   <div class="card" id="card">
     <div class="head"><h2 id="ttl"></h2><span class="cnt" id="cnt"></span></div>
@@ -153,6 +155,9 @@ input[type=range]:disabled{opacity:.7}
     <canvas id="cf"></canvas>
   </div>
 </div>
+<script src="/catalog.js"></script>
+<script src="/orders.js"></script>
+<script src="/ai.js"></script>
 <script>
 (()=>{
 const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
@@ -179,7 +184,7 @@ towel:'<rect class="f2" x="12" y="62" width="76" height="26" rx="11"/><rect clas
 candle:'<path style="fill:#ffb300" d="M50 4Q65 20 58 29A8 8 0 0 1 42 29Q37 20 50 4Z"/><rect class="f2" x="48" y="30" width="4" height="14"/><rect class="f1" x="22" y="42" width="56" height="48" rx="13"/><rect class="f3" x="30" y="54" width="40" height="26" rx="9"/>'+F(50,62,8),
 can:'<rect class="f1" x="28" y="10" width="44" height="82" rx="13"/><rect class="f2" x="28" y="10" width="44" height="13" rx="6"/><rect class="f2" x="28" y="79" width="44" height="13" rx="6"/><rect class="f3" x="34" y="34" width="32" height="34" rx="9"/>'+F(50,48,7)
 };
-const sv=(p,s)=>`<div class="art" style="width:${s}px;height:${s}px;--f1:${p.c[0]};--f2:${p.c[1]};--f3:${p.c[2]}"><svg viewBox="0 0 100 100" aria-hidden="true">${ART[p.art]}</svg></div>`;
+const fallbackArt=(p,s)=>`<div class="art" style="width:${s}px;height:${s}px;--f1:${p.c[0]};--f2:${p.c[1]};--f3:${p.c[2]}"><svg viewBox="0 0 100 100" aria-hidden="true">${ART[p.art]}</svg></div>`;
 /* ---------- catalog ---------- */
 const LB={matcha:'Matcha fan',coffee:'Coffee lover',kfood:'K-food fan',spicy:'Spice seeker',skin:'Skincare nerd',snack:'Snack lover',sweet:'Sweet tooth',home:'Home nester',cozy:'Cozy vibes',pet:'Pet parent',fit:'Fitness fuel',tea:'Tea sipper',trendy:'Trend chaser',premium:'Quality first',budget:'Deal hunter'};
 const P={};
@@ -208,13 +213,29 @@ const P={};
 ['pet3','Pet shampoo',11900,'pump',['#6fd6a0','#2fa06a','#e0ffef'],'pet','pet']
 ].forEach(([id,n,pr,art,c,t,cat,rare])=>P[id]={id,n,pr,art,c,tags:t.split(' '),cat,rare:!!rare});
 const ALL=Object.values(P);
+const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const matches={matcha:/matcha/i,cold:/cold brew|coffee/i,yuja:/yuja|tea/i,spark:/sparkling|water/i,choco:/choco/i,chips:/chips/i,gran:/granola/i,protein:/protein/i,ramen:/ramen|ramyun/i,kimchi:/kimchi/i,tteok:/tteok/i,seaweed:/seaweed/i,sheet:/mask/i,sun:/sun.*stick|sunscreen/i,hand:/hand cream/i,tumbler:/tumbler/i,candle:/candle/i,plant:/plant/i,towel:/towel/i,heat:/heat.*pack/i,pet1:/dog.*treat/i,pet2:/cat.*toy/i,pet3:/pet.*shampoo/i};
+const preferred={matcha:'drinks',cold:'drinks',yuja:'drinks',spark:'drinks',choco:'snacks',chips:'snacks',gran:'snacks',protein:'snacks',ramen:'snacks',kimchi:'snacks',tteok:'snacks',seaweed:'snacks',sheet:'beauty',sun:'beauty',hand:'beauty',tumbler:'home',candle:'home',plant:'home',towel:'home',heat:'home',pet1:'kitchen',pet2:'kitchen',pet3:'kitchen'};
+Object.assign(LB,{refreshing:'Refreshing',cooking:'Home cook',laundry:'Home essentials',care:'Self care',savory:'Savoury snacks',beauty:'Beauty fan',kitchen:'Home cook'});
+function syncCatalog(){const items=window.CATALOG&&CATALOG.items||[];if(!items.length)return;const used=new Set();ALL.forEach(p=>{const pool=items.filter(i=>i.category===preferred[p.id]);const item=pool.find(i=>!used.has(i.id)&&matches[p.id].test(i.name))||pool.find(i=>!used.has(i.id))||items.find(i=>!used.has(i.id)&&i.tags.includes('game'));if(!item)return;used.add(item.id);p.item=item;p.n=(item.name.toLowerCase().includes((item.brand||'').toLowerCase())?'':(item.brand?item.brand+' · ':''))+item.name;p.pr=+item.price;p.cat=item.category;p.tags=[...new Set([...(item.tags||[]).filter(t=>t!=='game'),...({snacks:['snack'],drinks:['refreshing'],beauty:['skin'],home:['home'],kitchen:['cooking']}[item.category]||[])])];p.rare=Boolean(item.tags?.includes('novelty'));});}
+
+syncCatalog();
+function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size}px;height:${size}px">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
+if(window.CATALOG&&CATALOG.onMode)CATALOG.onMode(()=>{$$('.product-art').forEach(el=>{const p=P[el.dataset.product];el.innerHTML=CATALOG.imgHTML(p.item,'product-photo')})});
+const sid=localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
+let prefState={weights:{},history:[]},startWeights={},pending=Promise.resolve(),signalError=false;
+const initialPrefs=fetch('/api/prefs?sid='+encodeURIComponent(sid)).then(r=>r.json()).then(d=>{prefState=d;startWeights={...d.weights}}).catch(()=>{});pending=initialPrefs;
+function emit(p,delta,action,extra={}){const signals={['cat:'+p.cat]:delta,...extra};if(p.item&&p.item.brand)signals['brand:'+p.item.brand.toLowerCase().replace(/\s+/g,'-')]=+(delta*.25).toFixed(3);p.tags.forEach(t=>signals['trait:'+t]=+(delta*.35).toFixed(3));const source=cur+' · '+action+' · '+p.n;pending=pending.then(async()=>{const r=await fetch('/api/prefs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({sid,signals,source})});if(!r.ok)throw Error('Preference save failed');prefState=await r.json();signalError=false}).catch(()=>{signalError=true});}
+function tasteHTML(){const entries=Object.entries(prefState.weights).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1])).slice(0,4);const max=Math.max(1,...entries.map(([,v])=>Math.abs(v)));return `<div class="taste"><div class="taste-head">Your taste · ${signalError?'save unavailable':'updated'} <a href="/dashboard.html?sid=${encodeURIComponent(sid)}">View engine ↗</a></div>${entries.map(([k,v])=>{const before=startWeights[k]||0,d=v-before;return `<div class="taste-row"><span>${esc(k.split(':').slice(1).join(':'))}</span><b class="${d<0?'down':'up'}">${before.toFixed(1)} → ${v.toFixed(1)} (${d>=0?'+':''}${d.toFixed(1)})</b><i><em style="width:${Math.abs(v)/max*100}%;background:${v<0?'#ee5960':'#13a27d'}"></em></i></div>`}).join('')}</div>`;}
+function reward(){const today=new Date().toLocaleDateString('en-CA'),yesterday=new Date(Date.now()-86400000).toLocaleDateString('en-CA');let r;try{r=JSON.parse(localStorage.getItem('t8-rewards')||'{}')}catch{r={}};r.streak=r.day===today?r.streak||1:r.day===yesterday?(r.streak||0)+1:1;r.day=today;r.coins=(r.coins||0)+120;localStorage.setItem('t8-rewards',JSON.stringify(r));return r;}
+
 /* ---------- learn + result ---------- */
 const PAL=['#ffd9ea','#fff0b3','#d6f5e3','#e3dcff'];
 function learn(w,ex,seen,pp){
   const tags=Object.entries(w).filter(([t,v])=>v>0&&LB[t]).sort((a,b)=>b[1]-a[1]).map(x=>x[0]);
   const chips=[...new Set([...ex,...tags.slice(0,3).map(t=>LB[t])])].slice(0,4);
-  const sc=ALL.filter(p=>!seen.has(p.id)).map(p=>{let s=0,best=p.tags[0],bv=0;
-    p.tags.forEach(t=>{const v=w[t]||0;s+=v;if(v>bv){bv=v;best=t}});
+  const sc=ALL.filter(p=>!seen.has(p.id)).map(p=>{let s=(prefState.weights['cat:'+p.cat]||0)+(p.item?(prefState.weights['brand:'+p.item.brand.toLowerCase().replace(/\s+/g,'-')]||0):0),best=p.tags[0],bv=0;
+    p.tags.forEach(t=>{const v=(w[t]||0)+(prefState.weights['trait:'+t]||0);s+=v;if(v>bv){bv=v;best=t}});
     if(pp)s-=Math.abs(Math.log(p.pr/pp))*.7;
     if(ex.includes('Novelty seeker')&&p.rare)s+=1.5;
     return{p,s,best}}).sort((a,b)=>b.s-a.s);
@@ -239,27 +260,28 @@ const G={};
 const stage=$('#stage'),card=$('#card'),cntEl=$('#cnt');
 const cnt=t=>{if(cntEl.textContent===t)return;cntEl.textContent=t;cntEl.classList.remove('bump');void cntEl.offsetWidth;cntEl.classList.add('bump')};
 function enter(){stage.classList.remove('enter');void stage.offsetWidth;stage.classList.add('enter')}
-function result(prof){
+async function result(prof){
+  const token=run;await pending;if(token!==run)return;const rewards=reward();
   if(inst&&inst.stop)inst.stop();
   const r=learn(prof.w,prof.ex||[],prof.seen||new Set(),prof.pp);lastRes=r;cnt('');
-  stage.innerHTML=`<div class="res"><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
-  <div class="rh">Picks</div><div class="pks">${r.picks.map((k,i)=>`<div class="pk" style="animation-delay:${.35+i*.1}s">${sv(k.p,50)}<div class="pi"><div class="pn">${k.p.n}</div><div class="pp">${won(k.p.pr)}</div></div><div class="tg"><span class="badge">${k.why}</span>${k.p.rare?'<span class="badge gem">Hidden gem</span>':''}</div></div>`).join('')}</div>
-  <button class="ship" id="ship"><span class="s1">Ship it · ${won(r.total)}</span><span class="s2">${CHECK}On the way</span></button>
+  stage.innerHTML=`<div class="res"><div class="rewards"><b>+120 coins</b><span>🔥 ${rewards.streak} day streak</span></div><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
+  ${tasteHTML()}<div class="rh">Picked for you</div><div class="pks">${r.picks.map((k,i)=>`<div class="pk" style="animation-delay:${.35+i*.1}s">${sv(k.p,50)}<div class="pi"><div class="pn">${k.p.n}</div><div class="pp">${won(k.p.pr)}</div></div><div class="tg"><span class="badge">${k.why}</span>${k.p.rare?'<span class="badge gem">Hidden gem</span>':''}</div></div>`).join('')}</div>
+  <button class="ship" id="ship"><span class="s1">Ship it · ${won(r.total)}</span><span class="s2">${CHECK}Order placed</span></button>
   <button class="again" id="again">Play again</button></div>`;
   enter();confetti();
-  $('#ship').onclick=e=>{const b=e.currentTarget;if(b.classList.contains('done'))return;b.classList.add('done');b.disabled=true;pop(b,1.06)};
+  $('#ship').onclick=e=>{const b=e.currentTarget;if(b.classList.contains('done'))return;if(!window.Orders){b.textContent='Orders unavailable · try again';return;}const items=r.picks.map(({p})=>p.item||{id:p.id,name:p.n,price:p.pr,img:''});const order=Orders.add({items,total:r.total,flow:'games'});b.classList.add('done');b.disabled=true;pop(b,1.06);const link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+encodeURIComponent(order.id),textContent:'Track order →',className:'track-fallback'});b.after(link)};
   $('#again').onclick=()=>go(cur);
 }
 function go(id){
-  if(!G[id])id='swipe';
+  if(!G[id])id='price';
   if(inst&&inst.stop)inst.stop();
-  run++;cur=id;const g=G[id];
+  run++;cur=id;syncCatalog();startWeights={...prefState.weights};const g=G[id];
   $$('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.g===id));
   card.style.background=g.bg;$('#ttl').textContent=g.name;$('#ttl').style.color=g.ink;cnt('');
   $('#cf').getContext('2d').clearRect(0,0,9999,9999);
   stage.innerHTML='';enter();
   inst=g.start(stage,result,cnt);
-  try{history.replaceState(null,'','?game='+id)}catch(e){}
+  try{const params=new URLSearchParams(location.search);params.set('game',id);history.replaceState(null,'','?'+params)}catch(e){}
 }
 /* ================= SWIPE ================= */
 G.swipe={name:'Swipe',ico:'💞',ink:'#d6285f',bg:'linear-gradient(160deg,#ffe0ee,#fff1cc)',
@@ -269,7 +291,7 @@ start(S,fin,cnt){
   S.innerHTML='<div class="deck"></div><div class="rbs"><button class="rb no" aria-label="Pass">✕</button><button class="rb yes" aria-label="Love">♥</button></div>';
   const deck=$('.deck',S);cnt('1/'+ids.length);
   const mk=k=>{if(k>=ids.length)return null;const p=P[ids[k]],e=document.createElement('div');e.className='sc';
-    e.innerHTML=`<i class="stamp l">LOVE</i><i class="stamp n">NOPE</i>${sv(p,184)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><span class="stags">${p.tags.slice(0,2).map(t=>`<em>${LB[t]}</em>`).join('')}</span>`;return e};
+    e.innerHTML=`<i class="stamp l">LOVE</i><i class="stamp n">NOPE</i>${sv(p,184)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><span class="stags">${p.tags.slice(0,2).map(t=>`<em>${LB[t]||esc(t)}</em>`).join('')}</span>`;return e};
   const put=()=>{fr.style.transform=`translate3d(${px}px,${py}px,0) rotate(${px/18}deg)`;
     $('.stamp.l',fr).style.opacity=clamp(px/90,0,1);$('.stamp.n',fr).style.opacity=clamp(-px/90,0,1);
     if(bk){bk.style.transition='none';bk.style.transform=`scale(${.93+.07*clamp(Math.abs(px)/160,0,1)}) translateY(${16-16*clamp(Math.abs(px)/160,0,1)}px)`}};
@@ -284,7 +306,7 @@ start(S,fin,cnt){
     if(liked.length&&lp<all*.8)ex.push('Deal hunter');else if(lp>all*1.15)ex.push('Quality first');
     if(liked.length<=2)ex.push('Picky');
     return{w,ex,seen:new Set(ids),pp:liked.length?lp:0}};
-  function fling(dir,v0){if(busy||!alive)return;busy=true;(dir>0?liked:pass).push(ids[i]);
+  function fling(dir,v0){if(busy||!alive)return;busy=true;emit(P[ids[i]],dir>0?.4:-.3,dir>0?'Love':'Pass',dir>0?{'trait:novelty':.1}:{});(dir>0?liked:pass).push(ids[i]);
     if(RM){px=dir*500;put();advance();return}
     let v=dir*clamp(Math.max(Math.abs(v0),1.6),0,3.2),vy=py*.004,t0=performance.now();
     cancelAnimationFrame(raf);fr.style.transition='none';
@@ -322,8 +344,8 @@ start(S,fin,cnt){
     $('#act').innerHTML='<div class="pair"><button class="cta g" id="no">✕ Pass</button><button class="cta" id="yes">♥ Worth it</button></div>';
     const rv=$('#rv');rv.innerHTML=`<span>Real</span><b id="cn">${won(RM?p.pr:0)}</b><span class="vd ${v[0]}">${v[1]}</span>`;
     if(!RM){const t0=performance.now();(function f(t){if(!alive)return;const k=clamp((t-t0)/(fast?220:480),0,1);$('#cn').textContent=won(p.pr*(1-Math.pow(1-k,3)));if(k<1)raf=requestAnimationFrame(f)})(t0)}
-    buzz();log.push({p,err,a,ok:null});
-    const nx=ok=>e=>{pop(e.currentTarget);log[log.length-1].ok=ok;$$('#act button').forEach(b=>b.disabled=true);setTimeout(()=>{if(!alive)return;i++;if(i<ids.length)round();else finish()},RM?0:180)};
+    buzz();emit(p,0,'Price guess',{'trait:price-savvy':a<.12?.3:a<.3?.1:0});log.push({p,err,a,ok:null});
+    const nx=ok=>e=>{cancelAnimationFrame(raf);pop(e.currentTarget);log[log.length-1].ok=ok;emit(p,ok?.3:-.2,ok?'Worth it':'Pass');$$('#act button').forEach(b=>b.disabled=true);setTimeout(()=>{if(!alive)return;i++;if(i<ids.length)round();else finish()},RM?0:180)};
     $('#no').onclick=nx(0);$('#yes').onclick=nx(1)}
   function finish(){const w={},ex=[],ok=log.filter(l=>l.ok),no=log.filter(l=>!l.ok);
     ok.forEach(l=>l.p.tags.forEach(t=>w[t]=(w[t]||0)+1));no.forEach(l=>l.p.tags.forEach(t=>w[t]=(w[t]||0)-.4));
@@ -349,7 +371,7 @@ start(S,fin,cnt){
   function upd(){const s=sum();$('#sum').textContent=won(s);$('#left').textContent=won(BUD-s)+' left';$('#mf').style.width=s/BUD*100+'%';$('#done').disabled=sel.size<2}
   $$('.bt',S).forEach(b=>b.onclick=()=>{const id=b.dataset.id,on=sel.has(id);
     if(!on&&sum()+P[id].pr>BUD){const m=$('#mt');m.classList.remove('shake');void m.offsetWidth;m.classList.add('shake');buzz();return}
-    on?sel.delete(id):sel.add(id);b.setAttribute('aria-pressed',!on);pop(b,1.08);upd()});
+    emit(P[id],on?-.3:.3,on?'Remove from budget':'Add to budget',{'trait:frugal':on?-.1:.1});on?sel.delete(id):sel.add(id);b.setAttribute('aria-pressed',!on);pop(b,1.08);upd()});
   $('#done').onclick=e=>{pop(e.currentTarget);const w={},ex=[],s=sum(),ch=[...sel].map(id=>P[id]),secs=(performance.now()-t0)/1000;
     ch.forEach(p=>p.tags.forEach(t=>w[t]=(w[t]||0)+1));
     if(s/BUD>=.85)ex.push('Budget master');else if(s/BUD<.5)ex.push('Saver');
@@ -368,7 +390,7 @@ start(S,fin,cnt){
     const side=p=>`<button class="dl" data-id="${p.id}">${sv(p,104)}<b class="dn">${p.n}</b><span class="sp">${won(p.pr)}</span></button>`;
     S.innerHTML=`<div class="rnd">${NAMES[r]}</div><div class="duel">${side(a)}${side(b)}<i class="vs">VS</i></div><div class="dots">${Array.from({length:7},(_,k)=>`<i class="${k<step?'on':''}"></i>`).join('')}</div>`;
     enter();$$('.dl',S).forEach(bn=>bn.onclick=()=>choose(bn))}
-  function choose(bn){if(lock)return;lock=true;const cr=rounds[r],w=bn.dataset.id,l=cr[m*2]===w?cr[m*2+1]:cr[m*2];
+  function choose(bn){if(lock)return;lock=true;emit(P[bn.dataset.id],.35,'Bracket winner');const cr=rounds[r],w=bn.dataset.id,l=cr[m*2]===w?cr[m*2+1]:cr[m*2];
     $$('.dl',S).forEach(x=>x.classList.add(x===bn?'win':'lose'));pop(bn,1.1);
     setTimeout(()=>{if(!alive)return;nxt.push(w);if(r===0)qlose.push(l);if(r===1)semis.push(l);if(r===2){champ=w;finalist=l}
       m++;step++;if(m*2>=cr.length){r++;rounds[r]=nxt.slice();nxt.length=0;m=0}
@@ -379,7 +401,7 @@ start(S,fin,cnt){
     fin({w,ex,seen:new Set(start),pp:P[champ].pr})}
   show();
   return{stop(){alive=false},
-    async auto(tok){for(let k=0;k<7&&tok===run;k++){await sleep(40);$$('.dl',S)[k%3===1?1:0].click();await sleep(400)}}}
+    async auto(tok){for(let k=0;k<7&&tok===run;k++){await sleep(40);$$('.dl',S)[k%3===1?1:0].click();await sleep(480)}}}
 }};
 /* ================= RAPID FIRE ================= */
 G.rapid={name:'Rapid fire',ico:'⚡',ink:'#b45309',bg:'linear-gradient(160deg,#fff1b8,#ffe0cc)',
@@ -390,7 +412,7 @@ start(S,fin,cnt){
     S.innerHTML=`<div class="rfc">${sv(p,168)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><div class="tb"><i></i></div></div><div class="rx"><button data-r="-1" aria-label="Nope">🥶<span>Nope</span></button><button data-r="0" aria-label="Meh">😐<span>Meh</span></button><button data-r="1" aria-label="Want">😍<span>Want</span></button></div>`;
     enter();t0=performance.now();clearTimeout(tm);tm=setTimeout(()=>react(0,true),2600);
     $$('.rx button',S).forEach(b=>b.onclick=()=>react(+b.dataset.r,false))}
-  function react(v,to){if(busy||!alive)return;busy=true;clearTimeout(tm);buzz();
+  function react(v,to){if(busy||!alive)return;busy=true;clearTimeout(tm);buzz();emit(P[ids[i]],v>0?.4:v<0?-.3:0,to?'Timed out':v>0?'Want':v<0?'Nope':'Meh',v>0?{'trait:novelty':.1}:{});
     log.push({id:ids[i],v,rt:to?null:(performance.now()-t0)/1000});i++;
     if(i>=ids.length)finish();else show()}
   function finish(){const w={},ex=[];
@@ -409,7 +431,7 @@ $('#tabs').innerHTML=Object.entries(G).map(([id,g])=>`<button class="tab" role="
 $$('.tab').forEach(t=>t.onclick=()=>{pop(t,1.08);go(t.dataset.g)});
 window.demoPlay=async id=>{id=id&&G[id]?id:cur;go(id);const tok=run;fast=true;await sleep(250);try{await inst.auto(tok)}finally{fast=false}return tok===run};
 window.__games=Object.keys(G);
-go(new URLSearchParams(location.search).get('game')||'swipe');
+go(new URLSearchParams(location.search).get('game')||'price');
 })();
 </script>
 </body>

@@ -1,0 +1,7 @@
+(()=>{'use strict';const KEY='t8-orders',STEPS=['Preparing','Shipped','Out for delivery','Delivered'];
+const read=()=>{try{const a=JSON.parse(localStorage.getItem(KEY)||'[]');return Array.isArray(a)?a:[]}catch{return[]}};
+const emit=()=>window.dispatchEvent(new Event(KEY));const save=a=>{localStorage.setItem(KEY,JSON.stringify(a));emit()};
+const status=o=>STEPS[Math.min(3,Math.max(0,Math.floor((Date.now()-new Date(o.createdAt).getTime())/20000)+(o.advanceSteps||0)))];
+window.Orders={add({items=[],total,flow='shopping'}){const o={id:'T8-'+(crypto.randomUUID?crypto.randomUUID():Date.now()+'-'+Math.random().toString(36).slice(2)),createdAt:Date.now(),items:items.map(i=>({id:i.id,name:i.name,price:Number(i.price)||0,img:i.img})),total:Number.isFinite(Number(total))?Number(total):items.reduce((n,i)=>n+(Number(i.price)||0),0),flow};save([o,...read()]);return o},list:read,get:id=>read().find(o=>o.id===id),status,advance(id){const a=read(),o=a.find(o=>o.id===id);if(!o)return; o.advanceSteps=(o.advanceSteps||0)+1;save(a);return o},onChange(fn){window.addEventListener(KEY,fn);return()=>window.removeEventListener(KEY,fn)},count:()=>read().filter(o=>status(o)!=='Delivered').length};
+window.addEventListener('storage',e=>{if(e.key===KEY)emit()});let previous=read().map(o=>o.id+status(o)).join();setInterval(()=>{const next=read().map(o=>o.id+status(o)).join();if(next!==previous){previous=next;emit()}},1000);
+})();
