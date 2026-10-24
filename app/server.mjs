@@ -18,6 +18,18 @@ let t;
 fs.watch(PUB, { recursive: true }, () => { clearTimeout(t); t = setTimeout(() => clients.forEach(r => r.write('data: reload\n\n')), 120); });
 const RELOAD = `<script>(()=>{const e=new EventSource('/__reload');e.onmessage=()=>location.reload()})()</script>`;
 
+// --- big screens: show the page inside an iPhone frame (390x844, scaled to fit) ---
+// Runs first in <head>; writes the frame, then swallows the rest of the page so its scripts don't run twice.
+const NO_FRAME = /\/(dashboard|primitives)\.html$/;
+const FRAME = `<script>(()=>{if(innerWidth<=700||top!==self||/[?&]frame=1/.test(location.search))return;
+const u=new URL(location.href);u.searchParams.set('frame','1');
+document.write('<style>html,body{margin:0;height:100%;background:#eceef2}body{display:grid;place-items:center;overflow:hidden}'
++'.ph{box-sizing:border-box;width:410px;height:864px;border-radius:54px;background:#111;padding:10px;box-shadow:0 30px 80px #0004;transform-origin:center}'
++'.ph iframe{width:390px;height:844px;border:0;border-radius:44px;background:#fff;display:block}</style>'
++'<div class="ph" id="ph"><iframe src="'+u.href.replace(/"/g,'&quot;')+'" allow="clipboard-write"></iframe></div>'
++'<script>const fit=()=>{const s=Math.min(1,(innerHeight-40)/864,(innerWidth-40)/410);document.getElementById("ph").style.transform="scale("+s+")"};fit();addEventListener("resize",fit)<\\/script>'
++'<plaintext style="display:none">')})()</script>`;
+
 // --- tiny JSON store (preferences per session, for the games dashboard) ---
 const PREFS = path.join(DATA, 'prefs.json');
 const readPrefs = () => { try { return JSON.parse(fs.readFileSync(PREFS, 'utf8')); } catch { return {}; } };
@@ -60,6 +72,10 @@ http.createServer(async (req, res) => {
   if (!fs.existsSync(f)) { res.writeHead(404); return res.end('not found'); }
   const ext = path.extname(f).toLowerCase();
   res.writeHead(200, { 'content-type': TYPES[ext] || 'application/octet-stream', 'cache-control': 'no-store' });
-  if (ext === '.html') return res.end(fs.readFileSync(f, 'utf8').replace('</body>', RELOAD + '</body>'));
+  if (ext === '.html') {
+    let html = fs.readFileSync(f, 'utf8').replace('</body>', RELOAD + '</body>');
+    if (!NO_FRAME.test(f)) html = html.replace(/<head[^>]*>/i, m => m + FRAME);
+    return res.end(html);
+  }
   fs.createReadStream(f).pipe(res);
 }).listen(PORT, HOST, () => console.log(`team8 app: http://${HOST}:${PORT}/`));
