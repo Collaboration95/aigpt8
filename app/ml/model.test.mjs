@@ -49,3 +49,13 @@ test('fresh history, replay removal, context, comparison and catalogue migration
  const a=upgraded.replay(g.sid,'guru',g.run_id,remaining),b=again.replay(g.sid,'guru',g.run_id,remaining);
  assert.deepEqual(a.weights,b.weights);assert.equal(a.predictions.length,expanded.length);
 });
+
+test('snack reactions move related items more than unrelated home history',()=>{
+ const e=createPreferenceEngine(catalogue),s=e.reset('locality');
+ const r=e.event(event(s,'snack-want',1));
+ const snack=r.after.predictions.find(p=>p.item_id==='snack-2');
+ const bed=r.after.predictions.find(p=>p.item_id==='bed-king');
+ assert.ok(snack.deltaP>0);
+ assert.ok(snack.deltaP>Math.abs(bed.deltaP)*3);
+ for(const w of r.after.weights.filter(w=>/^(bias|price:|band:|hist:)/.test(w.feature)))assert.equal(w.delta,0);
+});

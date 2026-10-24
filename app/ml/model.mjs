@@ -27,7 +27,7 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     'hist:category','hist:tags','hist:repeat'];
   const J=new Map(names.map((n,j)=>[n,j])), D=names.length, zero=()=>new Float64Array(D);
   const hash=catalogueHash(items);
-  const version=`ml-demo-v2:${hash.slice(0,12)}:${seed}:${asOf}`;
+  const version=`ml-demo-v3:${hash.slice(0,12)}:${seed}:${asOf}`;
   function history(orders=[]) {
     const h={c:new Map(),t:new Map(),r:new Map()}; let total=0;
     const add=(m,k,v)=>m.set(k,(m.get(k)||0)+v);
@@ -48,10 +48,16 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
     put('hist:tags',tt.reduce((s,t)=>s+(h.t.get(t)||0),0)/(tt.length||1));
     put('hist:repeat',h.r.get(p.id)||0); return x;
   }
+  // Personal feedback teaches category/trait/brand affinity. Global price and
+  // history coefficients stay fixed: one snack reaction is not a new price prior.
+  const personal=j=>/^(cat:|trait:|brand:)/.test(names[j]);
   function step(w,x,y,anchor,eta=.25,lambda=.025,r=1,freezeBias=true) {
     const p=sig(dot(w,x)), g=r*(p-y);
-    for(let j=freezeBias?1:0;j<D;j++)
-      w[j]-=eta*(g*x[j]+(j?lambda*(w[j]-anchor[j]):0));
+    const norm=freezeBias?Math.max(1,Math.sqrt(x.reduce((n,v,j)=>n+(personal(j)?v*v:0),0))):1;
+    for(let j=freezeBias?1:0;j<D;j++) {
+      if(freezeBias&&!personal(j))continue;
+      w[j]-=eta*(g*x[j]/norm+(j?lambda*(w[j]-anchor[j]):0));
+    }
     return p;
   }
   function synth() {
@@ -174,16 +180,16 @@ export function createPreferenceEngine(catalogue, asOf=Date.parse('2026-10-25T00
       const g=zero();
       for(const id of e.selected_ids) {
         const x=encode(byId.get(id),s.h), error=.5/e.selected_ids.length*(sig(dot(s.w,x))-1);
-        for(let j=1;j<D;j++) g[j]+=error*x[j];
+        for(let j=1;j<D;j++) if(personal(j))g[j]+=error*x[j]/Math.max(1,Math.sqrt(x.reduce((n,v,k)=>n+(personal(k)?v*v:0),0)));
       }
-      for(let j=1;j<D;j++) s.w[j]-=.25*(g[j]+.025*(s.w[j]-s.anchor[j]));
+      for(let j=1;j<D;j++) if(personal(j))s.w[j]-=.25*(g[j]+.025*(s.w[j]-s.anchor[j]));
       learned=true;
     } else if(e.label===0||e.label===1) {
       step(s.w,encode(byId.get(e.item_id),s.h),e.label,s.anchor); learned=true;
     }
     s.seq++; if(learned)s.learned++;
     const deltas=names.map((feature,j)=>({feature,delta:s.w[j]-before.weights[j].after}));
-    const regularization=before.weights.map((w,j)=>({feature:w.feature,delta:j?-.25*.025*(w.after-w.before):0}));
+    const regularization=before.weights.map((w,j)=>({feature:w.feature,delta:personal(j)?-.25*.025*(w.after-w.before):0}));
     s.log.push({seq:s.seq,receivedAt:Date.now(),event:{...e},learned,deltas,regularization:learned?regularization:[],priceGuess:e.stage==='guess'?{signedLogRatio:clip(Math.log(e.guess/byId.get(e.item_id).price),-1,1),absoluteRelativeError:Math.abs(e.guess-byId.get(e.item_id).price)/byId.get(e.item_id).price}:null});
     const receipt={event_id:e.event_id,seq:s.seq,before,after:snapshot(s),learned};
     s.payloads.set(e.event_id,fingerprint);s.receipts.set(e.event_id,receipt); return receipt;

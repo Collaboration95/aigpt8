@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import {randomUUID} from 'node:crypto';
+// Rebuild from journals on module reload, including changes to the personal update rule.
 const {createPreferenceEngine,catalogueHash,GURU}=await import('./model.mjs?v='+Date.now());
 const catalogue=JSON.parse(fs.readFileSync(new URL('../public/data/products.json',import.meta.url)));
 // Check the small fixture against browser memory without executing browser code.

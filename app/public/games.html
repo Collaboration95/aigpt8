@@ -22,7 +22,7 @@ button:disabled{cursor:default}
 .tab:nth-child(n+4){grid-column:span 3}
 .tab span{font-size:18px;line-height:1}
 .tab[aria-selected=true]{background:#1d1530;color:#fff;transform:translateY(2px);box-shadow:0 1px 0 rgba(0,0,0,.2)}
-.card{position:relative;border-radius:28px;padding:14px 12px 16px;overflow:hidden;min-height:620px;display:flex;flex-direction:column;transition:background .4s}
+.card{position:relative;border-radius:28px;padding:14px 12px 16px;overflow:hidden;min-height:0;display:flex;flex-direction:column;transition:background .4s}
 .head{display:flex;align-items:center;justify-content:space-between;min-height:36px;margin-bottom:10px;padding:0 4px}
 .head h2{margin:0;font-size:24px;font-weight:900;letter-spacing:-.03em}
 .cnt{min-width:46px;text-align:center;background:#1d1530;color:#fff;border-radius:14px;padding:5px 10px;font-size:14px;font-weight:800}
@@ -248,11 +248,33 @@ html.embedded,html.embedded body{height:100%;min-height:0;background:transparent
 .embedded .dl{min-height:210px;padding:8px 4px}.embedded .dl .art{max-height:120px}
 .embedded .grid3 .art{max-height:65px}.embedded .grid3{gap:6px}
 .embedded .bridge-result{display:grid;gap:12px;text-align:center;padding:24px 8px}
+
+/* A shopping tote, distinct from the mint price challenge. */
+#card[data-game=basket]{background:#173d39!important;color:#fff4d6;border:2px solid #d9c398}
+[data-game=basket] .head h2{color:#fff4d6!important}[data-game=basket] .basket-label{font:800 11px monospace;letter-spacing:2px;margin:0 4px 14px;color:#e4c585}
+[data-game=basket] .mt b{color:#fff4d6}[data-game=basket] .mt span{color:#f2dfbc}[data-game=basket] .bt{background:#fff9eb;color:#243e37;border-radius:6px;box-shadow:0 3px 0 #0c2524}
+[data-game=basket] .cta{background:#f6ce76;color:#183c35;border-radius:8px;box-shadow:none}[data-game=basket] .mf{background:#f6ce76}
+.sc{touch-action:pan-y}.sc .art{background:#fff}.deck{perspective:900px}.hint{font-size:12px}
+.res .ship{position:sticky;bottom:calc(16px + env(safe-area-inset-bottom));z-index:10;box-shadow:0 0 0 8px #fff,0 8px 24px #331a2630}
+.res{padding-bottom:calc(24px + env(safe-area-inset-bottom))}.rewards{gap:10px;align-items:flex-start}.rewards .coin-pill{font-size:11px;padding:0 6px}
+#ml-save[role=button]{min-height:44px}.embedded .page,.embedded .card{height:auto;flex:none}.embedded .card{overflow:visible}.embedded body,.embedded{height:auto!important;overflow:auto!important}
+
+/* Photo-first swipe stack: one edge-to-edge card with a caption overlay. */
+[data-game=swipe] .deck{height:440px;margin:8px 3px 18px}
+[data-game=swipe] .sc{padding:0;overflow:hidden;border:5px solid white;gap:0;justify-content:flex-start}
+[data-game=swipe] .sc .art{width:100%!important;height:100%!important;max-height:none;aspect-ratio:auto;margin:0}
+[data-game=swipe] .sc::after{content:'';position:absolute;inset:38% 0 0;background:linear-gradient(transparent,#23122ce8);pointer-events:none}
+[data-game=swipe] .sc .sn,[data-game=swipe] .sc .sp,[data-game=swipe] .sc .stags{position:absolute;z-index:1;left:14px;right:14px;color:white;text-align:left}
+[data-game=swipe] .sc .sn{bottom:76px;padding:0;font-size:22px;line-height:1.15}
+[data-game=swipe] .sc .sp{bottom:47px;font-size:20px}[data-game=swipe] .sc .stags{bottom:14px;justify-content:flex-start}
+[data-game=swipe] .stamp{z-index:2}[data-game=swipe] .rb{width:92px;border-radius:22px;gap:2px;font-size:25px;height:68px}
+[data-game=swipe] .rb small{font-size:12px;font-weight:800}
+.embedded [data-game=swipe] .deck{height:300px}.embedded [data-game=swipe] .sc .sn{font-size:17px}
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="top"><a class="logo" href="/">coupang<i>.</i></a><b>Play & discover</b><a class="cart" href="/orders.html" aria-label="Orders"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2 12h12l2-9H6M9 20h.01M18 20h.01" stroke-linecap="round"/></svg></a></div>
+  <div class="top"><a class="logo" href="/">coupang<i>.</i></a><b>Play & discover</b><span id="coin-pill"></span><a class="cart" href="/orders.html" aria-label="Orders"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4h2l2 12h12l2-9H6M9 20h.01M18 20h.01" stroke-linecap="round"/></svg></a></div>
   <div class="tabwrap" id="tw"><div class="tabs" role="tablist" id="tabs"></div></div>
   <div class="card" id="card">
     <div class="head"><h2 id="ttl"></h2><span class="cnt" id="cnt"></span></div>
@@ -260,6 +282,7 @@ html.embedded,html.embedded body{height:100%;min-height:0;background:transparent
     <canvas id="cf"></canvas>
   </div>
 </div>
+<script src="/rewards.js"></script>
 <script src="/catalog.js"></script>
 <script src="/orders.js"></script>
 <script src="/ai.js"></script>
@@ -270,16 +293,19 @@ const launch=new URLSearchParams(location.search);
 const launchToken=launch.get('launchToken')||launch.get('token')||'';
 const embedded=window.parent!==window;
 document.documentElement.classList.toggle('embedded',embedded);
+if(embedded)new ResizeObserver(()=>{try{const height=document.querySelector('.page')?.getBoundingClientRect().height;if(height&&window.frameElement){window.frameElement.style.height=Math.ceil(height)+'px';window.frameElement.style.maxHeight='none';}}catch{}}).observe(document.body);
 const requestedRounds=Number(launch.get('rounds'));
 const roundLimit=Number.isInteger(requestedRounds)&&requestedRounds>0?Math.min(requestedRounds,8):null;
 let approvedIds=[];
 try{const ids=JSON.parse(launch.get('productIds')||'[]');if(Array.isArray(ids))approvedIds=[...new Set(ids.filter(id=>typeof id==='string'&&CATALOG.get(id)))];}catch{}
 function gameDeck(defaults){
- if(!approvedIds.length)return roundLimit?defaults.slice(0,roundLimit):defaults;
+ queueMicrotask(()=>{gameItems=lastDeck.map(id=>P[id]).filter(Boolean);});
+ if(!approvedIds.length){lastDeck=roundLimit?defaults.slice(0,roundLimit):defaults;return lastDeck;}
  const ids=approvedIds.slice(0,roundLimit||approvedIds.length);
  ids.forEach(id=>{const item=CATALOG.get(id);P[id]={id,item,n:item.name,s:item.name,pr:item.price,cat:item.category,tags:item.tags||[]};});
- return ids;
+ lastDeck=ids;return ids;
 }
+let lastDeck=[];
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const won=n=>'₩'+Math.round(n).toLocaleString('en-US');
@@ -342,21 +368,26 @@ syncCatalog();
 function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size==='full'?'100%':size+'px'};height:${size==='full'?'auto':size+'px'};${size==='full'?'aspect-ratio:1':''}">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
 if(window.CATALOG&&CATALOG.onMode)CATALOG.onMode(()=>{$$('.product-art').forEach(el=>{const p=P[el.dataset.product];el.innerHTML=CATALOG.imgHTML(p.item,'product-photo')})});
 const sid=new URLSearchParams(location.search).get('sid')||localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
-let savedEventIds=[];
+let savedEventIds=[],completionId=crypto.randomUUID(),staleRun=false;
+REWARDS.pill($('#coin-pill'));
 let modelState=null,prefState={weights:{}},startWeights={},pending=Promise.resolve(),signalError=false,waiting=0;
 const save=document.createElement('div');save.id='ml-save';save.style='font:12px system-ui;padding:8px 4px;color:#586174';$('.card').before(save);
-function status(){save.textContent=signalError?'Learning pending · tap to retry':waiting?`Saving ${waiting} choice${waiting===1?'':'s'}…`:'Guru · demo profile · choices saved';}
-async function loadModel(){const r=await fetch('/api/model?sid='+encodeURIComponent(sid));if(!r.ok)throw Error('Model unavailable');modelState=await r.json();return modelState;}
+function status(){save.textContent=signalError?'Learning pending · tap to retry':waiting?`Saving ${waiting} choice${waiting===1?'':'s'}…`:(modelState?.profile==='new'?'Fresh user':'Guru')+' · choices saved';}
+async function loadModel(){const r=await fetch('/api/model?sid='+encodeURIComponent(sid));if(!r.ok)throw Error('Model unavailable');modelState=await r.json();status();return modelState;}
 const initialPrefs=loadModel().catch(()=>{});pending=initialPrefs;
 function postEvent(fields){
  const event={sid,event_id:crypto.randomUUID(),ts:Date.now(),...fields};
- const runAtTap=modelState?.run_id;waiting++;status();
+ const runAtTap=modelState?.run_id,tapRun=run;waiting++;status();
  pending=pending.then(async()=>{
-  for(;;){try{
+  for(;;){if(tapRun!==run){waiting=Math.max(0,waiting-1);status();return;}try{
    if(!modelState)await loadModel();event.run_id??=runAtTap||modelState.run_id;
    const r=await fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(event)});
-   if(!r.ok){const d=await r.json();throw Error(d.error||'Save failed');}
-   const receipt=await r.json();modelState=receipt.after;savedEventIds.push(receipt.event_id);waiting--;signalError=false;status();return;
+   if(!r.ok){const d=await r.json();if(r.status===409){
+    staleRun=true;signalError=true;if(inst?.stop)inst.stop();
+    save.innerHTML='Run reset — start a new game <button id="restart-run" style="min-height:44px;padding:8px">Start new game</button>';
+    await new Promise(resolve=>{$('#restart-run').onclick=async()=>{await loadModel();staleRun=false;signalError=false;waiting=0;go(cur);resolve();};});return;
+   }throw Error(d.error||'Save failed');}
+   const receipt=await r.json();if(tapRun!==run){waiting=Math.max(0,waiting-1);status();return;}modelState=receipt.after;savedEventIds.push(receipt.event_id);waiting--;signalError=false;status();return;
   }catch(e){signalError=true;status();save.textContent+=' · '+e.message;save.setAttribute('role','button');save.tabIndex=0;
    await new Promise(resolve=>{save.onclick=resolve;save.onkeydown=e=>{if(e.key==='Enter')resolve()}});save.onclick=null;save.removeAttribute('role');
   }}
@@ -369,14 +400,16 @@ function emit(p,delta,action){
  const label=action==='Meh'||action==='Timed out'?null:delta>0?1:0;
  postEvent({game,item_id:p.item.id,label,...(game==='price'?{stage:'verdict'}:{})});
 }
-function tasteHTML(){const top=modelState?.top||[];return `<div class="taste"><div class="taste-head">Buy-intent · demo model <a href="/dashboard.html?sid=${encodeURIComponent(sid)}">View engine ↗</a></div><small>synthetic prior · live game learning</small>${top.slice(0,3).map(p=>`<div class="taste-row"><span>${esc(CATALOG.get(p.item_id).name)}</span><b>${(p.beforeP*100).toFixed(1)} → ${(p.p_buy*100).toFixed(1)}%</b></div>`).join('')}</div>`;}
+function tasteHTML(){const top=learn().picks.map(k=>k.row);return `<div class="taste"><div class="taste-head">Your taste is taking shape <a href="/dashboard.html?sid=${encodeURIComponent(sid)}">View engine ↗</a></div>${top.slice(0,1).map(p=>`<div class="taste-row"><span>${esc(CATALOG.get(p.item_id).name)}</span><b>${(p.beforeP*100).toFixed(1)} → ${(p.p_buy*100).toFixed(1)}%</b></div>`).join('')}</div>`;}
 status();
-function reward(){const today=new Date().toLocaleDateString('en-CA'),yesterday=new Date(Date.now()-86400000).toLocaleDateString('en-CA');let r;try{r=JSON.parse(localStorage.getItem('t8-rewards')||'{}')}catch{r={}};r.streak=r.day===today?r.streak||1:r.day===yesterday?(r.streak||0)+1:1;r.day=today;r.coins=(r.coins||0)+120;localStorage.setItem('t8-rewards',JSON.stringify(r));return r;}
-
 /* ---------- learn + result ---------- */
 const PAL=['#ffd9ea','#fff0b3','#d6f5e3','#e3dcff'];
 function learn(){
- const picks=(modelState?.top||[]).slice(0,3).map(row=>{const item=CATALOG.get(row.item_id);return {p:{id:item.id,item,n:item.name,s:item.name,pr:item.price},why:(100*row.p_buy).toFixed(1)+'% intent'};});
+ const played=gameItems.length?gameItems:Object.values(P).filter(p=>p.item);
+ const cats=new Set(played.map(p=>p.item?.category||p.cat));
+ const ceiling=Math.min(30000,Math.max(...played.map(p=>p.pr)));
+ const floor=Math.min(...played.map(p=>p.pr));
+ const picks=(modelState?.predictions||[]).filter(row=>{const item=CATALOG.get(row.item_id);return item&&cats.has(item.category)&&item.price<=ceiling&&item.price>=floor;}).slice(0,3).map(row=>{const item=CATALOG.get(row.item_id);return {row,p:{id:item.id,item,n:item.name,s:item.name,pr:item.price},why:'For your taste'};});
  return {chips:[modelState?.segment||'Still learning'],picks,total:picks.reduce((n,x)=>n+x.p.pr,0)};
 }
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
@@ -391,39 +424,49 @@ function confetti(){
     ps.forEach(p=>{p.vy+=.28;p.x+=p.vx;p.y+=p.vy;p.vx*=.99;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.globalAlpha=clamp(1-(k-1300)/700,0,1);x.fillStyle=p.c;x.fillRect(-p.s/2,-p.s/3,p.s,p.s*.66);x.restore()});
     requestAnimationFrame(f)})(t0);
 }
-let cur,run=0,inst=null,fast=false,lastRes=null;
+let cur,run=0,inst=null,fast=false,lastRes=null,gameItems=[];
 const G={};
 const stage=$('#stage'),card=$('#card'),cntEl=$('#cnt');
 const cnt=t=>{if(cntEl.textContent===t)return;cntEl.textContent=t;cntEl.classList.remove('bump');void cntEl.offsetWidth;cntEl.classList.add('bump')};
 function enter(){stage.classList.remove('enter');void stage.offsetWidth;stage.classList.add('enter')}
 async function result(prof){
-  const token=run;await pending;if(token!==run)return;
+  const token=run;await pending;if(token!==run||staleRun)return;
+  const game=cur==='basket'?'budget':cur;
+  const rounds=game==='price'?savedEventIds.length/2:savedEventIds.length;
+  let rewards;
+  const claim=()=>REWARDS.earn(game,{completionId,eventIds:[...savedEventIds],rounds});
+  try{rewards=await claim();}catch(e){stage.innerHTML='<div class="bridge-result"><b>Rewards pending</b><button class="cta" id="reward-retry">Retry reward</button></div>';$('#reward-retry').onclick=()=>result(prof);return;}
+  if(token!==run)return;
+  REWARDS.burst(rewards.earned);
   if(embedded){
     if(inst&&inst.stop)inst.stop();cnt('');
-    stage.innerHTML='<div class="bridge-result"><b>Preferences updated</b><span>Back to shopping</span></div>';
+    stage.innerHTML=`<div class="bridge-result"><b>+${rewards.earned} coins</b><span>Preferences updated · back to shopping</span></div>`;
     if(launchToken)parent.postMessage({type:'game_complete',token:launchToken,game:cur,eventIds:[...savedEventIds]},location.origin);
     return;
   }
-  const rewards=reward();
   if(inst&&inst.stop)inst.stop();
   const r=learn(prof.w,prof.ex||[],prof.seen||new Set(),prof.pp);lastRes=r;cnt('');
-  stage.innerHTML=`<div class="res"><div class="rewards"><b>+120 coins</b><span>🔥 ${rewards.streak} day streak</span></div><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
+  stage.innerHTML=`<div class="res"><div class="rewards"><div><b>+${rewards.earned} coins</b><div style="font-size:11px;margin-top:4px">${rewards.breakdown.map(p=>esc(p.note)+' +'+p.coins).join(' · ')}${rewards.earned===0?(rewards.duplicate?'Coins already added':'Daily coin limit reached'):''}</div></div><span id="result-coins"></span></div><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
   ${tasteHTML()}<div class="rh">Picked for you</div><div class="pks">${r.picks.map((k,i)=>`<div class="pk" style="animation-delay:${.35+i*.1}s">${sv(k.p,50)}<div class="pi"><div class="pn">${k.p.s||k.p.n}</div><div class="pp">${won(k.p.pr)}</div></div><div class="tg"><span class="badge">${k.why}</span>${k.p.rare?'<span class="badge gem">Hidden gem</span>':''}</div></div>`).join('')}</div>
   <button class="ship" id="ship"><span class="s1">Ship it · ${won(r.total)}</span><span class="s2">${CHECK}Order placed</span></button>
   <button class="again" id="again">Play again</button></div>`;
-  enter();confetti();
+  REWARDS.pill($('#result-coins'));enter();confetti();
   $('#ship').onclick=e=>{const b=e.currentTarget;if(b.classList.contains('done'))return;if(!window.Orders){b.textContent='Orders unavailable · try again';return;}const items=r.picks.map(({p})=>p.item||{id:p.id,name:p.n,price:p.pr,img:''});const order=Orders.add({items,total:r.total,flow:'games'});b.classList.add('done');b.disabled=true;pop(b,1.06);const link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+encodeURIComponent(order.id),textContent:'Track order →',className:'track-fallback'});b.after(link)};
   $('#again').onclick=()=>go(cur);
 }
 function go(id){
   if(!G[id])id='price';
   if(inst&&inst.stop)inst.stop();
-  run++;savedEventIds=[];cur=id;syncCatalog();startWeights={...prefState.weights};const g=G[id];
+  run++;savedEventIds=[];gameItems=[];completionId=crypto.randomUUID();cur=id;syncCatalog();startWeights={...prefState.weights};const g=G[id];
   $$('.tab').forEach(t=>{const on=t.dataset.g===id;t.setAttribute('aria-selected',on);if(on&&t.scrollIntoView)t.scrollIntoView({inline:'center',block:'nearest',behavior:'auto'})});
-  card.style.background=g.bg;$('#ttl').textContent=g.name;$('#ttl').style.color=g.ink;cnt('');
+  card.dataset.game=id;card.style.background=g.bg;$('#ttl').textContent=g.name;$('#ttl').style.color=g.ink;cnt('');
   $('#cf').getContext('2d').clearRect(0,0,9999,9999);
   stage.innerHTML='';enter();
-  inst=g.start(stage,result,cnt);
+  const begin=()=>{inst=g.start(stage,result,cnt);};
+  if(id==='rapid'){
+   stage.innerHTML='<div class="bridge-result"><b>Go with your first reaction</b><span>10 quick picks. Coins for finishing.</span><button class="cta" id="start-game">Start</button></div>';
+   $('#start-game').onclick=begin;
+  }else begin();
   try{const params=new URLSearchParams(location.search);params.set('game',id);history.replaceState(null,'','?'+params)}catch(e){}
 }
 /* ================= SWIPE ================= */
@@ -431,7 +474,7 @@ G.swipe={name:'Swipe',ico:'💞',ink:'#d6285f',bg:'linear-gradient(160deg,#ffe0e
 start(S,fin,cnt){
   const ids=gameDeck(['matcha','chips','candle','tteok','sun','cold','pet2','tumbler']);
   let i=0,busy=false,raf=0,alive=true,px=0,py=0,drag=null,fr,bk;const liked=[],pass=[];
-  S.innerHTML='<div class="deck"></div><div class="rbs"><button class="rb no" aria-label="Pass">✕</button><button class="rb yes" aria-label="Love">♥</button></div>';
+  S.innerHTML='<div class="hint" style="margin-bottom:12px">Swipe right to save · left to pass</div><div class="deck"></div><div class="rbs"><button class="rb no" aria-label="Pass">✕<small>Pass</small></button><button class="rb yes" aria-label="Love">♥<small>Save</small></button></div>';
   const deck=$('.deck',S);cnt('1/'+ids.length);
   const mk=k=>{if(k>=ids.length)return null;const p=P[ids[k]],e=document.createElement('div');e.className='sc';
     e.innerHTML=`<i class="stamp l">LOVE</i><i class="stamp n">NOPE</i>${sv(p,'full')}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><span class="stags">${[...new Set(p.tags.filter(t=>LB[t]).map(t=>LB[t]))].slice(0,2).map(t=>`<em>${esc(t)}</em>`).join('')}</span>`;return e};
@@ -483,7 +526,7 @@ start(S,fin,cnt){
     rg.oninput=()=>{gv.textContent=won(rg.value)};
     $('#lock').onclick=e=>{pop(e.currentTarget);lock(p,+rg.value)}}
   function lock(p,g){$('#rg').disabled=true;const err=(g-p.pr)/p.pr,a=Math.abs(err);
-    const v=a<.12?['spot','Spot on']:a<.3?['close','Close']:err>0?['off','Too high']:['off','Too low'];
+    const v=a<=.1?['spot','Spot on']:a<.3?['close','Close']:err>0?['off','Too high']:['off','Too low'];
     $('#act').innerHTML='<div class="pair"><button class="cta g" id="no">✕ Pass</button><button class="cta" id="yes">♥ Worth it</button></div>';
     const rv=$('#rv');rv.innerHTML=`<span>Real</span><b id="cn">${won(RM?p.pr:0)}</b><span class="vd ${v[0]}">${v[1]}</span>`;
     if(!RM){const t0=performance.now();(function f(t){if(!alive)return;const k=clamp((t-t0)/(fast?220:480),0,1);$('#cn').textContent=won(p.pr*(1-Math.pow(1-k,3)));if(k<1)raf=requestAnimationFrame(f)})(t0)}
@@ -507,7 +550,7 @@ G.basket={name:'Budget',ico:'🧺',ink:'#c2410c',bg:'linear-gradient(160deg,#ffe
 start(S,fin,cnt){
   const ids=gameDeck(['chips','ramen','seaweed','matcha','hand','sheet','plant','towel','sun','candle','pet1','spark']),BUD=30000;
   const sel=new Set();let alive=true;const t0=performance.now();
-  S.innerHTML=`<div class="mt"><b id="sum">${won(0)}</b><span id="left">${won(BUD)} left</span></div><div class="meter" id="mt"><div class="mf" id="mf"></div></div>
+  S.innerHTML=`<div class="basket-label">YOUR ₩30,000 HAUL</div><div class="mt"><b id="sum">${won(0)}</b><span id="left">${won(BUD)} left</span></div><div class="meter" id="mt"><div class="mf" id="mf"></div></div>
   <div class="grid3">${ids.map(id=>{const p=P[id];return`<button class="bt" aria-pressed="false" data-id="${id}">${sv(p,'full')}<span class="bn">${p.s||p.n}</span><span class="bp">${won(p.pr)}</span><i class="ck">${CHECK}</i></button>`}).join('')}</div>
   <button class="cta" id="done" disabled>Done</button>`;
     const sum=()=>[...sel].reduce((a,id)=>a+P[id].pr,0);
@@ -556,7 +599,7 @@ start(S,fin,cnt){
   let i=0,t0=0,tm=0,alive=true,busy=false;const log=[];
   function show(){const p=P[ids[i]];cnt((i+1)+'/'+ids.length);busy=false;
     S.innerHTML=`<div class="rfc">${sv(p,224)}<b class="sn">${p.n}</b><span class="sp">${won(p.pr)}</span><div class="tb"><i></i></div></div><div class="rx"><button data-r="-1" aria-label="Nope">🥶<span>Nope</span></button><button data-r="0" aria-label="Meh">😐<span>Meh</span></button><button data-r="1" aria-label="Want">😍<span>Want</span></button></div>`;
-    enter();t0=performance.now();clearTimeout(tm);tm=setTimeout(()=>react(0,true),2600);
+    enter();t0=performance.now();clearTimeout(tm);tm=setTimeout(()=>{if(document.visibilityState==='visible')react(0,true);},2600);
     $$('.rx button',S).forEach(b=>b.onclick=()=>react(+b.dataset.r,false))}
   function react(v,to){if(busy||!alive)return;busy=true;clearTimeout(tm);buzz();emit(P[ids[i]],v>0?.4:v<0?-.3:0,to?'Timed out':v>0?'Want':v<0?'Nope':'Meh',v>0?{'trait:novelty':.1}:{});
     log.push({id:ids[i],v,rt:to?null:(performance.now()-t0)/1000});i++;
