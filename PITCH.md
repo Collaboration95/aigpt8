@@ -13,7 +13,7 @@ Shopping where the AI *is* the interface: every request builds its own screen fr
 - **Tech:**
   - The LLM chooses UI **tool calls**: 23 tools and 127 pre-built visual variants. It never writes UI code.
   - The server checks every product ID and price against the catalogue before anything renders.
-  - About 1.8 s per turn.
+  - The first lookup appears in under 2 s; a full screen takes about 3–4 s.
 
 ### 2. Weak intent: "mosquitoes keep biting me at night"
 - **What happens:** the AI infers context from past orders (King bed in Mar, baby monitor in Aug) and asks with tappable choices, not chat.

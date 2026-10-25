@@ -49,7 +49,7 @@ export default async function(req,res,url){
    json(res,200,{...view(s),earned,breakdown,dailyCap:150});
   }else if(url.pathname==='/api/rewards/spend'){
    const orderId=id(e.orderId),coins=e.coins;
-   if(!Number.isSafeInteger(coins)||coins<=0||coins%100)fail(400,'Use multiples of 100 coins');
+   if(!Number.isSafeInteger(coins)||coins<=0||coins%10)fail(400,'Use multiples of 10 coins');
    const prior=s.spends[orderId];if(prior){if(prior.coins!==coins||prior.refunded)fail(409,'Order reward conflict');json(res,200,view(s));return true;}
    if(coins>s.balance)fail(409,'Not enough coins');
    s.balance-=coins;s.spends[orderId]={coins,refunded:false};s.ledger.push({at:Date.now(),kind:'spend',coins:-coins,note:'Order '+orderId});write(sid,s);json(res,200,view(s));

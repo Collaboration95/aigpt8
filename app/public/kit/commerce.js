@@ -95,7 +95,7 @@
     const priceEl=node('strong','kc-deal-price',price);body.append(priceEl,node('small','kc-muted','Current catalogue total'));
     if(v==='coupon')body.append(node('div','kc-perforation','✂ · · · · · · · · · · · · · · ·'));
     if(v==='graph'){const graph=node('div','kc-graph');const max=Math.max(1,...rows.map(r=>r.p.price*r.qty));rows.forEach(r=>{const row=node('div','kc-price-row');const label=node('div','kc-price-label');label.append(node('span','',r.p.brand+' ×'+r.qty),node('b','',c.won(r.p.price*r.qty)));const track=node('div','kc-price-track'),bar=node('span');bar.style.width=(r.p.price*r.qty/max*100)+'%';track.append(bar);row.append(label,track);graph.append(row);});body.append(graph,node('small','kc-muted','Price breakdown · current catalogue'));}
-    if(v==='coins'){const benefit=node('div','kc-benefit');if(window.REWARDS?.shipRow && window.REWARDS.balance?.()>=100){benefit.append(window.REWARDS.shipRow(sum(rows)));}else benefit.append(node('strong','','Coins at checkout'),node('small','kc-muted','100 coins = ₩200 · subject to your balance'));body.append(benefit);}
+    if(v==='coins'){const benefit=node('div','kc-benefit');if(window.REWARDS?.shipRow && window.REWARDS.balance?.()>=10){benefit.append(window.REWARDS.shipRow(sum(rows)));}else benefit.append(node('strong','','Coins at checkout'),node('small','kc-muted','10 coins = ₩100 · subject to your balance'));body.append(benefit);}
     if(v==='flash')body.append(node('div','kc-flash-label','⚡ YOUR PRICE, RIGHT NOW'));
     if(a.because)body.append(node('p','kc-muted',a.because));e.append(body);
     const label=v==='scratch'?'✦ Tap to reveal your price':v==='coins'?'Choose this pick':'Choose this price';
