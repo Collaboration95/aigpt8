@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Click · 척하면 척</title>
+<link rel="icon" href="img/click.svg">
+<style>
+:root{--bg:#f7f5f1;--ink:#16161a;--mute:#6b6b76;--line:#e7e3dd;--red:#e52528;--gold:#f6a800;--green:#16725c;--card:#fff;--sans:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;--mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden;background:#111;color:var(--ink);font-family:var(--sans)}
+h1,h2,h3,p,ul,ol{margin:0}
+#stage{position:fixed;width:1920px;height:1080px;left:50%;top:50%;transform-origin:0 0;overflow:hidden;background:var(--bg)}
+.slide{position:absolute;inset:0;padding:84px 100px 80px;background:var(--bg);visibility:hidden;opacity:0}
+.slide.active{visibility:visible;opacity:1}
+.eyebrow{font-size:26px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);margin-bottom:22px}
+.eyebrow b{color:var(--red)}
+h2{font-size:76px;line-height:1.08;letter-spacing:-2.4px;font-weight:800;max-width:1700px}
+.lead{font-size:38px;line-height:1.35;color:#3a3a42;margin-top:22px}
+.num{position:absolute;right:100px;bottom:44px;font-size:24px;font-weight:600;color:#b5b0a8}
+.foot{position:absolute;left:100px;bottom:44px;font-size:24px;color:var(--mute)}
+.logo{font-weight:900;letter-spacing:-.045em;color:var(--red);line-height:1}
+.logo span{color:var(--gold)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:34px 38px}
+.spark{color:var(--mute)}
+code,.mono{font-family:var(--mono)}
+
+/* phone slot */
+.phone-slot{position:absolute;left:164px;top:44px;width:440px;height:952px;border-radius:64px;background:#0d0d10;padding:6px;box-shadow:0 18px 50px #0003;overflow:hidden}
+.phone-slot .inner{position:relative;width:100%;height:100%;border-radius:58px;background:#17171c;overflow:hidden;display:grid;place-items:center}
+.phone-slot .inner::before{content:"";position:absolute;inset:0;border-radius:58px;border:2px dashed #3a3a44}
+.phone-slot iframe{display:none;position:absolute;left:0;top:0;width:390px;height:844px;border:0;background:#fff;transform:scale(1.097);transform-origin:0 0;border-radius:0}
+body.live .phone-slot iframe{display:block}
+body.live .phone-slot .inner::before,body.live .phone-slot .empty{display:none}
+.phone-slot .empty{color:#5d5d6a;font-size:22px;font-weight:600;letter-spacing:.04em}
+.phone-cap{position:absolute;left:164px;top:1008px;width:440px;text-align:center;font-size:21px;color:var(--mute);font-weight:600}
+.right{position:absolute;left:760px;right:100px;top:84px}
+.right h2{font-size:62px;letter-spacing:-1.8px}
+
+/* title */
+.s1{display:flex;flex-direction:column;justify-content:center;padding-left:160px}
+.s1 .mark{width:150px;height:150px;border-radius:34px;box-shadow:0 14px 34px #e5252840}
+.s1 .logo{font-size:230px;margin-top:34px;letter-spacing:-11px}
+.s1 .ko{font-size:104px;font-weight:800;letter-spacing:-2px;margin-top:6px}
+.s1 .mean{font-size:42px;color:#3a3a42;margin-top:20px}
+.s1 .team{font-size:28px;color:var(--mute);margin-top:56px}
+.s1 .deco{position:absolute;right:140px;top:150px;width:520px;height:780px;border-radius:60px;overflow:hidden;box-shadow:0 22px 60px #0003;border:6px solid #111}
+.s1 .deco img{width:100%;height:100%;object-fit:cover;object-position:top}
+
+/* problem wireframes */
+.wires{display:flex;gap:70px;margin-top:40px;justify-content:center}
+.wf{width:560px;height:680px;border-radius:44px;background:#fff;border:3px solid #cfcac1;position:relative;overflow:hidden;padding:26px}
+.wf small{position:absolute;left:0;right:0;bottom:-0px}
+.wcap{text-align:center;margin-top:20px;font-size:34px;font-weight:700}
+.wcap span{display:block;font-size:26px;font-weight:500;color:var(--mute);margin-top:6px}
+.w{background:#e9e6df;border-radius:12px}
+.w.d{background:#d4d0c7}
+.wf .search{height:56px;border-radius:30px;margin-bottom:16px}
+.wf .banner{height:120px;margin-bottom:14px;border-radius:16px}
+.wf .row{display:flex;gap:12px;margin-bottom:14px}
+.wf .tile{flex:1;height:110px;position:relative}
+.wf .tile i{position:absolute;left:8px;top:8px;width:46px;height:20px;border-radius:6px;background:#f0b9ba}
+.wf .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;height:290px;overflow:hidden}
+.wf .grid .tile{height:130px}
+.wf .lbl{height:16px;width:40%;margin:2px 0 10px}
+.chat .composer{position:absolute;left:26px;right:26px;bottom:26px;height:68px;border-radius:36px;border:3px solid #cfcac1;display:flex;align-items:center;padding:0 24px;color:#a9a49b;font-size:28px;justify-content:space-between}
+.chat .composer b{width:44px;height:44px;border-radius:22px;background:#cfcac1;display:block}
+.chat .hint{position:absolute;left:0;right:0;top:44%;text-align:center;color:#c1bcb2;font-size:30px;font-weight:600}
+
+/* idea */
+.phones{display:flex;gap:64px;justify-content:center;margin-top:30px}
+.phones figure{margin:0;width:340px}
+.phones img{width:296px;height:640px;margin:0 auto;object-fit:cover;object-position:top;border-radius:38px;border:6px solid #111;box-shadow:0 14px 34px #0002;display:block}
+.phones figcaption{margin-top:14px;font-size:25px;line-height:1.3;font-weight:600;text-align:center}
+.phones figcaption span{display:block;font-weight:500;color:var(--mute);font-size:22px;margin-top:3px}
+
+/* persona + trace */
+.persona{display:inline-flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:40px;padding:12px 26px 12px 14px;font-size:30px;font-weight:600;margin:26px 0 30px}
+.persona i{width:50px;height:50px;border-radius:25px;background:var(--red);color:#fff;font-style:normal;display:grid;place-items:center;font-weight:800;font-size:26px}
+.persona span{color:var(--mute);font-weight:500}
+.sec{font-size:22px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);margin:30px 0 12px}
+.trace{background:#f0eee9;border-radius:22px;padding:22px 28px}
+.trace .t{display:flex;gap:18px;align-items:baseline;font-size:30px;line-height:1.45;padding:7px 0}
+.trace .t code{flex:none;font-size:27px;color:#fff;background:#2a2a31;border-radius:10px;padding:2px 12px}
+.trace .t em{font-style:normal;color:#3a3a42}
+.trace .t em b{color:var(--ink)}
+.steps{display:flex;gap:18px;align-items:stretch}
+.step{flex:1;background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px 26px;font-size:30px;line-height:1.3}
+.step small{display:block;font-size:22px;color:var(--mute);margin-top:6px;font-weight:500}
+.step.go{background:#16161a;color:#fff}
+.step.go small{color:#b5b5be}
+.chips{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+.chip{background:#e8f1ff;color:#1b57c9;border-radius:30px;padding:10px 24px;font-size:28px;font-weight:700}
+.chip.k{background:#fff;color:var(--ink);border:2px solid #dcd7cf}
+.facts{display:flex;gap:44px;margin-top:34px;font-size:26px;color:var(--mute)}
+.facts b{display:block;font-size:44px;color:var(--ink);letter-spacing:-1px}
+
+/* games */
+.gcards{display:flex;gap:22px;margin-top:8px}
+.gcard{flex:1;background:#fff;border:1px solid var(--line);border-radius:26px;overflow:hidden}
+.gcard .im{height:350px;overflow:hidden;background:#eee}
+.gcard img{width:100%;display:block;object-fit:cover;object-position:top;margin-top:-122px}
+.gcard div.t{padding:18px 22px 22px;font-size:25px;line-height:1.3;color:var(--mute)}
+.gcard h3{font-size:34px;color:var(--ink);margin-bottom:6px;letter-spacing:-.6px}
+.loop{display:flex;align-items:center;gap:16px;margin-top:34px;font-size:30px;font-weight:700}
+.loop span{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px 24px}
+.loop span.coin{background:#fff3c9;border-color:#f3d77c}
+.loop i{font-style:normal;color:var(--mute);font-size:34px}
+
+/* dashboard */
+.dshot{position:absolute;left:100px;top:258px;width:850px;height:712px;border-radius:24px;border:1px solid var(--line);box-shadow:0 14px 34px #0001;overflow:hidden}
+.dshot img{width:1200px;max-width:none;margin:-22px 0 0 -172px;display:block}
+.dside{position:absolute;left:1010px;right:100px;top:262px}
+.big{font-size:56px;font-weight:800;letter-spacing:-1.6px;line-height:1.1}
+.big em{font-style:normal;color:var(--red)}
+.big small{display:block;font-size:26px;font-weight:600;color:var(--mute);letter-spacing:0;margin-bottom:8px}
+.arrow{color:var(--mute);margin:0 6px}
+.sizes{margin-top:30px}
+.sizes .r{display:grid;grid-template-columns:1fr 62px;gap:2px 14px;font-size:24px;margin-bottom:12px;align-items:center}
+.sizes .r b{text-align:right}
+.sizes .bar{grid-column:1/3;height:8px;border-radius:5px;background:#e9e6df;overflow:hidden}
+.sizes .bar i{display:block;height:100%;background:var(--red);opacity:.85}
+.sizes .r.hl .bar i{opacity:1}
+.sizes .r.hl{font-weight:700}
+.small{font-size:22px;color:var(--mute);margin-top:12px;line-height:1.4}
+
+/* architecture */
+.arch{position:absolute;left:100px;right:100px;top:250px}
+.lane{display:flex;align-items:stretch;gap:0}.lane .ar{align-self:center}
+.box{flex:1;min-height:150px;background:#fff;border:2px solid #dcd7cf;border-radius:24px;padding:20px 24px;font-size:25px;line-height:1.3;color:var(--mute)}
+.box h3{font-size:32px;color:var(--ink);letter-spacing:-.6px;margin-bottom:6px}
+.box.red{border-color:var(--red)}
+.box.dk{background:#16161a;border-color:#16161a;color:#b5b5be}
+.box.dk h3{color:#fff}
+.ar{flex:none;width:58px;text-align:center;font-size:40px;color:#9a958c}
+.lname{font-size:22px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin:0 0 10px}
+.tools{display:flex;gap:22px;margin:22px 0 24px}
+.tools .box{min-height:0}
+.tools code{font-size:23px;color:var(--ink);background:#f0eee9;border-radius:8px;padding:1px 8px;display:inline-block;margin:4px 6px 0 0}
+.back{margin:8px 0 6px;font-size:24px;color:var(--mute);text-align:center}
+
+/* scope */
+.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-top:40px}
+.cols .card{min-height:660px;padding:38px}
+.cols h3{font-size:36px;letter-spacing:-.7px;margin-bottom:18px}
+.cols li{font-size:33px;line-height:1.3;margin-bottom:22px;list-style:none;padding-left:34px;position:relative}
+.cols li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+.cols .syn li::before{content:"○";color:var(--gold)}
+.cols .nxt li::before{content:"→";color:var(--red)}
+.cols li small{display:block;font-size:26px;color:var(--mute);margin-top:2px}
+
+/* close */
+.s10{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.s10 .mark{width:140px;height:140px;border-radius:32px}
+.s10 .ko{font-size:200px;font-weight:800;letter-spacing:-5px;line-height:1;margin-top:34px}
+.s10 .mean{font-size:48px;color:#3a3a42;margin-top:26px}
+.s10 .logo{font-size:60px;margin-top:70px}
+
+/* notes + nav */
+#notes{position:fixed;z-index:50;left:0;right:0;bottom:0;display:none;background:#16161aee;color:#f2f0ec;padding:18px 40px 22px;font-size:22px;line-height:1.45;max-height:34vh;overflow:auto}
+body.notes #notes{display:block}
+#notes b{color:var(--gold);letter-spacing:.1em;text-transform:uppercase;font-size:15px;display:block;margin-bottom:4px}
+.notes-src{display:none}
+.nav{position:fixed;z-index:60;top:10px;right:12px;display:flex;align-items:center;gap:6px;background:#ffffffe6;border:1px solid var(--line);border-radius:14px;padding:3px 6px;opacity:.55;font-size:13px}
+.nav:hover{opacity:1}
+.nav button{border:0;background:none;height:30px;min-width:30px;border-radius:8px;font:600 14px var(--sans);cursor:pointer;color:var(--ink)}
+.nav button:hover{background:#eee}
+.nav button:disabled{opacity:.25;cursor:default}
+.nav #counter{min-width:46px;text-align:center;color:var(--mute)}
+.nav .tg.on{background:var(--ink);color:#fff}
+.capture .nav{display:none}
+@media print{@page{size:16in 9in;margin:0}html,body{overflow:visible;background:#fff}#stage{position:static;transform:none!important;width:1920px;height:auto}.slide{position:relative;visibility:visible!important;opacity:1!important;height:1080px;break-after:page}.nav,#notes{display:none}}
+</style>
+</head>
+<body>
+<main id="stage" aria-label="Click presentation">
+
+<!-- 1 TITLE -->
+<section class="slide s1" aria-label="Title">
+  <img class="mark" src="img/click.svg" alt="Click logo">
+  <div class="logo">click<span>.</span></div>
+  <div class="ko" lang="ko">척하면 척</div>
+  <p class="mean"><i style="font-style:normal;color:var(--mute)">cheok-hamyeon cheok</i> · gets you before you finish</p>
+  <p class="team">Team 8 · Coupang × OpenAI hackathon</p>
+  <div class="deco"><img src="img/tp-2-final.png" alt="Click: your usual toothpaste, Ship it"></div>
+  <span class="num">1</span>
+  <aside class="notes-src"><b>Say</b>Click, 척하면 척: it gets you before you finish. It's a Korean idiom for someone who understands you from half a word. Reorder my toothpaste. 척. Done.</aside>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide" aria-label="Problem">
+  <p class="eyebrow">The problem</p>
+  <h2>Shopping apps are one of two screens.</h2>
+  <div class="wires">
+    <div>
+      <div class="wf" aria-label="Wireframe: search bar and recommendation feed">
+        <div class="w search"></div>
+        <div class="w d banner"></div>
+        <div class="w lbl"></div>
+        <div class="row"><div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div></div>
+        <div class="w lbl"></div>
+        <div class="grid">
+          <div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div>
+          <div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div>
+          <div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div>
+        </div>
+      </div>
+      <p class="wcap">Search bar + feed<span>Shopee, Amazon, Coupang. Cluttered, predictable.</span></p>
+    </div>
+    <div>
+      <div class="wf chat" aria-label="Wireframe: empty screen with a chat box">
+        <div class="hint">How can I help?</div>
+        <div class="composer">Ask anything<b></b></div>
+      </div>
+      <p class="wcap">The LLM app<span>An empty screen and a chat box.</span></p>
+    </div>
+  </div>
+  <span class="num">2</span>
+  <aside class="notes-src"><b>Say</b>Every shopping app is one of two screens. A search bar over a recommendation feed — Shopee, Amazon, Coupang — cluttered, predictable, and nobody really engages with the feed. Or the LLM app: an empty screen with a chat box. It asks you to already know what to say.</aside>
+</section>
+
+<!-- 3 IDEA -->
+<section class="slide" aria-label="Idea">
+  <p class="eyebrow">The idea</p>
+  <h2>Same simple text box. A new screen every time.</h2>
+  <div class="phones">
+    <figure><img src="img/tp-2-final.png" alt="Generated screen: usual toothpaste"><figcaption>“reorder my toothpaste”<span>Your usual · Ship it</span></figcaption></figure>
+    <figure><img src="img/mq-2-choice.png" alt="Generated screen: bed size question"><figcaption>“mosquitoes keep biting me at night”<span>King preselected</span></figcaption></figure>
+    <figure><img src="img/sp-1-game.png" alt="Generated screen: Rapid fire game"><figcaption>“surprise me”<span>A game</span></figcaption></figure>
+  </div>
+  <span class="num">3</span>
+  <aside class="notes-src"><b>Say</b>We keep the one thing everybody already understands: a text box. Nothing to learn, nothing that scares off existing customers. What changes is what comes back. Every request renders a new screen built for that person and that moment, with extra options to explore. You don't lock into one flow, and you won't see the same screen twice.</aside>
+</section>
+
+<!-- 4 STRONG INTENT -->
+<section class="slide" aria-label="Strong intent: toothpaste" data-live="live.html?frame=1&q=reorder%20my%20toothpaste">
+  <div class="phone-slot"><div class="inner"><span class="empty">Live · iPhone</span><iframe title="Live app" loading="lazy"></iframe></div></div>
+  <div class="right">
+    <p class="eyebrow"><b>Strong intent</b> · knows what they want</p>
+    <h2>“Reorder my toothpaste.”</h2>
+    <div class="persona"><i>G</i>Guru <span>· reorders about every 6 weeks</span></div>
+    <div class="sec">Lookups</div>
+    <div class="trace">
+      <div class="t"><code>search_orders</code><em>→ <b>Median Toothpaste 120g ×3</b> · 13 Sep</em></div>
+      <div class="t"><code>get_reorder_pattern</code><em>→ every ~6 wks · <b>due now</b></em></div>
+    </div>
+    <div class="sec">Click shows</div>
+    <div class="steps">
+      <div class="step">Your usual toothpaste<small>from order history</small></div>
+      <div class="step go">Ship it · ₩8,900<small>1 tap</small></div>
+      <div class="step">Undo<small>if you change your mind</small></div>
+    </div>
+    <div class="facts"><div><b>&lt; 2 s</b>first lookup</div><div><b>3–4 s</b>full screen</div></div>
+  </div>
+  <span class="num">4</span>
+  <aside class="notes-src"><b>Say</b>It already knows what you use. It looked up my orders; that's retrieval, not search. The LLM picks UI tool calls, 23 tools and 127 pre-built variants; it never writes UI code. The server checks every ID and price against the catalogue. One tap to reorder, and Undo if you change your mind. (Ship it and Undo don't call the model.) First lookup in under 2 seconds, a full screen in 3–4.<br><b style="margin-top:8px">Do</b>Tap “Reorder toothpaste”, hold on the ✦ trace for 2 s, then Ship it → receipt → Undo.</aside>
+</section>
+
+<!-- 5 WEAK INTENT -->
+<section class="slide" aria-label="Weak intent: mosquito net" data-live="live.html?frame=1&q=Mosquitoes%20keep%20biting%20me%20at%20night">
+  <div class="phone-slot"><div class="inner"><span class="empty">Live · iPhone</span><iframe title="Live app" loading="lazy"></iframe></div></div>
+  <div class="right">
+    <p class="eyebrow"><b>Weak intent</b> · only a problem</p>
+    <h2>“Mosquitoes keep biting me at night.”</h2>
+    <div class="sec">Lookups</div>
+    <div class="trace">
+      <div class="t"><code>check_bought_before</code><em>→ <b>King-size fitted bed sheet cover</b> · 12 Mar</em></div>
+      <div class="t"><code>search_orders</code><em>→ past bed and bedroom orders</em></div>
+    </div>
+    <div class="sec">Click infers, the customer decides</div>
+    <div class="steps">
+      <div class="step">What size is your bed?<small>tap to answer, no typing</small></div>
+      <div class="step go">✦ King preselected<small>from your 12 Mar order</small></div>
+    </div>
+    <div class="sec" style="margin-top:26px">“Why King?”</div>
+    <div class="chips"><span class="chip k">You ordered it on 12 Mar</span><span class="chip">Change</span><span class="chip">Don’t use this</span></div>
+    <p class="small" style="font-size:26px;margin-top:22px">Each inference cites a real order. A correction becomes a confirmed fact that overrides memory for the rest of the session.</p>
+  </div>
+  <span class="num">5</span>
+  <aside class="notes-src"><b>Say</b>Weak intent. It checked my past purchases and found a King bed sheet cover from March. ✦ King, from your March bed order. Tap to see why, change it, or tell it not to use it. A correction becomes a confirmed fact that overrides memory. The customer stays in control.<br><b style="margin-top:8px">Do</b>Tap “Mosquito net”, hold on the trace, point at ✦ inferred, open “Why King?”.</aside>
+</section>
+
+<!-- 6 NO INTENT -->
+<section class="slide" aria-label="No intent: games" data-live="live.html?frame=1&q=Surprise%20me">
+  <div class="phone-slot"><div class="inner"><span class="empty">Live · iPhone</span><iframe title="Live app" loading="lazy"></iframe></div></div>
+  <div class="right">
+    <p class="eyebrow"><b>No intent</b> · waiting on the MRT</p>
+    <h2>Short games pass the time and show taste.</h2>
+    <div class="gcards" style="margin-top:34px">
+      <div class="gcard"><div class="im"><img src="img/g-price.png" alt="Price guess"></div><div class="t"><h3>Price guess</h3>willingness to pay</div></div>
+      <div class="gcard"><div class="im"><img src="img/g-rapid.png" alt="Rapid fire"></div><div class="t"><h3>Rapid fire</h3>Want / Meh / Nope</div></div>
+      <div class="gcard"><div class="im"><img src="img/g-bracket.png" alt="Bracket"></div><div class="t"><h3>Bracket</h3>“which do I like better”</div></div>
+    </div>
+    <div class="loop"><span>Play 30 s</span><i>→</i><span class="coin">Coins</span><i>→</i><span>Better picks</span></div>
+    <p class="small" style="font-size:26px;margin-top:22px">Coins pay for finishing, not for particular answers, so the data stays unbiased. 10 coins = ₩100 off at checkout.</p>
+  </div>
+  <span class="num">6</span>
+  <aside class="notes-src"><b>Say</b>No intent: someone waiting for the MRT or an elevator. Short games pass the time, and they reveal taste: which product do I like better. 30 seconds of play is 30 seconds of labelled data. Coins pay for finishing, not for particular answers, so the data stays unbiased. Every tap trains your personal model.<br><b style="margin-top:8px">Do</b>Tap “Surprise me”, play 4 rounds with taps only.</aside>
+</section>
+
+<!-- 7 WHAT WE LEARN -->
+<section class="slide" aria-label="What we learn: shopper segments">
+  <p class="eyebrow">What we learn</p>
+  <h2>8 taps moved Guru from 7.9% to 43.4%.</h2>
+  <div class="dshot"><img src="img/dash-after.png" alt="Dashboard: shopper segment before and after a snack game"></div>
+  <div class="dside">
+    <div class="big"><small>Snack-first bargain hunter</small>7.9%<span class="arrow">→</span><em>43.4%</em></div>
+    <p class="small" style="font-size:25px">5 Want, 3 Nope in a snack game. Segment probability before and after.</p>
+    <div class="sec" style="margin-top:26px">Segment sizes · 1,600 shoppers</div>
+    <div class="sizes">
+      <div class="r"><span>New-parent essentials</span><b>223</b><div class="bar"><i style="width:57.8%"></i></div></div>
+      <div class="r hl"><span>Snack-first bargain hunter</span><b>386</b><div class="bar"><i style="width:100%"></i></div></div>
+      <div class="r"><span>Coffee &amp; drinks regular</span><b>257</b><div class="bar"><i style="width:66.6%"></i></div></div>
+      <div class="r"><span>Household restocker</span><b>287</b><div class="bar"><i style="width:74.4%"></i></div></div>
+      <div class="r"><span>Premium self-care</span><b>266</b><div class="bar"><i style="width:68.9%"></i></div></div>
+      <div class="r"><span>Explorer</span><b>181</b><div class="bar"><i style="width:46.9%"></i></div></div>
+    </div>
+    <p class="small">Synthetic shoppers; sizes are the user bases an advertiser could target.</p>
+  </div>
+  <span class="num">7</span>
+  <aside class="notes-src"><b>Say</b>Every tap trains your personal model. Here's the before and after. The preference model is a logistic regression with about 190 features, trained on 2,000 synthetic shoppers. Each tap is a gradient update, anchored to the prior so one tap can't swing everything. Undo replays the history exactly. The segments show who Guru is, and how big each user base is, which is the signal for what to prioritise or advertise.<br><b style="margin-top:8px">Do</b>Laptop: /dashboard.html?frame=1 → Reset → Simulate snack game → Undo last.</aside>
+</section>
+
+<!-- 8 ARCHITECTURE -->
+<section class="slide" aria-label="How it works">
+  <p class="eyebrow">How it works</p>
+  <h2>The LLM calls tools. It never writes UI code.</h2>
+  <div class="arch">
+    <div class="lname">Ask</div>
+    <div class="lane">
+      <div class="box"><h3>Phone</h3>One text box. Renders what it is sent.</div><div class="ar">→</div>
+      <div class="box"><h3>Server</h3>Holds the API key. Nothing secret on the phone.</div><div class="ar">→</div>
+      <div class="box red"><h3>LLM</h3>Reads the request and the user’s context. Picks tool calls.</div><div class="ar">→</div>
+      <div class="box dk"><h3>Validator</h3>Every product ID and price is checked against the catalogue.</div><div class="ar">→</div>
+      <div class="box"><h3>Kit renderer</h3>Pre-built template per tool, 127 variants.</div>
+    </div>
+    <div class="tools">
+      <div class="box"><h3>Data-lookup tools</h3><code>search_orders</code><code>get_reorder_pattern</code><code>check_bought_before</code><code>get_preferences</code></div>
+      <div class="box"><h3>UI tools · 23</h3><code>ask_choice</code><code>show_usual</code><code>compare_products</code><code>ship_it</code><code>note_inference</code><code>show_picks</code></div>
+    </div>
+    <div class="lname">Learn</div>
+    <div class="lane">
+      <div class="box"><h3>Events</h3>Taps, game picks, corrections.</div><div class="ar">→</div>
+      <div class="box"><h3>Preference model</h3>Logistic regression, ~190 features. Prior from 2,000 synthetic shoppers.</div><div class="ar">→</div>
+      <div class="box"><h3>Segment model</h3>6 shopper segments, updated per tap.</div><div class="ar">→</div>
+      <div class="box red"><h3>Next request</h3>Re-ranked picks, “✦ tuned by your picks”.</div>
+    </div>
+  </div>
+  <span class="num">8</span>
+  <aside class="notes-src"><b>Say</b>The live LLM reads the user's order history through lookup tools, then chooses UI tool calls: 23 tools and 127 pre-built visual variants. It never writes UI code. The server checks every product ID and price against the catalogue before anything renders. Below, the learning loop: every tap is a gradient update to the preference model, which re-ranks the next shopping request. Cold start uses the population prior, and one game warms it up.</aside>
+</section>
+
+<!-- 9 SCOPE -->
+<section class="slide" aria-label="Honest scope and next">
+  <p class="eyebrow">Honest scope</p>
+  <h2>What is real, what is synthetic, what is next.</h2>
+  <div class="cols">
+    <div class="card"><h3>Real</h3><ul>
+      <li>Live LLM tool calls, no scripted screens<small>23 tools · 127 variants</small></li>
+      <li>Server-side ID and price validation</li>
+      <li>Lookups over the user’s orders</li>
+      <li>Preference model updated per tap<small>held-out log-loss 0.521 vs 0.539 baseline · AUC 0.62</small></li>
+    </ul></div>
+    <div class="card syn"><h3>Synthetic</h3><ul>
+      <li>The prior: 2,000 synthetic shoppers</li>
+      <li>Order history is demo data</li>
+      <li>Fulfilment is simulated</li>
+      <li>Conversion uplift: not measured<small>the model predicts buy-intent only</small></li>
+    </ul></div>
+    <div class="card nxt"><h3>Next</h3><ul>
+      <li>Real catalogue and real product photos</li>
+      <li>A/B test for conversion uplift</li>
+      <li>Per-product animations in games<small>toothbrush brushing, drink sipping</small></li>
+    </ul></div>
+  </div>
+  <span class="num">9</span>
+  <aside class="notes-src"><b>Say</b>Be honest: the prior is synthetic, the order history is demo data, fulfilment is simulated. The model predicts buy-intent; we haven't measured conversion uplift. Next: a real catalogue and real photos, then an A/B test for uplift.</aside>
+</section>
+
+<!-- 10 CLOSE -->
+<section class="slide s10" aria-label="Close">
+  <img class="mark" src="img/click.svg" alt="Click logo">
+  <div class="ko" lang="ko">척하면 척</div>
+  <p class="mean">Half a word is enough.</p>
+  <div class="logo">click<span>.</span></div>
+  <span class="num">10</span>
+  <aside class="notes-src"><b>Say</b>척하면 척: half a word is enough. Play, pick, ship.</aside>
+</section>
+
+</main>
+
+<div id="notes" aria-live="polite"></div>
+<nav class="nav" aria-label="Slide navigation"><button id="prev" aria-label="Previous">←</button><span id="counter"></span><button id="next" aria-label="Next">→</button><button id="mbtn" class="tg" title="Toggle live app fallback (m)">m</button><button id="nbtn" class="tg" title="Toggle speaker notes (n)">n</button></nav>
+
+<script>
+const LIVE='https://macbook-pro-7.tailca286e.ts.net:8443/';
+const stage=document.getElementById('stage'),slides=[...document.querySelectorAll('.slide')],notes=document.getElementById('notes');let cur=0;
+function fit(){const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight,s=Math.min(w/1920,h/1080);stage.style.left=w/2+'px';stage.style.top=h/2+'px';stage.style.transform=`scale(${s}) translate(-50%,-50%)`}
+function syncLive(){const s=slides[cur],src=s.dataset.live;if(!document.body.classList.contains('live')||!src)return;const f=s.querySelector('iframe');if(f&&!f.getAttribute('src'))f.setAttribute('src',LIVE+src)}
+function show(i){cur=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,k)=>{s.classList.toggle('active',k===cur);s.setAttribute('aria-hidden',String(k!==cur));s.inert=k!==cur});
+ document.getElementById('counter').textContent=`${cur+1} / ${slides.length}`;document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1;
+ const n=slides[cur].querySelector('.notes-src');notes.innerHTML=n?n.innerHTML:'';history.replaceState(null,'','#'+(cur+1));syncLive()}
+function tog(cls,btn){const on=document.body.classList.toggle(cls);document.getElementById(btn).classList.toggle('on',on);if(cls==='live')syncLive()}
+addEventListener('resize',fit);addEventListener('hashchange',()=>show((parseInt(location.hash.slice(1),10)||1)-1));
+document.getElementById('prev').onclick=()=>show(cur-1);document.getElementById('next').onclick=()=>show(cur+1);
+document.getElementById('mbtn').onclick=()=>tog('live','mbtn');document.getElementById('nbtn').onclick=()=>tog('notes','nbtn');
+addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;const k=e.key;
+ if(['ArrowRight','PageDown',' '].includes(k)){e.preventDefault();show(cur+1)}else if(['ArrowLeft','PageUp'].includes(k)){e.preventDefault();show(cur-1)}
+ else if(k==='Home')show(0);else if(k==='End')show(slides.length-1);else if(k==='m'||k==='M')tog('live','mbtn');else if(k==='n'||k==='N')tog('notes','nbtn')});
+stage.addEventListener('click',e=>{if(e.target.closest('a,button,iframe'))return;show(cur+1)});
+if(new URLSearchParams(location.search).has('capture'))document.body.classList.add('capture');
+fit();show((parseInt(location.hash.slice(1),10)||1)-1);
+</script>
+</body>
+</html>
