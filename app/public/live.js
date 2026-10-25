@@ -37,13 +37,17 @@
       clearThinking(); lookupNode = el('div','lookup-steps'); lookupNode.setAttribute('role','status'); messages.append(lookupNode);
     }
     const labels={search_orders:'Checked your orders',check_bought_before:'Checked past purchases',get_reorder_pattern:'Checked refill timing',get_preferences:'Checked your preferences'};
-    const row=el('div','lookup-step');row.append(el('span','','✦ '+(labels[data.name]||'Checked')+' → '+data.summary),el('code','',data.name));lookupNode.append(row);updateProof();
+    const row=el('div','lookup-step');row.append(el('span','','✦ '+(labels[data.name]||'Checked')+' → '+[...new Set(String(data.summary||'').split(' / ').map(x=>x.trim()).filter(Boolean))].join(' / ')),el('code','',data.name));lookupNode.append(row);updateProof();
   }
   function collapseLookups() {
     if (!lookupNode || lookupNode.classList.contains('lookup-used')) return;
     lookupNode.className='lookup-used';
-    const trace=el('details','lookup-trace'),summary=el('summary','','✦ '+lookups[0].summary);
-    trace.append(summary);for(const l of lookups){const row=el('div','lookup-step');row.append(el('span','',l.summary),el('code','',l.name));trace.append(row);}
+    // Collapsed under a quiet 'Thinking' line; tap to see what was looked up.
+    const uniq=t=>[...new Set(String(t||'').split(' / ').map(x=>x.trim()).filter(Boolean))].join(' / ');
+    const seen=new Set(),rows=lookups.map(l=>({...l,summary:uniq(l.summary)})).filter(l=>{const k=l.name+'|'+l.summary;if(seen.has(k))return false;seen.add(k);return true;});
+    const labels={search_orders:'Checked your orders',check_bought_before:'Checked past purchases',get_reorder_pattern:'Checked refill timing',get_preferences:'Checked your preferences'};
+    const trace=el('details','lookup-trace'),summary=el('summary','','✦ Thinking · '+rows.length+' lookup'+(rows.length===1?'':'s'));
+    trace.append(summary);for(const l of rows){const row=el('div','lookup-step');row.append(el('span','',(labels[l.name]||'Checked')+' → '+l.summary),el('code','',l.name));trace.append(row);}
     lookupNode.replaceChildren(trace);lookupNode.removeAttribute('role');
   }
   function freezePrevious() { for (const c of calls.values()) if (c.committed) { c.node.firstElementChild?.freeze?.(); c.node.inert = true; c.frozen = true; } }
