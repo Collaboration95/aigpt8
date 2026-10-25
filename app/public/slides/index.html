@@ -230,7 +230,7 @@ code,.mono{font-family:var(--mono)}
 .bet:nth-child(1){background:var(--disc),linear-gradient(150deg,#ff4a3d,#c9162a)}
 .bet:nth-child(2){background:var(--disc),linear-gradient(150deg,#6c4cf1,#a23cf0)}
 .bet:nth-child(3){background:var(--disc),linear-gradient(150deg,#16a37a,#0b7f6a)}
-.bet i{font-style:normal;font-size:190px;font-weight:900;line-height:.9;letter-spacing:-8px;color:#ffffff40;margin-bottom:auto}
+.bet i{font-style:normal;font-size:190px;font-weight:900;line-height:.9;letter-spacing:-8px;color:#ffffff40;margin-bottom:auto}.bet i.w{font-size:64px;letter-spacing:-2px;color:#fff;position:relative;z-index:1;text-shadow:0 2px 12px #0003}
 .bet b{display:block;font-size:58px;line-height:1.08;letter-spacing:-1.8px;font-weight:800}
 .bet small{display:block;font-size:30px;line-height:1.3;margin-top:18px;opacity:.85;font-weight:600}
 .bet .tw{position:absolute;color:#fff;font-size:var(--s,30px);line-height:1;opacity:.9;text-shadow:0 0 14px #fffa}
@@ -239,7 +239,7 @@ code,.mono{font-family:var(--mono)}
 .s10{background:radial-gradient(circle at 20% 20%,#ff8a4a 0,transparent 50%),linear-gradient(135deg,#ff4a3d,#d11a2a 70%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 .s10 .mark{width:150px;height:150px;border-radius:34px;box-shadow:0 0 0 12px #ffffff40,0 18px 40px #0004}
 .s10 .ko{font-size:210px;font-weight:800;letter-spacing:-5px;line-height:1;margin-top:40px}
-.s10 .mean{font-size:56px;margin-top:26px;font-weight:700}
+.s10 .mean{font-size:56px;margin-top:26px;font-weight:700}.s10 .rom{font-size:40px;margin-top:22px;font-weight:600;opacity:.92}.s10 .rom i{color:var(--yellow)}
 .s10 .logo{font-size:70px;margin-top:64px;color:#fff;background:#ffffff26;border-radius:60px;padding:14px 50px 22px}
 .s10 .logo span{color:var(--yellow)}
 
@@ -501,11 +501,11 @@ body.notes #notes{display:block}
   <div class="arch">
     <div class="lname">Ask</div>
     <div class="lane">
-      <div class="box sky"><h3>Phone</h3>One text box. Renders what it is sent.</div><div class="ar">→</div>
-      <div class="box mint"><h3>Server</h3>Holds the API key. Nothing secret on the phone.</div><div class="ar">→</div>
-      <div class="box red"><h3>LLM</h3>Reads the request and the user’s context. Picks tool calls.</div><div class="ar">→</div>
-      <div class="box dk"><h3>Validator</h3>Every product ID and price is checked against the catalogue.</div><div class="ar">→</div>
-      <div class="box sun"><h3>Renderer</h3>Each tool call becomes a screen. 127 variants.</div>
+      <div class="box sky"><h3>Phone</h3>One text box. Renders whatever screen it is sent.</div><div class="ar">→</div>
+      <div class="box mint"><h3>Server</h3>Brings the user’s context: orders, history, preferences.</div><div class="ar">→</div>
+      <div class="box red"><h3>LLM</h3>Reads the request and context. Calls lookup tools, then UI tools.</div><div class="ar">→</div>
+      <div class="box dk"><h3>Validation</h3>Every tool call is checked: real products, real prices.</div><div class="ar">→</div>
+      <div class="box sun"><h3>Screen</h3>Each tool call becomes part of the UI.</div>
     </div>
     <div class="tools">
       <div class="box"><h3>Lookup tools</h3><code>search_orders</code><code>get_reorder_pattern</code><code>check_bought_before</code><code>get_preferences</code></div>
@@ -513,35 +513,35 @@ body.notes #notes{display:block}
     </div>
     <div class="lname lr">Learn</div>
     <div class="lane">
-      <div class="box pink"><h3>Events</h3>Taps, game picks, corrections.</div><div class="ar">→</div>
-      <div class="box vio"><h3>Preference model</h3>Logistic regression, ~190 features. Prior from 2,000 synthetic shoppers.</div><div class="ar">→</div>
-      <div class="box sky"><h3>Segment model</h3>6 shopper segments, updated per tap.</div><div class="ar">→</div>
-      <div class="box red"><h3>Next request</h3>Re-ranked picks, “✦ tuned by your picks”.</div>
+      <div class="box pink"><h3>Signals</h3>Orders, taps, game picks, corrections.</div><div class="ar">→</div>
+      <div class="box vio"><h3>Preference engine</h3>Learns what each shopper likes from every signal.</div><div class="ar">→</div>
+      <div class="box sky"><h3>Shopper profile</h3>Segment, tastes, reorder rhythm.</div><div class="ar">→</div>
+      <div class="box red"><h3>Next request</h3>Better picks, “✦ tuned by your picks”.</div>
     </div>
   </div>
   <span class="num">8</span>
-  <aside class="notes-src"><b>Say</b>The LLM calls tools. Lookup tools read the user's order history; UI tools render the screen: 23 tools and 127 visual variants. The server checks every product ID and price against the catalogue before anything renders. Below, the learning loop: every tap is a gradient update to the preference model, which re-ranks the next shopping request. Cold start uses the population prior, and one game warms it up.</aside>
+  <aside class="notes-src"><b>Say</b>The phone is just a text box that renders whatever it is sent. The server brings the user's context, their orders, history and preferences, to the LLM. The LLM calls lookup tools to read that context, then UI tools to build the screen, and every tool call is validated: real products, real prices. Underneath, every order, tap and game pick feeds a preference engine that builds a shopper profile, so the next request gets better picks.</aside>
 </section>
 
 <!-- 9 ASSUMPTIONS -->
 <section class="slide s9" aria-label="Why it works">
-  <p class="eyebrow"><b>Assumptions</b></p>
   <h2>Why it works.</h2>
   <div class="bets">
-    <div class="bet"><i>1</i><b>A new screen is a <span class="mk" data-c="y">reason to look</span>.</b><small>Every request looks different, so browsing turns into discovering.</small></div>
-    <div class="bet"><i>2</i><b>Fun in, <span class="mk" data-c="y">insight</span> out.</b><small>Every tap in a game tells us who the shopper is.</small>
+    <div class="bet"><i class="w">Frictionless</i><b>Know what you want? <span class="mk" data-c="y">Two taps</span>.</b><small>Strong-intent shoppers go straight to checkout. Nothing in the way.</small></div>
+    <div class="bet"><i class="w">Discovery</i><b>A new screen is a <span class="mk" data-c="y">reason to look</span>.</b><small>Every request looks different, so browsing turns into discovering.</small></div>
+    <div class="bet"><i class="w">Insight</i><b>Fun in, <span class="mk" data-c="y">insight</span> out.</b><small>Every tap in a game tells us who the shopper is.</small>
       <span class="tw" style="left:42%;top:70px;--s:34px;--td:0" aria-hidden="true">✦</span><span class="tw" style="left:58%;top:215px;--s:26px;--td:.5" aria-hidden="true">✦</span><span class="tw" style="left:24%;top:225px;--s:22px;--td:1.1" aria-hidden="true">✦</span><span class="tw" style="left:80%;top:262px;--s:30px;--td:.8" aria-hidden="true">✦</span><span class="tw" style="left:44%;top:150px;--s:18px;--td:1.5" aria-hidden="true">✦</span>
     </div>
-    <div class="bet"><i>3</i><b>Know what you want? <span class="mk" data-c="y">Two taps</span>.</b><small>Strong-intent shoppers go straight to checkout. Nothing in the way.</small></div>
   </div>
   <span class="num">9</span>
-  <aside class="notes-src"><b>Say</b>Three reasons this works. A screen that changes every time gives people a reason to look, so browsing becomes discovery. Games turn data collection into fun: every tap tells us who the shopper is. And if you already know what you want, it's two taps to checkout; nothing gets in the way.</aside>
+  <aside class="notes-src"><b>Say</b>Three reasons this works. If you already know what you want, it's two taps to checkout; nothing gets in the way. A screen that changes every time gives people a reason to look, so browsing becomes discovery. And games turn data collection into fun: every tap tells us who the shopper is.</aside>
 </section>
 
 <!-- 10 CLOSE -->
 <section class="slide s10" aria-label="Close">
   <img class="mark" src="img/click.svg" alt="Click logo">
   <div class="ko" lang="ko">척하면 척</div>
+  <p class="rom"><i>cheok-hamyeon cheok</i> · gets you before you finish</p>
   <p class="mean"><span class="mk" data-c="y">Half a word</span> is enough.</p>
   <div class="logo">click<span>.</span></div>
   <span class="num">10</span>
