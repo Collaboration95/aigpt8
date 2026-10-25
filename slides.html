@@ -48,24 +48,25 @@ body.live .phone-slot .inner::before,body.live .phone-slot .empty{display:none}
 .s1 .deco img{width:100%;height:100%;object-fit:cover;object-position:top}
 
 /* problem wireframes */
-.wires{display:flex;gap:70px;margin-top:40px;justify-content:center}
-.wf{width:560px;height:680px;border-radius:44px;background:#fff;border:3px solid #cfcac1;position:relative;overflow:hidden;padding:26px}
-.wf small{position:absolute;left:0;right:0;bottom:-0px}
-.wcap{text-align:center;margin-top:20px;font-size:34px;font-weight:700}
+.wires{display:flex;gap:140px;margin-top:28px;justify-content:center}
+.wf{width:330px;height:690px;border-radius:56px;background:#fff;border:12px solid #16161a;box-shadow:0 0 0 2px #3a3a40,0 30px 60px #0002;position:relative;overflow:hidden;padding:58px 16px 16px;margin:0 auto}
+.wf:before{content:"";position:absolute;top:12px;left:50%;width:96px;height:28px;margin-left:-48px;border-radius:14px;background:#16161a}
+.wf:after{content:"";position:absolute;bottom:8px;left:50%;width:110px;height:5px;margin-left:-55px;border-radius:3px;background:#16161a}
+.wcap{text-align:center;margin-top:22px;font-size:34px;font-weight:700}
 .wcap span{display:block;font-size:26px;font-weight:500;color:var(--mute);margin-top:6px}
-.w{background:#e9e6df;border-radius:12px}
+.w{background:#e9e6df;border-radius:10px}
 .w.d{background:#d4d0c7}
-.wf .search{height:56px;border-radius:30px;margin-bottom:16px}
-.wf .banner{height:120px;margin-bottom:14px;border-radius:16px}
-.wf .row{display:flex;gap:12px;margin-bottom:14px}
-.wf .tile{flex:1;height:110px;position:relative}
-.wf .tile i{position:absolute;left:8px;top:8px;width:46px;height:20px;border-radius:6px;background:#f0b9ba}
-.wf .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;height:290px;overflow:hidden}
-.wf .grid .tile{height:130px}
-.wf .lbl{height:16px;width:40%;margin:2px 0 10px}
-.chat .composer{position:absolute;left:26px;right:26px;bottom:26px;height:68px;border-radius:36px;border:3px solid #cfcac1;display:flex;align-items:center;padding:0 24px;color:#a9a49b;font-size:28px;justify-content:space-between}
-.chat .composer b{width:44px;height:44px;border-radius:22px;background:#cfcac1;display:block}
-.chat .hint{position:absolute;left:0;right:0;top:44%;text-align:center;color:#c1bcb2;font-size:30px;font-weight:600}
+.wf .search{height:40px;border-radius:20px;margin-bottom:12px}
+.wf .banner{height:96px;margin-bottom:12px;border-radius:14px}
+.wf .row{display:flex;gap:8px;margin-bottom:12px}
+.wf .tile{flex:1;height:72px;position:relative}
+.wf .tile i{position:absolute;left:6px;top:6px;width:26px;height:12px;border-radius:4px;background:#f0b9ba}
+.wf .grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;overflow:hidden}
+.wf .grid .tile{height:118px}
+.wf .lbl{height:12px;width:45%;margin:2px 0 8px}
+.chat .composer{position:absolute;left:16px;right:16px;bottom:26px;height:52px;border-radius:26px;border:2px solid #cfcac1;display:flex;align-items:center;padding:0 8px 0 18px;color:#a9a49b;font-size:20px;justify-content:space-between}
+.chat .composer b{width:36px;height:36px;border-radius:18px;background:#cfcac1;display:block}
+.chat .hint{position:absolute;left:0;right:0;top:44%;text-align:center;color:#c1bcb2;font-size:24px;font-weight:600}
 
 /* idea */
 .phones{display:flex;gap:64px;justify-content:center;margin-top:30px}
@@ -197,7 +198,7 @@ body.notes #notes{display:block}
         <div class="w search"></div>
         <div class="w d banner"></div>
         <div class="w lbl"></div>
-        <div class="row"><div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div></div>
+        <div class="row"><div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div></div>
         <div class="w lbl"></div>
         <div class="grid">
           <div class="w tile"><i></i></div><div class="w tile"><i></i></div><div class="w tile"><i></i></div>
