@@ -26,11 +26,11 @@ h2{font-size:76px;line-height:1.08;letter-spacing:-2.4px;font-weight:800;max-wid
 code,.mono{font-family:var(--mono)}
 
 /* phone slot */
-.phone-slot{position:absolute;left:164px;top:44px;width:440px;height:952px;border-radius:64px;background:#0d0d10;padding:6px;box-shadow:0 18px 50px #0003;overflow:hidden}
+.phone-slot{visibility:hidden;position:absolute;left:164px;top:44px;width:440px;height:952px;border-radius:64px;background:#0d0d10;padding:6px;box-shadow:0 18px 50px #0003;overflow:hidden}
 .phone-slot .inner{position:relative;width:100%;height:100%;border-radius:58px;background:#17171c;overflow:hidden;display:grid;place-items:center}
 .phone-slot .inner::before{content:"";position:absolute;inset:0;border-radius:58px;border:2px dashed #3a3a44}
 .phone-slot iframe{display:none;position:absolute;left:0;top:0;width:390px;height:844px;border:0;background:#fff;transform:scale(1.097);transform-origin:0 0;border-radius:0}
-body.live .phone-slot iframe{display:block}
+body.live .phone-slot{visibility:visible}body.live .phone-slot iframe{display:block}
 body.live .phone-slot .inner::before,body.live .phone-slot .empty{display:none}
 .phone-slot .empty{color:#5d5d6a;font-size:22px;font-weight:600;letter-spacing:.04em}
 .phone-cap{position:absolute;left:164px;top:1008px;width:440px;text-align:center;font-size:21px;color:var(--mute);font-weight:600}
