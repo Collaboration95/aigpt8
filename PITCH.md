@@ -38,7 +38,7 @@ Shopping where the AI *is* the interface: every request builds its own screen fr
   - **Online learning:** each tap is a gradient update, anchored to the user's prior so one tap can't swing everything. Undo replays the history exactly.
   - **Closed loop:** the updated model reranks the next shopping request, shown as "✦ tuned by your Rapid fire picks".
   - **Cold start:** a brand-new user gets the population prior, and one game warms them up.
-  - **Rewards:** coins pay for *finishing* a game, not for particular answers, so the data stays unbiased. Coins are spent at checkout (100 coins = ₩200 off). This makes the game a sales funnel.
+  - **Rewards:** coins pay for *finishing* a game, not for particular answers, so the data stays unbiased. Coins are spent at checkout (10 coins = ₩100 off). This makes the game a sales funnel.
 
 ### 4. The dashboard ("this is who Guru is")
 - Shows before and after buy-intent probabilities, the learned traits, the evidence behind each trait, and the coin ledger.
