@@ -85,7 +85,12 @@
       const url=new URL('/games.html',location.origin);url.searchParams.set('sid',sid);url.searchParams.set('game',game);
       if(token && /^[a-zA-Z0-9_-]{1,256}$/.test(token)) {
         url.searchParams.set('launchToken',token);url.searchParams.set('rounds',String(a.rounds||4));url.searchParams.set('productIds',JSON.stringify(a.productIds||a.product_ids||[]));
-        const frame=el('iframe','game-frame');frame.title=a.title||'Shopping game';frame.src=url.href;wrapper.append(frame);
+        // Surprise me: show every game; tapping one launches it in place.
+        const GAMES=[['basket','🧺','Budget','Fill a basket on a budget'],['bracket','🏆','This or that','Pick a winner, round by round'],['rapid','⚡','Rapid fire','Want or nope, fast'],['price','💸','Price guess','Guess the price, win coins'],['swipe','💞','Swipe','Right to save, left to pass']];
+        const pick=el('div','game-pick');pick.append(el('div','gp-title','Pick a game'),el('div','gp-sub','Play 30 seconds. Earn coins.'));const grid=el('div','gp-grid');
+        GAMES.forEach(([id,emo,name,line],i)=>{const b=el('button','gp-card gp-'+id);b.type='button';b.style.animationDelay=(i*70)+'ms';b.append(el('span','gp-emo',emo),el('b','',name),el('small','',line));b.onclick=()=>{url.searchParams.set('game',id);if(id==='bracket'||id==='basket'){url.searchParams.delete('productIds');url.searchParams.delete('rounds');}const frame=el('iframe','game-frame');frame.title=name;frame.src=url.href;pick.replaceWith(frame);};grid.append(b);});
+        pick.append(grid);wrapper.append(pick);
+        wrapper.closest('[data-call]')?.parentElement?.querySelectorAll('.lookup-used,.lookup-trace,.trace').forEach(n=>n.remove());
       } else {const link=el('a','','Continue to games →');link.href=url.pathname+url.search;node.className='notice';node.append(el('br'),link);}
     }
     // Older commerce variants commit to localStorage on click. Capture live checkout
