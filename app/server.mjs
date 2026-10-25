@@ -48,7 +48,7 @@ async function moduleHandlers() {
 // --- big screens: show the page inside an iPhone frame (390x844, scaled to fit) ---
 // Runs first in <head>; writes the frame, then swallows the rest of the page so its scripts don't run twice.
 const ICONS = '<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png"><link rel="manifest" href="/manifest.webmanifest">';
-const NO_FRAME = /\/(dashboard|primitives)\.html$/;
+const NO_FRAME = /\/(dashboard|primitives)\.html$|\/slides\//;
 const FRAME = `<script>(()=>{if(screen.width<=700||innerWidth<=700||top!==self||/[?&]frame=1/.test(location.search))return;
 const u=new URL(location.href);u.searchParams.set('frame','1');
 document.write('<style>html,body{margin:0;height:100%;background:#eceef2}body{display:grid;place-items:center;overflow:hidden}'
