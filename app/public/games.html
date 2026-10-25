@@ -437,20 +437,21 @@ async function result(prof){
   const claim=()=>REWARDS.earn(game,{completionId,eventIds:[...savedEventIds],rounds});
   try{rewards=await claim();}catch(e){stage.innerHTML='<div class="bridge-result"><b>Rewards pending</b><button class="cta" id="reward-retry">Retry reward</button></div>';$('#reward-retry').onclick=()=>result(prof);return;}
   if(token!==run)return;
-  REWARDS.burst(rewards.earned);
   if(embedded){
     if(inst&&inst.stop)inst.stop();cnt('');
     stage.innerHTML=`<div class="bridge-result"><b>+${rewards.earned} coins</b><span>Preferences updated · back to shopping</span></div>`;
-    if(launchToken)parent.postMessage({type:'game_complete',token:launchToken,game:cur,eventIds:[...savedEventIds]},location.origin);
+    stage.scrollTop=0;stage.closest('.card')?.scrollTo(0,0);window.scrollTo(0,0);
+    if(launchToken)parent.postMessage({type:'game_complete',earned:rewards.earned,token:launchToken,game:cur,eventIds:[...savedEventIds]},location.origin);
     return;
   }
   if(inst&&inst.stop)inst.stop();
+  REWARDS.burst(rewards.earned);
   const r=learn(prof.w,prof.ex||[],prof.seen||new Set(),prof.pp);lastRes=r;cnt('');
   stage.innerHTML=`<div class="res"><div class="rewards"><div><b>+${rewards.earned} coins</b><div style="font-size:11px;margin-top:4px">${rewards.breakdown.map(p=>esc(p.note)+' +'+p.coins).join(' · ')}${rewards.earned===0?(rewards.duplicate?'Coins already added':'Daily coin limit reached'):''}</div></div><span id="result-coins"></span></div><div class="rh">Learned</div><div class="chips">${r.chips.map((c,i)=>`<span class="lc" style="background:${PAL[i%4]};animation-delay:${.1+i*.09}s">${c}</span>`).join('')}</div>
   ${tasteHTML()}<div class="rh">Picked for you</div><div class="pks">${r.picks.map((k,i)=>`<div class="pk" style="animation-delay:${.35+i*.1}s">${sv(k.p,50)}<div class="pi"><div class="pn">${k.p.s||k.p.n}</div><div class="pp">${won(k.p.pr)}</div></div><div class="tg"><span class="badge">${k.why}</span>${k.p.rare?'<span class="badge gem">Hidden gem</span>':''}</div></div>`).join('')}</div>
   <button class="ship" id="ship"><span class="s1">Ship it · ${won(r.total)}</span><span class="s2">${CHECK}Order placed</span></button>
   <button class="again" id="again">Play again</button></div>`;
-  REWARDS.pill($('#result-coins'));enter();confetti();
+  stage.scrollTop=0;window.scrollTo(0,0);REWARDS.pill($('#result-coins'));enter();confetti();
   $('#ship').onclick=e=>{const b=e.currentTarget;if(b.classList.contains('done'))return;if(!window.Orders){b.textContent='Orders unavailable · try again';return;}const items=r.picks.map(({p})=>p.item||{id:p.id,name:p.n,price:p.pr,img:''});const order=Orders.add({items,total:r.total,flow:'games'});b.classList.add('done');b.disabled=true;pop(b,1.06);const link=window.AI&&AI.trackLink?AI.trackLink(order):Object.assign(document.createElement('a'),{href:'/orders.html#'+encodeURIComponent(order.id),textContent:'Track order →',className:'track-fallback'});b.after(link)};
   $('#again').onclick=()=>go(cur);
 }

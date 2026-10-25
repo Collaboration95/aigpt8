@@ -13,3 +13,11 @@ brushEvery:{value:'3 months',label:'Brush replacement reminder',because:'Demo ca
 export function memory(session,orders=[]) {const result=structuredClone(facts);for(const k of session.forgotten||[])delete result[k];for(const o of orders.filter(o=>o.sid===session.sid&&o.status!=='cancelled'))for(const p of o.items||[])if(p.category==='haircare')result.shampooUsual={value:p.productId,label:'Your ordered shampoo',because:'From your saved demo order',source_product_id:p.productId};Object.assign(result,session.confirmedFacts||{});for(const k of session.forgotten||[])delete result[k];return {facts:result,pastOrders};}
 
 export function confirm(session,text){const match=/\b(single|twin|queen|king|double)\s*(?:size\s*)?bed\b/i.exec(text);if(!match)return;const value=match[1].toLowerCase()==='twin'?'Single':match[1][0].toUpperCase()+match[1].slice(1).toLowerCase();session.confirmedFacts||={};session.confirmedFacts.bed={value,label:value+' bed',because:'you, just now'};session.forgotten=(session.forgotten||[]).filter(k=>k!=='bed');delete session.selectedProductId;}
+
+// Removing an inference also clears any previous selection derived from it.
+export function removeFact(session,key,action){
+ session.forgotten=[...new Set([...(session.forgotten||[]),key])];
+ delete session.confirmedFacts?.[key];
+ delete session.selectedProductId;
+ session.factCorrection={key,action};
+}

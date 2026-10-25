@@ -40,7 +40,7 @@
   }
   function collapseLookups() {
     if (!lookupNode || lookupNode.classList.contains('lookup-used')) return;
-    lookupNode.className='lookup-used';lookupNode.replaceChildren(el('span','','✦ Used: '),el('code','',[...new Set(lookups.map(l=>l.name))].join(' · ')));lookupNode.removeAttribute('role');
+    lookupNode.className='lookup-used';lookupNode.replaceChildren(el('span','','✦ '+lookups[0].summary),el('code','',[...new Set(lookups.map(l=>l.name))].join(' · ')));lookupNode.removeAttribute('role');
   }
   function freezePrevious() { for (const c of calls.values()) if (c.committed) { c.node.firstElementChild?.freeze?.(); c.node.inert = true; c.frozen = true; } }
   function adapted(e) {
@@ -62,6 +62,7 @@
     const c = calls.get(e.toolCallId); if (busy || !c?.committed || c.frozen) return;
     if(value?.forget)value={action:'forget',key:value.forget};if(value?.change)value={action:'change',key:value.change};
     if (e.name === 'ship_it') value = 'ship';
+    c.node.querySelectorAll('dialog[open]').forEach(d=>d.close());
     return submit({event:{toolCallId:e.toolCallId, value, label:String(label || value).slice(0,200)}});
   }
   function renderTool(e) {
@@ -72,7 +73,7 @@
     catch { node = el('div','status-card','This option is temporarily unavailable.'); }
     wrapper.append(node);
     if(e.gameReason&&['show_picks','compare_products','product_spotlight'].includes(e.name))wrapper.append(el('small','game-reason',e.gameReason));
-    if(['note_inference','memory_recap'].includes(e.name))wrapper.addEventListener('click',ev=>{const b=ev.target.closest('button[data-action]');if(!b||!['forget','change'].includes(b.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();answer(e,{action:b.dataset.action,key:b.dataset.key},b.textContent);},true);
+    if(['note_inference','memory_recap'].includes(e.name))wrapper.addEventListener('click',ev=>{const b=ev.target.closest('button[data-action]');if(!b||!['forget','change'].includes(b.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();ev.target.closest('dialog')?.close();answer(e,{action:b.dataset.action,key:b.dataset.key},b.textContent);},true);
     if(e.name==='play_game'&&!KIT.tools().includes('play_game')) {
       const token=a.launchToken||a.launch_token;
       const game=['price','rapid','swipe','basket','bracket'].includes(a.game)?a.game:'price';
@@ -174,7 +175,9 @@
     const c=[...calls.values()].find(c=>c.event.name==='play_game'&&c.committed&&!c.frozen&&c.node.querySelector('iframe')?.contentWindow===e.source);
     const token=c?.event.args?.launchToken || c?.event.args?.launch_token;
     if(!c||!token||e.data.token!==token||!Array.isArray(e.data.eventIds)||!e.data.eventIds.every(id=>typeof id==='string'&&id.length<=160))return;
-    answer(c.event,{action:'complete',eventIds:e.data.eventIds},'Game complete');
+    if(c.completing)return;c.completing=true;
+    anchor=c.node;align();if(e.data.earned)REWARDS.burst(e.data.earned);
+    setTimeout(()=>answer(c.event,{action:'complete',eventIds:e.data.eventIds},'Done playing'),2600);
   });
   const viewKey='t8-live-view-'+sid;
   function saveView(){try{sessionStorage.setItem(viewKey,JSON.stringify({goal:originalGoal,html:messages.innerHTML,calls:[...calls].map(([id,c])=>[id,{event:c.event,committed:c.committed,frozen:c.frozen}])}));}catch{}}
