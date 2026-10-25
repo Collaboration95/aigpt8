@@ -163,8 +163,7 @@ html,body{background:#fff;color:#202332}
 .head{min-height:36px;margin-bottom:12px}
 .head h2{font-size:25px}
 .stage{flex:none}
-.art.product-art{display:block;background:transparent;border-radius:14px;overflow:hidden;flex:none}
-.product-art .pimg{width:100%;height:100%;border-radius:14px}
+.art.fill{background:var(--f3);border-radius:16px;padding:10%;box-sizing:border-box}
 .sn{font-size:20px;line-height:1.2;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;padding:0 4px}
 .pgn{font-size:19px;min-height:0;overflow-wrap:anywhere;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;text-align:center}
 .pgart{background:transparent;padding:0;border-radius:14px;margin-bottom:6px}
@@ -175,7 +174,6 @@ html,body{background:#fff;color:#202332}
 .deck{height:auto;aspect-ratio:auto;margin:0 0 16px;height:408px}
 .sc{padding:8px 8px 12px;justify-content:flex-start;gap:4px}
 .sc .art{margin:0 0 8px;width:100%!important;height:auto!important;aspect-ratio:1;max-height:268px}
-.sc .art .pimg{height:100%}
 .sc .sn{font-size:19px}
 .stamp{top:22px}
 .rbs{margin-top:0;padding-top:0}
@@ -253,8 +251,9 @@ html.embedded,html.embedded body{height:100%;min-height:0;background:transparent
 #card[data-game=basket]{background:#173d39!important;color:#fff4d6;border:2px solid #d9c398}
 [data-game=basket] .head h2{color:#fff4d6!important}[data-game=basket] .basket-label{font:800 11px monospace;letter-spacing:2px;margin:0 4px 14px;color:#e4c585}
 [data-game=basket] .mt b{color:#fff4d6}[data-game=basket] .mt span{color:#f2dfbc}[data-game=basket] .bt{background:#fff9eb;color:#243e37;border-radius:6px;box-shadow:0 3px 0 #0c2524}
+[data-game=basket] .pk,[data-game=basket] .taste,[data-game=basket] .lc{color:#243e37}[data-game=basket] .taste{background:#fff9eb}[data-game=basket] .rh{color:#e4c585}[data-game=basket] .again{color:#f2dfbc}
 [data-game=basket] .cta{background:#f6ce76;color:#183c35;border-radius:8px;box-shadow:none}[data-game=basket] .mf{background:#f6ce76}
-.sc{touch-action:pan-y}.sc .art{background:#fff}.deck{perspective:900px}.hint{font-size:12px}
+.sc{touch-action:pan-y}.deck{perspective:900px}.hint{font-size:12px}
 .res .ship{position:sticky;bottom:calc(16px + env(safe-area-inset-bottom));z-index:10;box-shadow:0 0 0 8px #fff,0 8px 24px #331a2630}
 .res{padding-bottom:calc(24px + env(safe-area-inset-bottom))}.rewards{gap:10px;align-items:flex-start}.rewards .coin-pill{font-size:11px;padding:0 6px}
 #ml-save[role=button]{min-height:44px}.embedded .page,.embedded .card{height:auto;flex:none}.embedded .card{overflow:visible}.embedded body,.embedded{height:auto!important;overflow:auto!important}
@@ -262,8 +261,8 @@ html.embedded,html.embedded body{height:100%;min-height:0;background:transparent
 /* Photo-first swipe stack: one edge-to-edge card with a caption overlay. */
 [data-game=swipe] .deck{height:440px;margin:8px 3px 18px}
 [data-game=swipe] .sc{padding:0;overflow:hidden;border:5px solid white;gap:0;justify-content:flex-start}
-[data-game=swipe] .sc .art{width:100%!important;height:100%!important;max-height:none;aspect-ratio:auto;margin:0}
-[data-game=swipe] .sc::after{content:'';position:absolute;inset:38% 0 0;background:linear-gradient(transparent,#23122ce8);pointer-events:none}
+[data-game=swipe] .sc .art{width:100%!important;height:100%!important;max-height:none;aspect-ratio:auto;margin:0;border-radius:0;padding:8% 20% 50%;background:radial-gradient(circle at 50% 36%,#fff 0,var(--f3) 70%)}
+[data-game=swipe] .sc::after{content:'';position:absolute;inset:56% 0 0;background:linear-gradient(transparent,#23122ce8);pointer-events:none}
 [data-game=swipe] .sc .sn,[data-game=swipe] .sc .sp,[data-game=swipe] .sc .stags{position:absolute;z-index:1;left:14px;right:14px;color:white;text-align:left}
 [data-game=swipe] .sc .sn{bottom:76px;padding:0;font-size:22px;line-height:1.15}
 [data-game=swipe] .sc .sp{bottom:47px;font-size:20px}[data-game=swipe] .sc .stags{bottom:14px;justify-content:flex-start}
@@ -329,7 +328,6 @@ towel:'<rect class="f2" x="12" y="62" width="76" height="26" rx="11"/><rect clas
 candle:'<path style="fill:#ffb300" d="M50 4Q65 20 58 29A8 8 0 0 1 42 29Q37 20 50 4Z"/><rect class="f2" x="48" y="30" width="4" height="14"/><rect class="f1" x="22" y="42" width="56" height="48" rx="13"/><rect class="f3" x="30" y="54" width="40" height="26" rx="9"/>'+F(50,62,8),
 can:'<rect class="f1" x="28" y="10" width="44" height="82" rx="13"/><rect class="f2" x="28" y="10" width="44" height="13" rx="6"/><rect class="f2" x="28" y="79" width="44" height="13" rx="6"/><rect class="f3" x="34" y="34" width="32" height="34" rx="9"/>'+F(50,48,7)
 };
-const fallbackArt=(p,s)=>`<div class="art" style="width:${s}px;height:${s}px;--f1:${p.c[0]};--f2:${p.c[1]};--f3:${p.c[2]}"><svg viewBox="0 0 100 100" aria-hidden="true">${ART[p.art]}</svg></div>`;
 /* ---------- catalog ---------- */
 const LB={matcha:'Matcha fan',coffee:'Coffee lover',kfood:'K-food fan',spicy:'Spice seeker',skin:'Skincare nerd',snack:'Snack lover',sweet:'Sweet tooth',home:'Home nester',cozy:'Cozy vibes',pet:'Pet parent',fit:'Fitness fuel',tea:'Tea sipper',trendy:'Trend chaser',premium:'Quality first',budget:'Deal hunter'};
 const P={};
@@ -365,8 +363,22 @@ Object.assign(LB,{refreshing:'Refreshing',cooking:'Home cook',laundry:'Home esse
 function syncCatalog(){const items=window.CATALOG&&CATALOG.items||[];if(!items.length)return;const used=new Set();ALL.forEach(p=>{const pool=items.filter(i=>i.category===preferred[p.id]);const item=pool.find(i=>!used.has(i.id)&&matches[p.id].test(i.name))||pool.find(i=>!used.has(i.id))||items.find(i=>!used.has(i.id)&&i.tags.includes('game'));if(!item)return;used.add(item.id);p.item=item;p.s=item.name;p.n=(item.name.toLowerCase().includes((item.brand||'').toLowerCase())?'':(item.brand?item.brand+' · ':''))+item.name;p.pr=+item.price;p.cat=item.category;p.tags=[...new Set([...(item.tags||[]).filter(t=>t!=='game'),...({snacks:['snack'],drinks:['refreshing'],beauty:['skin'],home:['home'],kitchen:['cooking']}[item.category]||[])])];p.rare=Boolean(item.tags?.includes('novelty'));});}
 
 syncCatalog();
-function sv(p,size){if(!p.item)return fallbackArt(p,size);return `<div class="art product-art" data-product="${p.id}" data-size="${size}" style="width:${size==='full'?'100%':size+'px'};height:${size==='full'?'auto':size+'px'};${size==='full'?'aspect-ratio:1':''}">${CATALOG.imgHTML(p.item,'product-photo')}</div>`;}
-if(window.CATALOG&&CATALOG.onMode)CATALOG.onMode(()=>{$$('.product-art').forEach(el=>{const p=P[el.dataset.product];el.innerHTML=CATALOG.imgHTML(p.item,'product-photo')})});
+// Games always use the playful drawn icons (never product photos). Catalogue items without their own art get a matching icon + palette.
+const ARTKEY=[[/tube|cream|toothpaste|lotion|gel/i,'tube'],[/shampoo|wash|soap|pump|detergent|softener/i,'pump'],[/ramen|noodle|granola|cereal|bowl|soup|rice/i,'bowl'],[/jar|kimchi|jam|honey|paste|sauce|tea mix|yuja/i,'jar'],[/bar|chocolate|choco|jelly|wafer|pepero|biscuit|cookie|cracker/i,'bar'],[/cup|tumbler|mug|latte/i,'cup'],[/mask|kit|box|pack|toy|sheet|seaweed|tteok/i,'box'],[/bottle|cold brew|juice|milk|oil|vinegar|lotion|drink|water/i,'bottle'],[/plant|flower|leaf/i,'plant'],[/towel|tissue|wipe|sponge/i,'towel'],[/candle|diffuser/i,'candle'],[/can\b|soda|cola|sparkling/i,'can'],[/chips|snack|bag|nuts|candy|treat|pasta|coffee/i,'bag']];
+const CATART={snacks:'bag',drinks:'bottle',beauty:'tube',home:'box',kitchen:'jar',toothpaste:'tube',laundry:'pump'};
+const PALS=[['#ff7eb6','#d94a8c','#ffe3f0'],['#ffc83d','#e09a00','#fff4c7'],['#5cc8ff','#1e8fd6','#e2f6ff'],['#8fcf6a','#4e9a3c','#f2ffe0'],['#c58bff','#8a4fd6','#f2e5ff'],['#ff8f6a','#d9552c','#ffe6dc'],['#6fd6a0','#2fa06a','#e0ffef'],['#ff5a4a','#c42a1c','#ffe3dc'],['#4f7cff','#2447c4','#e3eaff'],['#d9a066','#9a6a30','#fff0d8']];
+const CATPAL={snacks:[1,5,7,9],drinks:[2,3,8,6],beauty:[0,4,1,6],home:[3,5,2,9],kitchen:[7,1,9,3],toothpaste:[2,6,3,8],laundry:[2,6,4,8]};
+function artOf(p){
+ const it=p.item||{},name=(p.n||'')+' '+(it.name||'');
+ const hit=ARTKEY.find(([re])=>re.test(name));
+ const k=hit?hit[1]:p.art&&!p.item?p.art:CATART[p.cat||it.category]||p.art||'box';
+ if(p.art===k&&ART[k]&&p.c)return{art:k,c:p.c};
+ const h=[...String(p.id)].reduce((a,ch)=>a*31+ch.charCodeAt(0)>>>0,7);
+ const pool=CATPAL[p.cat||it.category]||[0,1,2,3,4,5];
+ return{art:k,c:PALS[pool[h%pool.length]]};
+}
+function sv(p,size){const {art,c}=artOf(p),full=size==='full';
+ return `<div class="art${full?' fill':''}" style="width:${full?'100%':size+'px'};height:${full?'auto':size+'px'};${full?'aspect-ratio:1;':''}--f1:${c[0]};--f2:${c[1]};--f3:${c[2]}"><svg viewBox="0 0 100 100" aria-hidden="true">${ART[art]}</svg></div>`}
 const sid=new URLSearchParams(location.search).get('sid')||localStorage.getItem('t8-sid')||'demo';localStorage.setItem('t8-sid',sid);
 let savedEventIds=[],completionId=crypto.randomUUID(),staleRun=false;
 REWARDS.pill($('#coin-pill'));
@@ -410,7 +422,7 @@ function learn(){
  const ceiling=Math.min(30000,Math.max(...played.map(p=>p.pr)));
  const floor=Math.min(...played.map(p=>p.pr));
  const picks=(modelState?.predictions||[]).filter(row=>{const item=CATALOG.get(row.item_id);return item&&cats.has(item.category)&&item.price<=ceiling&&item.price>=floor;}).slice(0,3).map(row=>{const item=CATALOG.get(row.item_id);return {row,p:{id:item.id,item,n:item.name,s:item.name,pr:item.price},why:'For your taste'};});
- return {chips:[modelState?.segment||'Still learning'],picks,total:picks.reduce((n,x)=>n+x.p.pr,0)};
+ return {chips:[(typeof modelState?.segment==='string'?modelState.segment:modelState?.segment?.top?.name)||'Still learning'],picks,total:picks.reduce((n,x)=>n+x.p.pr,0)};
 }
 const CHECK='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
 function confetti(){
