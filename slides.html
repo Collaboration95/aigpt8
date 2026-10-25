@@ -140,15 +140,12 @@ body.live .phone-slot .inner::before,body.live .phone-slot .empty{display:none}
 .tools code{font-size:23px;color:var(--ink);background:#f0eee9;border-radius:8px;padding:1px 8px;display:inline-block;margin:4px 6px 0 0}
 .back{margin:8px 0 6px;font-size:24px;color:var(--mute);text-align:center}
 
-/* scope */
-.cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:28px;margin-top:40px}
-.cols .card{min-height:660px;padding:38px}
-.cols h3{font-size:36px;letter-spacing:-.7px;margin-bottom:18px}
-.cols li{font-size:33px;line-height:1.3;margin-bottom:22px;list-style:none;padding-left:34px;position:relative}
-.cols li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
-.cols .syn li::before{content:"○";color:var(--gold)}
-.cols .nxt li::before{content:"→";color:var(--red)}
-.cols li small{display:block;font-size:26px;color:var(--mute);margin-top:2px}
+/* assumptions */
+.assume{list-style:none;padding:0;margin:54px 0 0;max-width:1640px}
+.assume li{position:relative;padding:0 0 0 76px;margin-bottom:38px}
+.assume li i{position:absolute;left:0;top:4px;font-style:normal;font-size:34px;font-weight:800;color:var(--red);font-variant-numeric:tabular-nums}
+.assume li b{display:block;font-size:44px;line-height:1.2;letter-spacing:-1px;font-weight:700}
+.assume li small{display:block;font-size:27px;line-height:1.35;color:var(--mute);margin-top:8px}
 
 /* close */
 .s10{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -351,31 +348,20 @@ body.notes #notes{display:block}
   <aside class="notes-src"><b>Say</b>The live LLM reads the user's order history through lookup tools, then chooses UI tool calls: 23 tools and 127 pre-built visual variants. It never writes UI code. The server checks every product ID and price against the catalogue before anything renders. Below, the learning loop: every tap is a gradient update to the preference model, which re-ranks the next shopping request. Cold start uses the population prior, and one game warms it up.</aside>
 </section>
 
-<!-- 9 SCOPE -->
-<section class="slide" aria-label="Honest scope and next">
-  <p class="eyebrow">Honest scope</p>
-  <h2>What is real, what is synthetic, what is next.</h2>
-  <div class="cols">
-    <div class="card"><h3>Real</h3><ul>
-      <li>Live LLM tool calls, no scripted screens<small>23 tools · 127 variants</small></li>
-      <li>Server-side ID and price validation</li>
-      <li>Lookups over the user’s orders</li>
-      <li>Preference model updated per tap<small>held-out log-loss 0.521 vs 0.539 baseline · AUC 0.62</small></li>
-    </ul></div>
-    <div class="card syn"><h3>Synthetic</h3><ul>
-      <li>The prior: 2,000 synthetic shoppers</li>
-      <li>Order history is demo data</li>
-      <li>Fulfilment is simulated</li>
-      <li>Conversion uplift: not measured<small>the model predicts buy-intent only</small></li>
-    </ul></div>
-    <div class="card nxt"><h3>Next</h3><ul>
-      <li>Real catalogue and real product photos</li>
-      <li>A/B test for conversion uplift</li>
-      <li>Per-product animations in games<small>toothbrush brushing, drink sipping</small></li>
-    </ul></div>
-  </div>
+<!-- 9 ASSUMPTIONS -->
+<section class="slide" aria-label="Assumptions">
+  <p class="eyebrow">Assumptions</p>
+  <h2>What we are betting on.</h2>
+  <ol class="assume">
+    <li><i>1</i><b>Customers already buy repeat items on the platform.</b><small>Order history is the context. The demo uses 4 seeded orders.</small></li>
+    <li><i>2</i><b>A few taps in a game are enough to place a shopper in a segment.</b><small>Tested on synthetic shoppers: 56.5% correct after 10 taps, against 19.3% for the baseline.</small></li>
+    <li><i>3</i><b>People will play a 30-second game while they wait.</b><small>On the MRT or in a lift, for small coin rewards.</small></li>
+    <li><i>4</i><b>An LLM can choose the screen for each request fast enough.</b><small>First lookup in under 2 s, full screen in 3–4 s.</small></li>
+    <li><i>5</i><b>Customers stay in control.</b><small>Every inference is shown and can be changed.</small></li>
+  </ol>
+  <p class="foot">Demo data: seeded orders, synthetic shopper population, simulated delivery.</p>
   <span class="num">9</span>
-  <aside class="notes-src"><b>Say</b>Be honest: the prior is synthetic, the order history is demo data, fulfilment is simulated. The model predicts buy-intent; we haven't measured conversion uplift. Next: a real catalogue and real photos, then an A/B test for uplift.</aside>
+  <aside class="notes-src"><b>Say</b>These are the assumptions behind the demo. Customers already reorder on the platform, so order history is our context; the demo uses four seeded orders. A few taps place a shopper in a segment: on synthetic shoppers, ten taps got 56.5% right against 19.3% for the baseline. People will play a short game while they wait, and the LLM can choose the screen fast enough, under 2 seconds for the first lookup and 3 to 4 for a full screen. Everything it infers is shown and can be changed. The data here is seeded orders, synthetic shoppers and simulated delivery.</aside>
 </section>
 
 <!-- 10 CLOSE -->
