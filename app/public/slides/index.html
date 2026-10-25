@@ -14,13 +14,16 @@ h1,h2,h3,p,ul,ol{margin:0}
 .slide{position:absolute;inset:0;padding:84px 100px 80px;visibility:hidden;opacity:0;overflow:hidden;color:var(--ink)}
 .slide.active{visibility:visible;opacity:1}
 .slide>*{position:relative}
-.slide>.abs,.slide>.num,.slide>.foot,.slide>.bg{position:absolute}
+.slide>.abs,.slide>.num,.slide>.bg{position:absolute}
 .eyebrow{font-size:26px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .eyebrow b{background:var(--chip,var(--red));color:var(--chipink,#fff);padding:7px 22px;border-radius:40px;margin-right:6px}
 h2{font-size:76px;line-height:1.08;letter-spacing:-2.4px;font-weight:800;max-width:1700px}
-.hl{background:linear-gradient(transparent 58%,var(--yellow) 58% 92%,transparent 92%);padding:0 6px;margin:0 -6px;border-radius:6px}
+/* hand-drawn marker highlights: JS injects an SVG into each .mk */
+.mk{position:relative;display:inline-block;white-space:nowrap}
+.mk:not([data-shape]){margin:0 .03em 0 .1em}
+.mk svg{position:absolute;overflow:visible;pointer-events:none;z-index:3}
+.mk path{fill:none;stroke:var(--mc,#f0322f);stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:var(--len,0)}
 .num{right:100px;bottom:44px;font-size:24px;font-weight:700;opacity:.55}
-.foot{left:100px;bottom:44px;font-size:24px;opacity:.75;font-weight:600}
 .logo{font-weight:900;letter-spacing:-.045em;color:var(--red);line-height:1}
 .logo span{color:var(--yellow)}
 code,.mono{font-family:var(--mono)}
@@ -50,16 +53,14 @@ code,.mono{font-family:var(--mono)}
 /* 2 problem */
 .s2{background:radial-gradient(circle at 20% 90%,#e5252840,transparent 45%),radial-gradient(circle at 85% 10%,#6c4cf150,transparent 45%),var(--navy);color:#fff}
 .s2 h2{font-size:66px;max-width:1720px;letter-spacing:-2px}
-.s2 .hl.a{background:linear-gradient(transparent 58%,#e52528 58% 92%,transparent 92%)}
-.s2 .hl.b{background:linear-gradient(transparent 58%,#6c4cf1 58% 92%,transparent 92%)}
 .s2 .eyebrow b{--chip:var(--yellow);--chipink:var(--ink)}
 .trio{position:absolute;left:100px;right:100px;top:280px;height:760px;display:flex;align-items:center;justify-content:space-between}
-.cap{width:320px}
+.cap{width:320px;position:relative;z-index:1}
 .cap h3{font-size:50px;line-height:1.05;letter-spacing:-1.4px;font-weight:800}
 .cap p{font-size:28px;line-height:1.35;margin-top:14px;opacity:.82}
 .cap.l{text-align:right}.cap.l h3{color:#ff8a78}
 .cap.r h3{color:#b9a8ff}
-.mid{display:flex;flex-direction:column;align-items:center}
+.mid{display:flex;flex-direction:column;align-items:center;position:relative;z-index:1}
 .mid .ph{box-shadow:0 0 0 10px var(--yellow),0 0 0 22px #ffc40040,0 0 110px #e52528a0}
 .mid .cap{text-align:center;width:420px;margin-top:34px}
 .mid .cap h3{color:var(--yellow);font-size:46px}
@@ -99,6 +100,14 @@ code,.mono{font-family:var(--mono)}
 .void .g.f{right:24px;bottom:150px;width:60px;height:60px;border-color:#c9bdf7}
 .void .sp{position:absolute;color:#e3dcf8;font-size:26px}
 .void .sp.a{left:150px;top:210px}.void .sp.b{right:70px;top:250px;color:#ffe9b0}.void .sp.c{left:60px;top:430px;color:#ffd0dc}
+.void .dr{position:absolute;left:50%;bottom:62px;margin-left:-8px;font-size:20px;color:#b9a8ff;opacity:0}
+.crowd .walls{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;background:radial-gradient(ellipse 88% 78% at 50% 50%,transparent 58%,#080620b0 100%)}
+.crowd .walls:before,.crowd .walls:after{content:"";position:absolute;top:0;bottom:0;width:24%}
+.crowd .walls:before{left:0;background:linear-gradient(90deg,#08062066,transparent)}
+.crowd .walls:after{right:0;background:linear-gradient(270deg,#08062066,transparent)}
+.wide{position:relative;flex:none;display:flex;align-items:center;justify-content:center}
+.halo{position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;background:radial-gradient(circle,#b9a8ff80 0,#6c4cf130 46%,transparent 70%);pointer-events:none}
+.ring{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;border:3px solid #ffffff59;opacity:0;pointer-events:none}
 
 /* 3 idea: collage */
 .s3{background:var(--navy);color:#fff;padding:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -197,7 +206,6 @@ code,.mono{font-family:var(--mono)}
 /* 8 architecture */
 .s8{background:radial-gradient(circle at 95% 0,#ffc4004d,transparent 40%),radial-gradient(circle at 0 100%,#ff4d8d33,transparent 40%),#eaedff}
 .s8 .eyebrow b{--chip:var(--navy)}
-.s8 h2 .hl{background:linear-gradient(transparent 58%,#ffc400 58% 92%,transparent 92%)}
 .s8 .lead{font-size:36px;line-height:1.3;font-weight:600;color:#33334a;margin-top:16px}
 .arch{position:absolute;left:100px;right:100px;top:352px}
 .lane{display:flex;align-items:stretch;gap:0}.lane .ar{align-self:center}
@@ -218,15 +226,14 @@ code,.mono{font-family:var(--mono)}
 .s9{background:radial-gradient(circle at 90% 90%,#ff6b5755,transparent 45%),linear-gradient(135deg,#ffc400,#ffdf55);color:var(--ink)}
 .s9 .eyebrow b{--chip:var(--red)}
 .bets{position:absolute;left:100px;right:100px;top:290px;display:flex;gap:32px}
-.bet{flex:1;height:660px;border-radius:40px;padding:44px 44px;color:#fff;display:flex;flex-direction:column;box-shadow:0 22px 50px #0003;position:relative;overflow:hidden}
-.bet:nth-child(1){background:linear-gradient(150deg,#ff4a3d,#c9162a)}
-.bet:nth-child(2){background:linear-gradient(150deg,#6c4cf1,#a23cf0)}
-.bet:nth-child(3){background:linear-gradient(150deg,#16a37a,#0b7f6a)}
+.bet{--disc:radial-gradient(circle 150px at calc(100% - 60px) 60px,#ffc400e6 149px,#ffc40000 150px);flex:1;height:660px;border-radius:40px;padding:44px 44px;color:#fff;display:flex;flex-direction:column;box-shadow:0 22px 50px #0003;position:relative;}
+.bet:nth-child(1){background:var(--disc),linear-gradient(150deg,#ff4a3d,#c9162a)}
+.bet:nth-child(2){background:var(--disc),linear-gradient(150deg,#6c4cf1,#a23cf0)}
+.bet:nth-child(3){background:var(--disc),linear-gradient(150deg,#16a37a,#0b7f6a)}
 .bet i{font-style:normal;font-size:190px;font-weight:900;line-height:.9;letter-spacing:-8px;color:#ffffff40;margin-bottom:auto}
 .bet b{display:block;font-size:58px;line-height:1.08;letter-spacing:-1.8px;font-weight:800}
 .bet small{display:block;font-size:30px;line-height:1.3;margin-top:18px;opacity:.85;font-weight:600}
-.bet:before{content:"";position:absolute;right:-90px;top:-90px;width:300px;height:300px;border-radius:50%;background:var(--yellow);opacity:.9}
-.s9 .foot{font-weight:700}
+.bet .tw{position:absolute;color:#fff;font-size:var(--s,30px);line-height:1;opacity:.9;text-shadow:0 0 14px #fffa}
 
 /* 10 close */
 .s10{background:radial-gradient(circle at 20% 20%,#ff8a4a 0,transparent 50%),linear-gradient(135deg,#ff4a3d,#d11a2a 70%);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
@@ -235,6 +242,62 @@ code,.mono{font-family:var(--mono)}
 .s10 .mean{font-size:56px;margin-top:26px;font-weight:700}
 .s10 .logo{font-size:70px;margin-top:64px;color:#fff;background:#ffffff26;border-radius:60px;padding:14px 50px 22px}
 .s10 .logo span{color:var(--yellow)}
+
+/* motion: replays whenever a slide becomes active; reduced-motion users get the static final state */
+@media (prefers-reduced-motion:no-preference){
+@keyframes fu{from{opacity:0;transform:translateY(28px)}}
+@keyframes blobIn{from{opacity:0;transform:scale(.8)}}
+@keyframes phIn{from{opacity:0;transform:translateY(54px) rotate(-3deg) scale(.93)}}
+@keyframes phWig{0%,100%{transform:rotate(0)}18%{transform:rotate(-4.5deg) translateY(-4px)}38%{transform:rotate(4deg)}58%{transform:rotate(-2.6deg)}78%{transform:rotate(1.4deg)}}
+@keyframes phFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes phTrem{0%,20%,100%{transform:translate(0,0) rotate(0)}2.5%{transform:translate(-1.6px,.8px) rotate(-.35deg)}5%{transform:translate(1.8px,-.8px) rotate(.4deg)}7.5%{transform:translate(-1.4px,-.6px) rotate(-.3deg)}10%{transform:translate(1.6px,.9px) rotate(.35deg)}12.5%{transform:translate(-1px,.4px) rotate(-.2deg)}15%{transform:translate(1px,-.4px) rotate(.2deg)}}
+@keyframes wallDrift{from{transform:rotate(-8deg) translate3d(0,0,0)}to{transform:rotate(-8deg) translate3d(44px,26px,0)}}
+@keyframes grow{from{transform:scaleX(0)}}
+@keyframes mkDraw{0%{stroke-dashoffset:var(--len);opacity:0}2%{opacity:1}100%{stroke-dashoffset:0;opacity:1}}
+@keyframes pile{from{opacity:0;transform:translateY(-20px) scale(1.12)}55%{transform:translateY(3px) scale(.97)}}
+@keyframes jost{0%,100%{transform:none}25%{transform:translate(-1.2px,1px) rotate(-1.6deg)}50%{transform:translate(1.2px,-1px) rotate(1.3deg)}75%{transform:translate(1px,1.2px) rotate(-.9deg)}}
+@keyframes wallsIn{from{opacity:0}}
+@keyframes wallL{from{transform:translateX(-100%)}}
+@keyframes wallR{from{transform:translateX(100%)}}
+@keyframes haloIn{from{opacity:0;transform:scale(.3)}}
+@keyframes breathe{0%,100%{transform:none}50%{transform:scale(1.07)}}
+@keyframes ringOut{0%{opacity:.55;transform:scale(.8)}100%{opacity:0;transform:scale(2.5)}}
+@keyframes drift{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:.95}100%{opacity:0;transform:translate(var(--dx,0),-280px) scale(1.15) rotate(40deg)}}
+@keyframes gIn{from{opacity:0;transform:scale(.6)}}
+@keyframes gDrift{to{translate:var(--gx,6px) var(--gy,-8px)}}
+@keyframes twink{0%,100%{opacity:.3;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.25) rotate(25deg)}}
+
+.slide.active .fu{animation:fu .65s cubic-bezier(.2,.7,.2,1) calc(var(--fu,0)*var(--st,70ms)) both}
+.slide.active .abs.blob,.slide.active .abs.dot{animation:blobIn .9s cubic-bezier(.2,.7,.2,1) both}
+
+/* phones: rise in staggered, a playful wiggle, then a faint idle float */
+.pa{--pd:calc(.15s + var(--pi,0)*.14s);transform-origin:50% 62%}
+.slide.active .pa{animation:phIn .8s cubic-bezier(.2,.8,.25,1.1) var(--pd) both,phWig .62s ease-in-out calc(var(--pd) + .8s),phFloat calc(5s + var(--pi,0)*.7s) ease-in-out calc(var(--pd) + 1.5s) infinite}
+.slide.active .pa.tight{animation:phIn .8s cubic-bezier(.2,.8,.25,1.1) var(--pd) both,phTrem 3.4s linear calc(var(--pd) + 1s) infinite}
+.slide.active .pa.open{animation:phIn .8s cubic-bezier(.2,.8,.25,1.1) var(--pd) both,phFloat 6.4s ease-in-out calc(var(--pd) + .9s) infinite}
+.slide.active .wall{animation:wallDrift 26s ease-in-out infinite alternate}
+.slide.active .wp{animation:phIn .9s cubic-bezier(.2,.8,.25,1) calc(var(--pi,0)*.09s) both}
+
+/* slide 2: boxed in vs wide open */
+.slide.active .crowd>*:not(.walls){animation:pile .55s cubic-bezier(.3,1.4,.5,1) calc(.45s + var(--k,0)*.075s) both}
+.slide.active .crowd .t{animation:jost 1.7s ease-in-out calc(1.6s + var(--j,0)*.13s) infinite}
+.slide.active .crowd .walls{animation:wallsIn 1.4s ease-out .6s both}
+.slide.active .crowd .walls:before{animation:wallL 1.4s cubic-bezier(.3,.7,.3,1) .6s both}
+.slide.active .crowd .walls:after{animation:wallR 1.4s cubic-bezier(.3,.7,.3,1) .6s both}
+.slide.active .halo{animation:haloIn 1.5s cubic-bezier(.2,.7,.2,1) .3s both,breathe 5.5s ease-in-out 1.8s infinite}
+.slide.active .ring{animation:ringOut 3.8s ease-out calc(.9s + var(--rg,0)*1.9s) infinite}
+.slide.active .void .dr{animation:drift 4.4s ease-out calc(1s + var(--dl,0)*1s) infinite}
+.void .g.a{--gi:0;--gx:8px;--gy:-10px}.void .g.b{--gi:1;--gx:-6px;--gy:8px}.void .g.c{--gi:2;--gx:10px;--gy:6px}.void .g.d{--gi:3;--gx:-8px;--gy:-8px}.void .g.e{--gi:4;--gx:6px;--gy:10px}.void .g.f{--gi:5;--gx:-10px;--gy:-6px}
+.slide.active .void .g{animation:gIn .8s ease-out calc(.5s + var(--gi,0)*.12s) both,gDrift 5.5s ease-in-out calc(1.4s + var(--gi,0)*.12s) infinite alternate}
+.void .sp.a{--td:.2}.void .sp.b{--td:1.1}.void .sp.c{--td:.7}
+.slide.active .void .sp{animation:twink 3s ease-in-out calc(var(--td,0)*1s) infinite}
+.slide.active .bet .tw{animation:twink 2.6s ease-in-out calc(.9s + var(--td,0)*1s) infinite}
+
+/* marker strokes draw themselves */
+.slide.active .mk path{animation:mkDraw .7s cubic-bezier(.5,.05,.3,1) var(--d,.8s) both}
+.slide.active .mk path+path{animation-duration:.45s;animation-delay:calc(var(--d,.8s) + .55s)}
+.slide.active .sizes .bar i{transform-origin:0 50%;animation:grow .9s cubic-bezier(.2,.7,.2,1) calc(.55s + var(--bk,0)*.09s) both}
+}
 
 /* notes + nav */
 #notes{position:fixed;z-index:50;left:0;right:0;bottom:0;display:none;background:#16161aee;color:#f2f0ec;padding:18px 40px 22px;font-size:22px;line-height:1.45;max-height:34vh;overflow:auto}
@@ -262,7 +325,7 @@ body.notes #notes{display:block}
   <img class="mark" src="img/click.svg" alt="Click logo">
   <div class="logo">click<span>.</span></div>
   <div class="ko" lang="ko">척하면 척</div>
-  <p class="mean"><i>cheok-hamyeon cheok</i> · gets you before you finish</p>
+  <p class="mean"><i>cheok-hamyeon cheok</i> · <span class="mk" data-shape="under" data-c="y">gets you before you finish</span></p>
   <p class="team">Team 8 · Coupang × OpenAI hackathon</p>
   <div class="ph"><img src="img/v5-tp-ship.png" alt="Click: your pick, Ship it"></div>
   <span class="num">1</span>
@@ -271,13 +334,13 @@ body.notes #notes{display:block}
 
 <!-- 2 PROBLEM -->
 <section class="slide s2" aria-label="Problem">
-  <p class="eyebrow"><b>The problem</b></p>
-  <h2>Shopping apps show <span class="hl a">everything</span>. AI apps show <span class="hl b">nothing</span>.</h2>
+  <p class="eyebrow"><b>The shift</b></p>
+  <h2>Shopping apps <span class="mk" data-c="r">box you in</span>. AI <span class="mk" data-c="y">opens it up</span>.</h2>
   <div class="trio">
-    <div class="cap l"><h3>Shows everything</h3><p>Shopee, Amazon, Coupang. Cluttered, predictable.</p></div>
-    <div class="ph" style="--w:270px" aria-label="Shopping app: crowded screen">
+    <div class="cap l"><h3>Cluttered</h3><p>So much choice, you don't know where to start.</p></div>
+    <div class="ph tight" style="--w:270px" aria-label="Shopping app: crowded screen">
       <div class="scr crowd">
-        <div class="top"><span>coupang.</span><i></i></div>
+        <div class="top"><span>click.</span><i></i></div>
         <div class="sr">Search</div>
         <div class="cats"><i></i><i></i><i></i><i></i><i></i></div>
         <div class="ban">BIG SALE −50%<small>NOW</small></div>
@@ -288,24 +351,27 @@ body.notes #notes{display:block}
           <div class="t"><u></u><s></s><b>₩5,900</b><em>Rocket</em></div><div class="t"><u></u><s></s><b>₩21,000</b><em>Rocket</em></div><div class="t"><u></u><s></s><b>₩7,700</b><em>Rocket</em></div>
           <div class="t"><u></u><s></s><b>₩9,900</b><em>Rocket</em></div><div class="t"><u></u><s></s><b>₩2,500</b><em>Rocket</em></div><div class="t"><u></u><s></s><b>₩15,800</b><em>Rocket</em></div>
         </div>
+        <div class="walls"></div>
       </div>
     </div>
     <div class="mid">
       <div class="ph" style="--w:292px"><img src="img/v5-tp-ship.png" alt="Click: one box and the screen it needs"></div>
-      <div class="cap"><h3><span class="logo">click<span>.</span></span></h3><p>One box, and the screen it needs.</p></div>
+      <div class="cap"><h3><span class="logo">click<span>.</span></span></h3></div>
     </div>
-    <div class="ph" style="--w:270px" aria-label="LLM app: empty screen with a chat box">
+    <div class="wide"><i class="halo"></i><i class="ring"></i><i class="ring" style="--rg:1"></i>
+    <div class="ph open" style="--w:270px" aria-label="LLM app: empty screen with a chat box">
       <div class="scr void">
         <i class="g a"></i><i class="g b"></i><i class="g c"></i><i class="g d"></i><i class="g e"></i><i class="g f"></i>
         <span class="sp a">✦</span><span class="sp b">✦</span><span class="sp c">✦</span>
+        <span class="dr" style="--dx:-46px;--dl:0">✦</span><span class="dr" style="--dx:30px;--dl:.9;color:#ffc400">✦</span><span class="dr" style="--dx:-6px;--dl:1.8;color:#ff9ab8">✦</span><span class="dr" style="--dx:62px;--dl:2.7">✦</span>
         <div class="hint">How can I help?</div>
         <div class="ask">Ask anything<b></b></div>
       </div>
-    </div>
-    <div class="cap r"><h3>Shows nothing</h3><p>An empty screen and a chat box. You can do anything.</p></div>
+    </div></div>
+    <div class="cap r"><h3>Wide open</h3><p>One box. Ask for anything.</p></div>
   </div>
   <span class="num">2</span>
-  <aside class="notes-src"><b>Say</b>There are two kinds of app today. Shopping apps show everything at once: a search bar over a recommendation feed, Shopee, Amazon, Coupang. Cluttered, predictable. AI apps show nothing: an empty screen and a chat box. You can do anything, but you have to already know what to say. Click sits in between: one box, and the screen it needs.</aside>
+  <aside class="notes-src"><b>Say</b>Shopping apps box you in: banners, deals, grids, so much choice you don't know where to start. AI apps did something new: one open box, and you can ask for anything. Click brings that openness to shopping: one box, and the screen you need.</aside>
 </section>
 
 <!-- 3 IDEA -->
@@ -322,7 +388,7 @@ body.notes #notes{display:block}
   <div class="abs blur"></div>
   <div class="abs veil"></div>
   <p class="eyebrow"><b>The idea</b></p>
-  <h2>Same simple text box.<br><em>A new screen every time.</em></h2>
+  <h2>Same simple text box.<br><span class="mk" data-shape="under" data-c="y"><em>A new screen every time.</em></span></h2>
   <div class="askbox">Ask anything<b>↑</b></div>
   <span class="num">3</span>
   <aside class="notes-src"><b>Say</b>We keep the one thing everybody already understands: a text box. Nothing to learn, nothing that scares off existing customers. What changes is what comes back. Every request renders a new screen built for that person and that moment, with extra options to explore. You don't lock into one flow, and you won't see the same screen twice.</aside>
@@ -333,7 +399,7 @@ body.notes #notes{display:block}
   <div class="abs blob"></div>
   <div class="L">
     <p class="eyebrow"><b>Strong intent</b> · knows what they want</p>
-    <h2>“Reorder my toothpaste.”</h2>
+    <h2>“Reorder my <span class="mk" data-c="y">toothpaste</span>.”</h2>
     <div class="persona"><i>G</i>Guru <span>· reorders about every 6 weeks</span></div>
     <div class="sec">Lookups</div>
     <div class="trace">
@@ -343,7 +409,7 @@ body.notes #notes{display:block}
     <div class="sec">Click shows</div>
     <div class="steps">
       <div class="step">Your usual toothpaste<small>from order history</small></div>
-      <div class="step go">Ship it · ₩8,900<small>1 tap</small></div>
+      <div class="step go"><span class="mk" data-shape="under" data-c="r">Ship it</span> · ₩8,900<small>1 tap</small></div>
       <div class="step">Undo<small>if you change your mind</small></div>
     </div>
     <div class="facts"><div><b>&lt; 2 s</b>first lookup</div><div><b>3–4 s</b>full screen</div></div>
@@ -361,7 +427,7 @@ body.notes #notes{display:block}
   <div class="abs blob"></div>
   <div class="L">
     <p class="eyebrow"><b>Weak intent</b> · only a problem</p>
-    <h2>“Mosquitoes keep biting me at night.”</h2>
+    <h2>“<span class="mk" data-c="r">Mosquitoes</span> keep biting me at night.”</h2>
     <div class="sec">Lookups</div>
     <div class="trace">
       <div class="t"><code>check_bought_before</code><em>→ <b>King-size fitted bed sheet cover</b> · 12 Mar</em></div>
@@ -370,7 +436,7 @@ body.notes #notes{display:block}
     <div class="sec">Click infers, the customer decides</div>
     <div class="steps">
       <div class="step">What size is your bed?<small>tap to answer, no typing</small></div>
-      <div class="step go">✦ King preselected<small>from your 12 Mar order</small></div>
+      <div class="step go">✦ <span class="mk" data-shape="under" data-c="y">King</span> preselected<small>from your 12 Mar order</small></div>
     </div>
     <div class="sec" style="margin-top:22px">“Why King?”</div>
     <div class="chips"><span class="chip k">You ordered it on 12 Mar</span><span class="chip">Change</span><span class="chip">Don’t use this</span></div>
@@ -389,7 +455,7 @@ body.notes #notes{display:block}
   <div class="abs blob"></div>
   <div class="L">
     <p class="eyebrow"><b>No intent</b> · waiting on the MRT</p>
-    <h2>Short games pass the time and show taste.</h2>
+    <h2>Short games pass the time and <span class="mk" data-c="y">show taste</span>.</h2>
     <div class="loop"><span>Play 30 s</span><i>→</i><span class="coin">Coins</span><i>→</i><span>Better picks</span></div>
     <p class="note">Coins pay for finishing, not for particular answers, so the data stays unbiased. 10 coins = ₩100 off at checkout.</p>
   </div>
@@ -407,7 +473,7 @@ body.notes #notes{display:block}
 <!-- 7 WHAT WE LEARN -->
 <section class="slide s7" aria-label="What we learn: shopper segments">
   <p class="eyebrow"><b>What we learn</b></p>
-  <h2>8 taps moved Guru from 7.9% to 43.4%.</h2>
+  <h2>8 taps moved Guru from 7.9% to <span class="mk" data-c="r">43.4%</span>.</h2>
   <div class="dshot"><div class="bar"><i></i><i></i><i></i><span>dashboard</span></div><div class="view"><img src="img/dash-after.png" alt="Dashboard: shopper segment before and after a snack game"></div></div>
   <div class="dside">
     <div class="big"><small>Snack-first bargain hunter</small>7.9%<span class="arrow">→</span><em>43.4%</em></div>
@@ -430,7 +496,7 @@ body.notes #notes{display:block}
 <!-- 8 ARCHITECTURE -->
 <section class="slide s8" aria-label="How it works">
   <p class="eyebrow"><b>How it works</b></p>
-  <h2>The LLM calls tools to <span class="hl">render the UI</span>.</h2>
+  <h2>The LLM calls tools to <span class="mk" data-c="r">render the UI</span>.</h2>
   <p class="lead">Lookup tools read your orders. UI tools render the screen.</p>
   <div class="arch">
     <div class="lname">Ask</div>
@@ -458,24 +524,25 @@ body.notes #notes{display:block}
 </section>
 
 <!-- 9 ASSUMPTIONS -->
-<section class="slide s9" aria-label="Assumptions">
+<section class="slide s9" aria-label="Why it works">
   <p class="eyebrow"><b>Assumptions</b></p>
-  <h2>What we are betting on.</h2>
+  <h2>Why it works.</h2>
   <div class="bets">
-    <div class="bet"><i>1</i><b>People already reorder on the platform.</b><small>Order history is the context.</small></div>
-    <div class="bet"><i>2</i><b>A few game taps reveal who a shopper is.</b><small>Tested on synthetic shoppers.</small></div>
-    <div class="bet"><i>3</i><b>Every guess stays visible and changeable.</b><small>Customers stay in control.</small></div>
+    <div class="bet"><i>1</i><b>A new screen is a <span class="mk" data-c="y">reason to look</span>.</b><small>Every request looks different, so browsing turns into discovering.</small></div>
+    <div class="bet"><i>2</i><b>Fun in, <span class="mk" data-c="y">insight</span> out.</b><small>Every tap in a game tells us who the shopper is.</small>
+      <span class="tw" style="left:42%;top:70px;--s:34px;--td:0" aria-hidden="true">✦</span><span class="tw" style="left:58%;top:215px;--s:26px;--td:.5" aria-hidden="true">✦</span><span class="tw" style="left:24%;top:225px;--s:22px;--td:1.1" aria-hidden="true">✦</span><span class="tw" style="left:80%;top:262px;--s:30px;--td:.8" aria-hidden="true">✦</span><span class="tw" style="left:44%;top:150px;--s:18px;--td:1.5" aria-hidden="true">✦</span>
+    </div>
+    <div class="bet"><i>3</i><b>Know what you want? <span class="mk" data-c="y">Two taps</span>.</b><small>Strong-intent shoppers go straight to checkout. Nothing in the way.</small></div>
   </div>
-  <p class="foot">Demo data: seeded orders, synthetic shopper population, simulated delivery.</p>
   <span class="num">9</span>
-  <aside class="notes-src"><b>Say</b>Three bets. One: people already reorder on the platform, so order history is our context. Two: a few game taps are enough to reveal who a shopper is; we tested that on synthetic shoppers. Three: every guess Click makes is shown and can be changed, so the customer stays in control. The data here is seeded orders, synthetic shoppers and simulated delivery.</aside>
+  <aside class="notes-src"><b>Say</b>Three reasons this works. A screen that changes every time gives people a reason to look, so browsing becomes discovery. Games turn data collection into fun: every tap tells us who the shopper is. And if you already know what you want, it's two taps to checkout; nothing gets in the way.</aside>
 </section>
 
 <!-- 10 CLOSE -->
 <section class="slide s10" aria-label="Close">
   <img class="mark" src="img/click.svg" alt="Click logo">
   <div class="ko" lang="ko">척하면 척</div>
-  <p class="mean">Half a word is enough.</p>
+  <p class="mean"><span class="mk" data-c="y">Half a word</span> is enough.</p>
   <div class="logo">click<span>.</span></div>
   <span class="num">10</span>
   <aside class="notes-src"><b>Say</b>척하면 척: half a word is enough. Play, pick, ship.</aside>
@@ -489,11 +556,51 @@ body.notes #notes{display:block}
 <script>
 const stage=document.getElementById('stage'),slides=[...document.querySelectorAll('.slide')],notes=document.getElementById('notes');let cur=0;
 function fit(){const w=document.documentElement.clientWidth,h=document.documentElement.clientHeight,s=Math.min(w/1920,h/1080);stage.style.left=w/2+'px';stage.style.top=h/2+'px';stage.style.transform=`scale(${s}) translate(-50%,-50%)`}
-function show(i){cur=Math.max(0,Math.min(slides.length-1,i));slides.forEach((s,k)=>{s.classList.toggle('active',k===cur);s.setAttribute('aria-hidden',String(k!==cur));s.inert=k!==cur});
+
+/* hand-drawn marker: an irregular loop (or underline) sized to the .mk text, drawn by CSS dash animation.
+   offsetWidth/Height are layout px, so the result is independent of the stage scale. */
+const NS='http://www.w3.org/2000/svg',MKC={r:'#f0322f',y:'#ffc400',w:'#fff',n:'#14122e',g:'#12b886'};
+const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
+function smooth(p){const f=n=>n.toFixed(1);let d=`M${f(p[0][0])} ${f(p[0][1])}`;
+ for(let i=0;i<p.length-1;i++){const a=p[i-1]||p[i],b=p[i],c=p[i+1],e=p[i+2]||c;
+  d+=`C${f(b[0]+(c[0]-a[0])/6)} ${f(b[1]+(c[1]-a[1])/6)} ${f(c[0]-(e[0]-b[0])/6)} ${f(c[1]-(e[1]-b[1])/6)} ${f(c[0])} ${f(c[1])}`}
+ return d}
+function mark(m,seed){const old=m.querySelector(':scope>svg');if(old)old.remove();
+ const w=m.offsetWidth,h=m.offsetHeight;if(!w||!h)return;
+ const R=rng(seed*97+5),sw=Math.max(5,Math.min(10,h*.09));let ox,oy,W,H,paths;
+ if(m.dataset.shape==='under'){ox=14;oy=6;W=w+2*ox;H=h+oy+32;const big=h>60,y=oy+h*(big?.95:.97)+R()*2;
+  paths=[smooth([[ox-8,y+R()*3],[ox+w*.3,y+2+R()*2],[ox+w*.62,y-1+R()*2],[ox+w+8,y-4-R()*2]])];
+  if(big)paths.push(smooth([[ox+w*.16,y+sw*1.9],[ox+w*.5,y+sw*1.9+3],[ox+w*.86,y+sw*1.9-1]]))}
+ else{const rx=w/2+15,ry=h/2*1.12+3;ox=rx*1.08-w/2+sw;oy=ry*1.08-h/2+sw;W=w+2*ox;H=h+2*oy;
+  const cx=W/2,cy=H/2,a0=-2.6+(R()-.5)*.5,ph=(R()-.5)*.08,N=22,pts=[],e=2/3;
+  for(let i=0;i<=N;i++){const t=i/N,a=a0+t*Math.PI*2*1.1,k=.97+.07*t+.025*Math.sin(a*2.3+seed),c=Math.cos(a),n=Math.sin(a),x=rx*k*Math.sign(c)*Math.abs(c)**e,y=ry*k*Math.sign(n)*Math.abs(n)**e;
+   pts.push([cx+x*Math.cos(ph)-y*Math.sin(ph)+(R()-.5)*3,cy+x*Math.sin(ph)+y*Math.cos(ph)+(R()-.5)*3])}
+  paths=[smooth(pts)]}
+ const s=document.createElementNS(NS,'svg');s.setAttribute('width',W);s.setAttribute('height',H);s.setAttribute('viewBox',`0 0 ${W} ${H}`);s.setAttribute('aria-hidden','true');
+ s.style.left=-ox+'px';s.style.top=-oy+'px';s.style.setProperty('--mc',MKC[m.dataset.c||'r']);
+ paths.forEach((d,j)=>{const p=document.createElementNS(NS,'path');p.setAttribute('d',d);p.setAttribute('stroke-width',(j?sw*.7:sw).toFixed(1));s.appendChild(p);p.style.setProperty('--len',(p.getTotalLength()+2).toFixed(0))});
+ m.appendChild(s)}
+const allMk=[...document.querySelectorAll('.mk')];
+function marks(root){root.querySelectorAll('.mk').forEach(m=>mark(m,allMk.indexOf(m)+1))}
+
+/* tag elements for entry motion; the CSS replays it whenever .active is re-added */
+const FU={s1:'.mark,.logo,.ko,.mean,.team',s2:'.eyebrow,h2,.trio .cap',s3:'.eyebrow,h2,.askbox',s4:'.L>*',s5:'.L>*',s6:'.L>*,.games figcaption',s7:'.eyebrow,h2,.dshot,.dside>*',s8:'.eyebrow,h2,.lead,.arch .lname,.arch .box,.arch .ar',s9:'.eyebrow,h2,.bet',s10:'.mark,.ko,.mean,.logo'};
+slides.forEach(s=>{const c=[...s.classList].find(x=>/^s\d+$/.test(x));
+ s.querySelectorAll(FU[c]||'').forEach((e,k)=>{e.classList.add('fu');e.style.setProperty('--fu',k)});
+ if(c==='s8')s.style.setProperty('--st','38ms');
+ s.querySelectorAll('.ph').forEach((p,k)=>{const w=p.closest('.wall');
+  if(w){p.classList.add('wp');p.style.setProperty('--pi',[...w.children].indexOf(p.parentElement))}else{p.classList.add('pa');p.style.setProperty('--pi',k)}});
+ const base=c==='s9'?650:c==='s8'?900:800,step=c==='s9'?260:380;
+ s.querySelectorAll('.mk').forEach((m,k)=>m.style.setProperty('--d',base+k*step+'ms'));
+ s.querySelectorAll('.crowd>*:not(.walls)').forEach((e,k)=>e.style.setProperty('--k',k));
+ s.querySelectorAll('.crowd .t').forEach((e,k)=>e.style.setProperty('--j',k));
+ s.querySelectorAll('.sizes .bar i').forEach((e,k)=>e.style.setProperty('--bk',k))});
+
+function show(i){cur=Math.max(0,Math.min(slides.length-1,i));marks(slides[cur]);slides.forEach((s,k)=>{s.classList.toggle('active',k===cur);s.setAttribute('aria-hidden',String(k!==cur));s.inert=k!==cur});
  document.getElementById('counter').textContent=`${cur+1} / ${slides.length}`;document.getElementById('prev').disabled=cur===0;document.getElementById('next').disabled=cur===slides.length-1;
  const n=slides[cur].querySelector('.notes-src');notes.innerHTML=n?n.innerHTML:'';history.replaceState(null,'','#'+(cur+1))}
 function tog(cls,btn){const on=document.body.classList.toggle(cls);document.getElementById(btn).classList.toggle('on',on)}
-addEventListener('resize',fit);addEventListener('hashchange',()=>show((parseInt(location.hash.slice(1),10)||1)-1));
+addEventListener('resize',()=>{fit();marks(document)});addEventListener('hashchange',()=>show((parseInt(location.hash.slice(1),10)||1)-1));
 document.getElementById('prev').onclick=()=>show(cur-1);document.getElementById('next').onclick=()=>show(cur+1);
 document.getElementById('nbtn').onclick=()=>tog('notes','nbtn');
 addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;const k=e.key;
@@ -501,7 +608,8 @@ addEventListener('keydown',e=>{if(e.metaKey||e.ctrlKey||e.altKey)return;const k=
  else if(k==='Home')show(0);else if(k==='End')show(slides.length-1);else if(k==='n'||k==='N')tog('notes','nbtn')});
 stage.addEventListener('click',e=>{if(e.target.closest('a,button'))return;show(cur+1)});
 if(new URLSearchParams(location.search).has('capture'))document.body.classList.add('capture');
-fit();show((parseInt(location.hash.slice(1),10)||1)-1);
+fit();marks(document);show((parseInt(location.hash.slice(1),10)||1)-1);
+if(document.fonts)document.fonts.ready.then(()=>marks(document));
 </script>
 </body>
 </html>
