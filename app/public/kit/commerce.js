@@ -16,7 +16,7 @@
   const sum=rows=>rows.filter(r=>r.checked).reduce((n,r)=>n+Number(r.p.price)*r.qty,0);
   const photo=(p,c,cls='')=>{const e=node('div','kc-photo '+cls);e.innerHTML=c.img(p,'kc-image');return e;};
   // Checkout line: big photo + what exactly it is (brand, name, size/qty, price).
-  const itemRow=(r,c)=>{const e=node('div','kc-item');const ph=node('div','kc-item-photo');ph.innerHTML=c.img(r.p,'kc-image');const info=node('div','kc-item-info');const detail=[r.p.variant,r.qty>1?'×'+r.qty:''].filter(Boolean).join(' · ');info.append(node('small','kc-item-brand',r.p.brand||''),node('b','kc-item-name',r.p.name),...(detail?[node('small','kc-item-detail',detail)]:[]),node('span','kc-item-price',c.won(r.p.price*r.qty)));e.append(ph,info);return e;};
+  const itemRow=(r,c)=>{const e=node('div','kc-item');const ph=node('div','kc-item-photo');ph.innerHTML=c.img(r.p,'kc-image');const info=node('div','kc-item-info');const detail=[typeof r.p.variant==='object'?r.p.variant?.size:r.p.variant,r.qty>1?'×'+r.qty:''].filter(Boolean).join(' · ');info.append(node('small','kc-item-brand',r.p.brand||''),node('b','kc-item-name',r.p.name),...(detail?[node('small','kc-item-detail',detail)]:[]),node('span','kc-item-price',c.won(r.p.price*r.qty)));e.append(ph,info);return e;};
   function picked(e,b){e.querySelectorAll('[data-picked]').forEach(x=>x.removeAttribute('data-picked'));b.dataset.picked='';}
   function register(name, description, ids, render) {K.register(name,{group:'commerce',description,variants:Object.fromEntries(ids.map(v=>[v,(a,c)=>render(a,c,v)]))});}
 
@@ -34,7 +34,7 @@
   });
 
   register('ship_it','Place a confirmed set of catalogue items in one action, with delivery receipt and Undo.', ['rocket','slide','hold','stamp','truck'],(a,c,v)=>{
-    const e=shell(a,'Ready when you are',v),rows=lines(a,c);let order=null,timer=null,busy=false;
+    const e=shell(a,'Ready when you are',v),rows=lines(a,c);e.dataset.category=rows[0]?.p.category||'';let order=null,timer=null,busy=false;
     const status=node('div','kc-status');status.setAttribute('role','status');e.append(status);
     const surface=node('div','kc-ship-surface');e.append(surface);
     function ready(){surface.replaceChildren();status.textContent='';
@@ -42,10 +42,7 @@
       const total=sum(rows),ship=button('Ship it · '+c.won(total),place,'kc-primary kc-ship-button');ship.disabled=!rows.length||e.isFrozen();
       if(v==='truck'||v==='stamp')surface.append(node('div','kc-hero',v==='truck'?'▰ →':'READY TO SHIP'));surface.append(ship,node('p','kc-delivery','Rocket · tomorrow 7am'));
       if(window.REWARDS?.shipRow){const rewardRow=window.REWARDS.shipRow(total);if(rewardRow instanceof HTMLElement)surface.append(rewardRow);}
-      if(v==='slide'){
-        ship.textContent='Ship it · '+c.won(total);const range=node('input','kc-range');range.type='range';range.min=0;range.max=100;range.value=0;range.setAttribute('aria-label','Slide to ship');range.disabled=ship.disabled;
-        range.oninput=()=>{e.style.setProperty('--progress',range.value+'%');};range.onchange=()=>{if(Number(range.value)>=95)place();else range.value=0;};surface.insertBefore(range,ship);surface.append(node('small','kc-muted','Slide to send · or tap Ship it'));
-      }
+      // The legacy slide variant now uses the same accessible one-tap checkout.
       if(v==='hold'){
         const hint=node('small','kc-muted','Hold for 0.6s · or tap to ship');surface.append(hint);
         ship.onpointerdown=ev=>{if(ev.button!==0||ship.disabled)return;ship.classList.add('kc-holding');timer=setTimeout(()=>{timer=null;place();},600);};
@@ -126,4 +123,25 @@
   .kit-ship_it .kc-range{accent-color:#e52528}
   .kit-ship_it .kc-primary,.kit-ship_it .kc-ship-button{background:#e52528!important;color:#fff!important}
   `);
+  K.css('click-checkout', `
+.kit.kit-ship_it{--acc:#e52528;--ink:#271a16;--sub:#705130;--card:#fff;position:relative;padding:22px;border:1px solid #edb252;border-radius:26px;background:linear-gradient(125deg,#ffdb58 0%,#ffc04b 65%,#ffad56 100%)}
+.kit.kit-ship_it:before{content:'✦';position:absolute;right:17px;top:2px;font-size:76px;line-height:1;color:#e52528;opacity:.85;pointer-events:none;transform:rotate(12deg)}
+.kit-ship_it .kc-eyebrow{position:relative;font-size:10px;letter-spacing:1.8px;color:#7c341b;margin:0 58px 10px 0}
+.kit-ship_it .kc-title{position:relative;font-size:30px;font-weight:850;letter-spacing:-1.2px;max-width:250px;line-height:1.04;margin:0 35px 22px 0}
+.kit-ship_it .kc-item{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px;align-items:center;padding:12px;background:#fff;border:1px solid #0000000b;border-radius:20px;text-align:left}
+.kit-ship_it .kc-item-photo{min-width:0;width:100%;height:178px;border-radius:13px;overflow:hidden;background:#fff}
+.kit-ship_it .kc-item-photo .pimg{width:100%;height:100%;aspect-ratio:auto;border-radius:12px}
+.kit-ship_it .kc-item-photo .pimg>img{object-fit:contain!important}
+.kit-ship_it .kc-item-info{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px}
+.kit-ship_it .kc-item-brand{font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase;color:#8b6657}
+.kit-ship_it .kc-item-name{font-size:17px;font-weight:750;letter-spacing:-.5px;line-height:1.22;overflow-wrap:anywhere}
+.kit-ship_it .kc-item-detail{font-size:11px;color:#806a60;text-transform:capitalize}
+.kit-ship_it .kc-item-price{font-size:25px;font-weight:850;letter-spacing:-1px;color:#e52528}
+.kit.kit-ship_it .kc-primary{background:#e52528;color:#fff;min-height:58px;margin-top:16px;border-radius:18px;box-shadow:0 5px 0 #b7181c;font-size:18px!important}
+.kit-ship_it .kc-delivery{color:#704526;margin:14px 0 0;font-size:11px;font-weight:650}
+.kit-ship_it .coin-use{margin-top:12px;padding:10px 12px;border:1px solid #ba781b55;border-radius:14px;background:#fff7dd;color:#704526;text-align:left}
+.kit-ship_it .kc-hero{display:none}
+.kit-ship_it[data-frozen]{opacity:1;filter:none}
+`);
+
 })();

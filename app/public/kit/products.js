@@ -10,7 +10,7 @@
     let ids = Array.isArray(a.product_ids) ? a.product_ids : [];
     if (!ids.length && tool === 'show_usual') ids = [ctx.memory?.facts?.toothpasteUsual];
     let products = [...new Set(ids)].map(id => ctx.product(id)).filter(Boolean).slice(0, tool === 'show_picks' ? 8 : tool === 'show_usual' || tool === 'product_spotlight' ? 1 : 3);
-    root.dataset.count=products.length;
+    root.dataset.count=products.length;root.dataset.category=products[0]?.category||'';
     const original = products.slice();
     const ix = p => original.findIndex(x => x.id === p.id);
     const reason = p => value(a.reasons, p, ix(p)) || '';
@@ -105,4 +105,24 @@
   .kp-ladder,.kp-swaps,.kp-tiers{display:grid;gap:12px}.kp-rung,.kp-tier{border-left:3px solid var(--acc);padding-left:10px}.kp-delta{display:block;font-size:11px;font-weight:700;color:var(--sub);padding:10px 4px;overflow-wrap:anywhere}.kp-baseline{margin:0 0 14px}.kp-swap{position:relative;padding-left:24px}.kp-swap-icon{position:absolute;left:0;top:44px;font-size:20px;color:var(--sub)}.kp-tier{padding:14px;border-left-width:1px;border:1px solid var(--soft);border-radius:16px}.kp-tier>.kp-eyebrow{margin-bottom:10px}.kp-tabs{display:flex;overflow-x:auto;gap:8px;padding:3px 3px 14px}.kp-tab{flex:none;min-height:44px;max-width:270px;white-space:normal;border:0;background:var(--soft);border-radius:24px;padding:10px 14px;font-size:11px!important}.kp-tab[aria-selected=true]{background:var(--ink);color:var(--card)}.kp-alt-rail>div .kp-product{height:auto}.kp-alt-rail .kp-chips{margin:0}.kp-empty{font-size:14px;color:var(--sub);padding:20px 0}
   @keyframes kp-enter{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){.kp-root,.kp-root *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   `);
+  KIT.css('click-care-edits', `
+.kit.kp-root[data-category=toothpaste]{border:1px solid #183b2526;border-radius:26px;padding:20px;--ink:#152c26;--sub:#42634c;--card:#fff;--soft:#fff}
+.kp-root[data-category=toothpaste][data-theme=mint]{background:linear-gradient(140deg,#c3f56b,#70d4a7);--acc:#12553d}
+.kp-root[data-category=toothpaste][data-theme=ocean]{background:linear-gradient(145deg,#154cda,#4485ff);--ink:#fff;--sub:#d0e8ff;--acc:#154cda}
+.kp-root[data-category=toothpaste][data-theme=rose]{background:linear-gradient(145deg,#9f2268,#e44889);--ink:#fff;--sub:#ffe0ed;--acc:#b82269}
+.kp-root[data-category=toothpaste] .kp-head{margin-bottom:16px}.kp-root[data-category=toothpaste] .kp-head h2{font-size:31px;font-weight:850;line-height:1.02;letter-spacing:-1.1px;margin-bottom:10px}
+.kp-root[data-category=toothpaste] .kp-because{font-size:10px;line-height:1.4}.kp-root[data-category=toothpaste] .kp-eyebrow{font-size:9px;letter-spacing:1.8px}
+.kp-root[data-category=toothpaste] .kp-product{background:#fff;border:1px solid #00000010;color:#172624;border-radius:18px;gap:10px;padding:12px}
+.kp-root[data-category=toothpaste] .kp-brand{color:#687b79;font-size:10px}.kp-root[data-category=toothpaste] .kp-name{font-weight:750;font-size:16px;line-height:1.22}.kp-root[data-category=toothpaste] .kp-price{color:#e52528;font-weight:850;font-size:25px;letter-spacing:-1px}
+.kp-root[data-category=toothpaste] .kp-action{display:none}.kp-root[data-category=toothpaste] .kp-hero{display:grid;grid-template-columns:138px 1fr;align-items:center;min-height:212px}
+.kp-root[data-category=toothpaste] .kp-hero .kp-photo{height:184px;aspect-ratio:auto}.kp-root[data-category=toothpaste] .kp-hero .kp-info{padding:0}
+.kp-root[data-category=toothpaste] .pimg>img{object-fit:contain!important}.kp-root[data-category=toothpaste] .kp-badge{position:absolute;top:2px;left:2px;background:#d6fba2;color:#21402c;font-size:8px;max-width:95%}
+.kp-root[data-category=toothpaste] .kp-refill{background:#fff;border-radius:22px;padding:16px;grid-template-columns:76px 1fr;gap:12px;color:#192c55}
+.kp-root[data-category=toothpaste] .kp-refillmark{font-size:84px;font-weight:300;line-height:1;color:#2363ef;animation:click-refill 1s ease-out}
+.kp-root[data-category=toothpaste] .kp-refill>.kp-product{padding:12px 0 0;border:0;border-top:1px solid #d8e5ff;border-radius:0;grid-template-columns:116px 1fr}
+.kp-root[data-category=toothpaste] .kp-refill .kp-photo{width:116px;height:142px}.kp-root[data-category=toothpaste] .kp-refill .kp-eyebrow{color:#2860b8;font-size:9px}.kp-root[data-category=toothpaste] .kp-refill .kp-foot{color:#293f68;font-size:18px;font-weight:750}
+.kp-root[data-category=toothpaste] .kp-columns{gap:10px}.kp-root[data-category=toothpaste] .kp-columns .kp-product{padding:10px;min-height:264px;gap:9px}.kp-root[data-category=toothpaste] .kp-columns .kp-photo{height:140px}.kp-root[data-category=toothpaste] .kp-columns .kp-photo .pimg{height:112px}.kp-root[data-category=toothpaste] .kp-columns .kp-badge{position:static;background:#ffdfec;color:#84254e;border-radius:20px;padding:4px 6px;font-size:8px}.kp-root[data-category=toothpaste] .kp-columns .kp-name{font-size:13px}.kp-root[data-category=toothpaste] .kp-columns .kp-price{font-size:21px}.kp-root[data-category=toothpaste] .kp-chips{display:none}
+@keyframes click-refill{from{transform:rotate(-100deg)}to{transform:rotate(0)}}
+`);
+
 })();

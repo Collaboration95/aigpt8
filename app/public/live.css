@@ -2,3 +2,34 @@
 .lookup-steps{padding:10px 12px;border-radius:14px;background:#f8f8fa;color:#656572;font-size:12px;line-height:1.5}.lookup-step+ .lookup-step{margin-top:8px}.lookup-step span{display:block}.lookup-step code{display:block;margin:2px 0 0 16px;font-size:10px;color:#93939c}.lookup-used{color:#85858f;font-size:10px;line-height:1.5;padding:0 3px;overflow-wrap:anywhere}.lookup-used code{font-size:10px}.lookup-step{animation:lookup-in .18s ease-out}@keyframes lookup-in{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
 
 .lookup-used{display:grid;gap:2px}.lookup-used>span{font-size:11px;color:#777782}.lookup-used code{font-size:9px;color:#9999a2}.kq-inferred-badge{min-height:32px;display:inline-flex;align-items:center;padding:4px 8px}
+
+/* Click's generated content contrasts with its quiet white chrome. */
+#messages{gap:10px;padding:8px 12px 0}.user{background:#2a2133;color:#fff;font-size:14px;padding:11px 15px}
+#send{background:#e52528}.lookup-used{padding:0 4px;color:#847169}.lookup-trace summary{font-size:11px;line-height:1.5;cursor:pointer;list-style:none;min-height:28px;padding:3px 0}.lookup-trace summary::-webkit-details-marker{display:none}.lookup-trace summary:after{content:'  ⌄';color:#b49c8f}.lookup-trace[open]{border-bottom:1px solid #eaded7;padding-bottom:10px}.lookup-trace .lookup-step{padding:6px 0}.lookup-trace .lookup-step span{font-size:11px}.lookup-trace .lookup-step code{font-size:9px;color:#94857b}.lookup-steps{background:#fff5db;color:#7d5331;border:1px solid #f2ddb0}
+.receipt{position:relative;overflow:hidden;border:1px solid #edb95d;border-radius:26px;padding:24px;background:linear-gradient(135deg,#ffe46c,#ffc052);color:#72512e;isolation:isolate}
+.receipt:before{content:'✧';position:absolute;right:-4px;top:50px;font-size:160px;line-height:1;color:#e525281c;transform:rotate(12deg);z-index:-1}
+.receipt .receipt-seal{width:54px;height:54px;display:grid;place-items:center;border-radius:50%;background:#e52528;color:#fff;font-size:32px;font-weight:800;margin-bottom:16px;box-shadow:0 0 0 6px #fff7d88c}
+.receipt .receipt-eyebrow{display:block;font-size:9px;letter-spacing:1.7px;font-weight:800;color:#87522e;margin-bottom:8px}
+.receipt .receipt-title{font-size:33px;font-weight:850;letter-spacing:-1.2px;line-height:1.05;color:#2b2020;margin-bottom:8px}
+.receipt>small{font-size:10px}.receipt .receipt-items{display:grid;margin:20px 0 12px;gap:12px}
+.receipt .receipt-item{display:grid;grid-template-columns:126px 1fr;gap:16px;align-items:center;padding:12px;background:#fff;border:1px solid #0000000b;border-radius:18px;text-align:left}
+.receipt .receipt-photo{width:126px;height:126px;overflow:hidden;border-radius:12px}.receipt .pimg{width:126px;height:126px;aspect-ratio:auto}.receipt .pimg>img{object-fit:contain!important}
+.receipt-info{min-width:0}.receipt .receipt-brand{font-size:10px;font-weight:800;letter-spacing:1px;color:#806a60;text-transform:uppercase;margin-bottom:6px}.receipt .receipt-name{display:block;font-size:15px;line-height:1.25;color:#2b2020;letter-spacing:-.3px}
+.receipt .receipt-total{font-size:28px;letter-spacing:-1px;color:#492c1f;margin:8px 0}
+.receipt a,.receipt button{border:1px solid #b57d37;background:transparent;font-size:12px;min-height:44px;padding:8px 18px;margin-top:6px;font-weight:700;color:#603820}
+.receipt a{background:#e52528;border-color:#e52528;color:white}.receipt[data-cancelled=true]{background:#fff6e4}.receipt[data-cancelled=true] .receipt-seal{background:#342343}
+html[data-phone-frame=true] #top{height:64px;padding-top:12px}
+html[data-phone-frame=true] #comp{padding-bottom:20px}
+html[data-phone-frame=true] .kx-source-sheet{padding-bottom:32px}
+@media(max-width:360px){.receipt .receipt-item{grid-template-columns:100px 1fr}.receipt .receipt-photo,.receipt .pimg{width:100px;height:110px}}
+
+/* Keep checkout as a short companion to an already displayed product. */
+#messages .checkout-companion>.kit-ship_it{padding:14px 18px;border-radius:22px;background:#fff;border:1px solid #e5ded8}
+#messages .checkout-companion .kc-items,#messages .checkout-companion .kc-eyebrow,#messages .checkout-companion .kc-title,#messages .checkout-companion .kc-hero,#messages .checkout-companion>.kit-ship_it:before{display:none}
+#messages .checkout-companion .kc-primary{margin:0;min-height:54px}.checkout-companion .kc-delivery{margin-top:12px}
+#messages .checkout-companion .kc-rocket .kc-primary{border-radius:30px}
+#messages .checkout-companion .kc-stamp .kc-primary{border-radius:9px;outline:1px dashed #fff9;outline-offset:-6px;box-shadow:0 4px 0 #bb2023}
+#messages .checkout-companion .kc-truck .kc-primary:after{content:' →';font-size:22px;margin-left:8px}
+#messages .kit-ship_it[data-category=mosquito]{background:linear-gradient(135deg,#372363,#141b40);border-color:#443369;--ink:#fff;--sub:#dfcce5}
+#messages .kit-ship_it[data-category=mosquito] .kc-title{color:#fff0bc}#messages .kit-ship_it[data-category=mosquito] .kc-eyebrow,#messages .kit-ship_it[data-category=mosquito] .kc-delivery{color:#d5c7ea}
+#messages .kit-ship_it[data-category=mosquito] .kc-item{color:#261a3b}#messages .kit-ship_it[data-category=mosquito]:before{color:#ffcf63}

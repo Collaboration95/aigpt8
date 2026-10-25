@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const params = new URLSearchParams(location.search), mock = params.get('mock') === '1';
+  if(params.get('frame')==='1'||window.top!==window.self)document.documentElement.dataset.phoneFrame='true';
   const feed = document.querySelector('#feed'), messages = document.querySelector('#messages'), spacer = document.querySelector('#spacer');
   const input = document.querySelector('#prompt'), send = document.querySelector('#send'), debug = document.querySelector('#debug');
   const sid = localStorage.getItem('t8-sid') || crypto.randomUUID(); localStorage.setItem('t8-sid', sid);
@@ -40,7 +41,10 @@
   }
   function collapseLookups() {
     if (!lookupNode || lookupNode.classList.contains('lookup-used')) return;
-    lookupNode.className='lookup-used';lookupNode.replaceChildren(el('span','','✦ '+lookups[0].summary),el('code','',[...new Set(lookups.map(l=>l.name))].join(' · ')));lookupNode.removeAttribute('role');
+    lookupNode.className='lookup-used';
+    const trace=el('details','lookup-trace'),summary=el('summary','','✦ '+lookups[0].summary);
+    trace.append(summary);for(const l of lookups){const row=el('div','lookup-step');row.append(el('span','',l.summary),el('code','',l.name));trace.append(row);}
+    lookupNode.replaceChildren(trace);lookupNode.removeAttribute('role');
   }
   function freezePrevious() { for (const c of calls.values()) if (c.committed) { c.node.firstElementChild?.freeze?.(); c.node.inert = true; c.frozen = true; } }
   function adapted(e) {
@@ -72,6 +76,7 @@
     try { node = e.name==='play_game'?el('div','game-host'):KIT.tools().includes(e.name) ? KIT.render(e.name,a,{onAnswer:(v,l)=>answer(e,v,l)}) : el('div','status-card','This option is temporarily unavailable.'); }
     catch { node = el('div','status-card','This option is temporarily unavailable.'); }
     wrapper.append(node);
+    if(e.name==='ship_it'&&[...calls.values()].some(c=>c.node.dataset.turn===wrapper.dataset.turn&&['show_usual','compare_products'].includes(c.event.name)&&c.event.args.product_ids?.includes(a.items?.[0]?.product_id)))wrapper.classList.add('checkout-companion');
     if(e.gameReason&&['show_picks','compare_products','product_spotlight'].includes(e.name))wrapper.append(el('small','game-reason',e.gameReason));
     if(['note_inference','memory_recap'].includes(e.name))wrapper.addEventListener('click',ev=>{const b=ev.target.closest('button[data-action]');if(!b||!['forget','change'].includes(b.dataset.action))return;ev.preventDefault();ev.stopImmediatePropagation();ev.target.closest('dialog')?.close();answer(e,{action:b.dataset.action,key:b.dataset.key},b.textContent);},true);
     if(e.name==='play_game'&&!KIT.tools().includes('play_game')) {
@@ -101,14 +106,15 @@
   }
   function reset(turnId = currentTurn) { for (const [id,c] of calls) if (!c.committed && (!turnId || c.node.dataset.turn === String(turnId))) { c.node.remove(); calls.delete(id); } }
   function safeFallback(url) { try { const u = new URL(url,location.origin); if (u.origin !== location.origin || !['/toothpaste.html','/mosquito.html','/games.html','/camping.html'].includes(u.pathname)) return null; u.searchParams.set('q',originalGoal); u.searchParams.set('sid',sid); return u.pathname + u.search; } catch { return null; } }
-  function fallback(data) { clearThinking(); reset(); const n=el('div','notice','Scripted fallback'); const url=safeFallback(data.url); if(url){const a=el('a','','Continue →');a.href=url;n.append(el('br'),a);}else n.append(el('div','','Try a different shopping request.'));messages.append(n);updateProof({source:'scripted'}); }
+  function fallback(data) { clearThinking(); reset(); const n=el('div','notice','Your shopping options'); const url=safeFallback(data.url); if(url){const a=el('a','','Continue →');a.href=url;n.append(el('br'),a);}else n.append(el('div','','Try a different shopping request.'));messages.append(n);updateProof({source:'scripted'}); }
   function receipt(data, toolCallId) {
     const o = data.order; if (!o?.id) return;
     if (!mock) Orders.upsertServer(o);
     const n=el('section','receipt'), cancelled = o.cancelled || o.canceled || ['cancelled','canceled'].includes(o.status);
-    n.append(el('strong','',cancelled?'Order cancelled':'You’re all set'),el('small','',mock?'Mock order · not saved':'Demo order · simulated delivery'));
-    const photos=el('div','receipt-items'); (o.items || []).forEach(i=>{const p=CATALOG.get(i.productId || i.product_id || i.id);if(p){const d=el('div');d.innerHTML=CATALOG.imgHTML(p);photos.append(d);}}); n.append(photos);
-    if(Number.isFinite(Number(o.total))) n.append(el('strong','','₩'+Number(o.total).toLocaleString('en-US')));
+    n.dataset.cancelled=String(Boolean(cancelled));n.setAttribute('role','status');
+    n.append(el('span','receipt-seal',cancelled?'↶':'✓'),el('span','receipt-eyebrow',cancelled?'YOU’RE IN CONTROL':'CLICK · ORDER CONFIRMED'),el('strong','receipt-title',cancelled?'Order cancelled':'You’re all set!'),el('small','',mock?'Mock order · not saved':'Demo order · simulated delivery'));
+    const photos=el('div','receipt-items'); (o.items || []).forEach(i=>{const p=CATALOG.get(i.productId || i.product_id || i.id);if(p){const d=el('div','receipt-item'),photo=el('div','receipt-photo'),info=el('div','receipt-info');photo.innerHTML=CATALOG.imgHTML(p);info.append(el('small','receipt-brand',p.brand),el('b','receipt-name',p.name));d.append(photo,info);photos.append(d);}}); n.append(photos);
+    if(Number.isFinite(Number(o.total))) n.append(el('strong','receipt-total','₩'+Number(o.total).toLocaleString('en-US')));
     const track=el('a','','Track order →');track.href='/orders.html#'+encodeURIComponent(o.id);if(!mock)n.append(track);
     if(toolCallId){const b=el('button','',cancelled?'Redo':'Undo');b.type='button';b.onclick=()=>submit({event:{toolCallId,value:{action:cancelled?'redo':'undo',orderId:o.id},label:cancelled?'Redo order':'Undo order'}});n.append(b);}
     messages.querySelectorAll('.receipt button').forEach(b=>b.disabled=true); messages.append(n);
@@ -181,7 +187,7 @@
   });
   const viewKey='t8-live-view-'+sid;
   function saveView(){try{sessionStorage.setItem(viewKey,JSON.stringify({goal:originalGoal,html:messages.innerHTML,calls:[...calls].map(([id,c])=>[id,{event:c.event,committed:c.committed,frozen:c.frozen}])}));}catch{}}
-  function restoreView(){try{const view=JSON.parse(sessionStorage.getItem(viewKey));if(!view)return false;originalGoal=view.goal;messages.innerHTML=view.html;for(const [id,c] of view.calls){const old=messages.querySelector('[data-call="'+id+'"]');if(!old)continue;renderTool(c.event);const fresh=calls.get(id);old.replaceWith(fresh.node);fresh.committed=c.committed;fresh.frozen=c.frozen;fresh.node.inert=c.frozen||!c.committed;if(c.frozen)fresh.node.firstElementChild?.freeze?.();}messages.querySelectorAll('.receipt').forEach(n=>n.remove());const orders=Orders.list().filter(o=>o.sid===sid);for(const order of orders.slice(0,1))receipt({order},order.toolCallId);anchor=messages.lastElementChild;align();return true;}catch{return false;}}
+  function restoreView(){try{const view=JSON.parse(sessionStorage.getItem(viewKey));if(!view)return false;originalGoal=view.goal;messages.innerHTML=view.html;for(const [id,c] of view.calls){const old=messages.querySelector('[data-call="'+id+'"]');if(!old)continue;renderTool(c.event);const fresh=calls.get(id);old.replaceWith(fresh.node);fresh.committed=c.committed;fresh.frozen=c.frozen;fresh.node.dataset.provisional=String(!c.committed);fresh.node.inert=c.frozen||!c.committed;if(c.frozen)fresh.node.firstElementChild?.freeze?.();}messages.querySelectorAll('.receipt').forEach(n=>n.remove());const orders=Orders.list().filter(o=>o.sid===sid);for(const order of orders.slice(0,1))receipt({order},order.toolCallId);anchor=[...messages.querySelectorAll('.user')].at(-1)||messages.lastElementChild;align();return true;}catch{return false;}}
   window.addEventListener('pagehide',saveView);
   const consumed=new URL(location.href);consumed.searchParams.delete('q');history.replaceState(null,'',consumed);
   if(originalGoal)submit({text:originalGoal});else if(!restoreView())input.focus();
